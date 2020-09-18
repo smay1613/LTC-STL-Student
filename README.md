@@ -83,11 +83,11 @@ _`sudo apt-get install wget unzip cmake`_
    * _....implement task....._
    * _....check if everything is ok...._
    * _Add files to index:_   
-        `git add *changed files with __code__`
-   * _Commit changes and write __meaningful__ commit message:_
+        `git add *changed files with code*`
+   * _Commit changes and write __meaningful__ commit message:_  
         `git commit`
-   * _Push to remote:_
+   * _Push to remote:_  
         `git push`
    * _....create pull request on [Github](https://github.com/smay1613/LTC-STL-Student/pulls)...._
-   * _Switch back to master branch:_
+   * _Switch back to master branch:_  
         `git checkout master`
