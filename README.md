@@ -69,3 +69,25 @@ _`sudo apt-get install wget unzip cmake`_
 * Qt Creator IDE  
 * gcc 7.3.0+ (or latest)  
 * gdb  
+
+## If you are not familiar with git:
+1. [Install git](https://git-scm.com/downloads)
+2. [Setup ssh access](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh)
+2. Learn how to:
+   * _Clone repository_:  
+        `git clone git@github.com:smay1613/LTC-STL-Student.git`
+   * _Check current status (branch, remote, etc) - do this before and after any command!_:  
+        `git status`
+   * _Switch to another branch_:  
+        `git checkout -b task_name_YourSurname` (-b creates a branch from the current branch)
+   * _....implement task....._
+   * _....check if everything is ok...._
+   * _Add files to index:_   
+        `git add *changed files with __code__`
+   * _Commit changes and write __meaningful__ commit message:_
+        `git commit`
+   * _Push to remote:_
+        `git push`
+   * _....create pull request on [Github](https://github.com/smay1613/LTC-STL-Student/pulls)...._
+   * _Switch back to master branch:_
+        `git checkout master`
