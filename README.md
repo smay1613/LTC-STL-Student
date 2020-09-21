@@ -11,18 +11,18 @@
 10. __Check__ results and __answer__ questions 
   
   
-## To check list:
-- [x] Run all tests when implementation is ready
-- [x] Check if branch is correct and branched from master
-- [x] Check pull request changes
-- [x] Check pull request title
+## Check list:
+- [x] All tests are passed
+- [x] Branch is correct and branched from master
+- [x] Pull request changes are correct (only code from one task)
+- [x] Pull request title contains task name and your surname
   
   
 ## Rules
 
 ### 1. If pull request contain any non-related changes, it will be rejected without review.
 ### 2. If tests are not passed, pull request will be rejected
-### 3. Pull request name should contain task name and your surname _(e.g iterators task (1) - Woodman)_
+### 3. Pull request title should contain task name and your surname _(e.g iterators task (1) - Woodman)_
 ### 4. Don't modify tests
 ### 5. Don't change task interface
   
