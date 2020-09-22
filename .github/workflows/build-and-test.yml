@@ -4,7 +4,7 @@ name: build_and_run_tests
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
-  pull_request_target:
+  pull_request:
     types: ["opened", "synchronize"]  
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -17,14 +17,15 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - uses: Trass3r/setup-cpp@v1
       - name: cmake
         run: |
             chmod +x "$GITHUB_WORKSPACE/test_build.sh" 
             "$GITHUB_WORKSPACE/test_build.sh"
-      - uses: smay1613/get-changed-files@2ee76638a80d280a92d221250e907e292d09682d
+      - uses: jitterbit/get-changed-files@v1
         with:
           format: 'json'
-          run: |
+      - run: |
             readarray -t changed_files <<<"$(jq -r '.[]' <<<'${{ steps.files.outputs.all }}')"
             changed_file="changed_files[0]"
             echo "${changed_file}"
