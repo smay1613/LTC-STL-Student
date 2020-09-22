@@ -1,14 +1,11 @@
-# This is a basic workflow to help you get started with Actions
 
 name: build_and_run_tests
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
-  pull_request:
-    
   pull_request_target:
-    
+    types: ["opened", "synchronize"]  
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -21,8 +18,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - name: cmake
-        run: test_build.sh
-      - uses: jitterbit/get-changed-files@v1
+        run: |
+            chmod +x "$GITHUB_WORKSPACE/test_build.sh" 
+            "$GITHUB_WORKSPACE/test_build.sh"
+      - uses: smay1613/get-changed-files@2ee76638a80d280a92d221250e907e292d09682d
         with:
           format: 'json'
           run: |
@@ -32,4 +31,3 @@ jobs:
             task_dir=$(echo $changed_file | grep -o ".*student")
             "$task_dir/build/bin/unit_tests"
             exit $?
-            
