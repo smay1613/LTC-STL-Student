@@ -22,11 +22,12 @@ jobs:
         run: |
             chmod +x "$GITHUB_WORKSPACE/test_build.sh" 
             "$GITHUB_WORKSPACE/test_build.sh"
-      - uses: jitterbit/get-changed-files@v1
+      - uses: lots0logs/gh-action-get-changed-files@2.1.4
         with:
-          format: 'json'
+          token: ${{ secrets.GITHUB_TOKEN }}
       - run: |
-            readarray -t changed_files <<<"$(jq -r '.[]' <<<'${{ steps.files.outputs.all }}')"
+            cat "${HOME}/files.json"
+            readarray -t changed_files <<<"$(jq -r '.[]' <<<'${HOME}/files.json')"
             changed_file="changed_files[0]"
             echo "${changed_file}"
             task_dir=$(echo $changed_file | grep -o ".*student")
