@@ -21,7 +21,7 @@ jobs:
         run: |
             chmod +x "$GITHUB_WORKSPACE/test_build.sh" 
             "$GITHUB_WORKSPACE/test_build.sh"
-      - uses: jitterbit/get-changed-files@v1
+      - uses: smay1613/get-changed-files@2ee76638a80d280a92d221250e907e292d09682d
         with:
           format: 'json'
           run: |
