@@ -11,18 +11,18 @@
 10. __Check__ results and __answer__ questions 
   
   
-## To check list:
-- [x] Run all tests when implementation is ready
-- [x] Check if branch is correct and branched from master
-- [x] Check pull request changes
-- [x] Check pull request title
+## Check list:
+- [x] All tests are passed
+- [x] Branch is correct and branched from master
+- [x] Pull request changes are correct (only code from one task)
+- [x] Pull request title contains task name and your surname
   
   
 ## Rules
 
 ### 1. If pull request contain any non-related changes, it will be rejected without review.
 ### 2. If tests are not passed, pull request will be rejected
-### 3. Pull request name should contain task name and your surname _(e.g iterators task (1) - Woodman)_
+### 3. Pull request title should contain task name and your surname _(e.g iterators task (1) - Woodman)_
 ### 4. Don't modify tests
 ### 5. Don't change task interface
   
@@ -69,3 +69,25 @@ _`sudo apt-get install wget unzip cmake`_
 * Qt Creator IDE  
 * gcc 7.3.0+ (or latest)  
 * gdb  
+
+## If you are not familiar with git:
+1. [Install git](https://git-scm.com/downloads)
+2. [Setup ssh access](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh)
+2. Learn how to:
+   * _Clone repository_:  
+        `git clone git@github.com:smay1613/LTC-STL-Student.git`
+   * _Check current status (branch, remote, etc) - do this before and after any command!_:  
+        `git status`
+   * _Switch to another branch_:  
+        `git checkout -b task_name_YourSurname` (-b creates a branch from the current branch)
+   * _....implement task....._
+   * _....check if everything is ok...._
+   * _Add files to index:_   
+        `git add *changed files with code*`
+   * _Commit changes and write __meaningful__ commit message:_  
+        `git commit`
+   * _Push to remote:_  
+        `git push`
+   * _....create pull request on [Github](https://github.com/smay1613/LTC-STL-Student/pulls)...._
+   * _Switch back to master branch:_  
+        `git checkout master`
