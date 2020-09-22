@@ -6,3 +6,5 @@ const std::vector<std::pair<char, char>> brackets {
     {'[', ']'},
     {'{', '}'}
 };
+
+void nope() {}
