@@ -18,18 +18,18 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - uses: Trass3r/setup-cpp@v1
-      - name: cmake
-        run: |
-            chmod +x "$GITHUB_WORKSPACE/test_build.sh" 
-            "$GITHUB_WORKSPACE/test_build.sh"
-      - uses: lots0logs/gh-action-get-changed-files@2.1.4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
       - run: |
-            cat "${HOME}/files.json"
-            readarray -t changed_files <<<"$(jq -r '.[]' <<<'${HOME}/files.json')"
+            URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/files"
+            echo "$URL"
+            FILES=$(curl -s -X GET -G $URL | jq -r '.[] | .cpp')
+            echo "$FILES"
             changed_file="changed_files[0]"
             echo "${changed_file}"
             task_dir=$(echo $changed_file | grep -o ".*student")
+            cd "$task_dir"
+            cmake . && make -j4
+            if [[ "$?" -ne 0 ]]; then 
+              exit 1
+            fi
             "$task_dir/build/bin/unit_tests"
             exit $?
