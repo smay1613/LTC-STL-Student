@@ -21,7 +21,7 @@ public:
      */
     void userEnter(const std::string& userId)
     {  // awful, but in header for testing
-        m_dataReaders.emplace(userId, getSelector());
+        m_dataReaders.emplace( userId, std::unique_ptr<IDataSelector>( getSelector() ) );
     }
 
     /** @todo THIS METHOD MUST USE safeCall idiom AND invokeDataRequest ON SUCCESS
@@ -62,10 +62,21 @@ private:
     bool safeCall(const std::string &userId, T&& f) const
     {
         static_assert(std::is_same<decltype(f(nullptr)), bool>::value, "Provided Callable must return bool");
+        
         // find reader
-        // check for errors
-        // call functor
-        return false;
+        const auto it = m_dataReaders.find(userId);
+        if ( it == m_dataReaders.end() )
+        {
+            // Failed to find userid
+            return false;
+        }
+
+        if ( !it->second )
+        {
+            return false;
+        }
+
+        return f( it->second );
     }
 
     /**
@@ -76,8 +87,9 @@ private:
     template<class Functional, typename Output>
     bool invokeDataRequest(Functional method, const std::unique_ptr<IDataSelector>& selector, Output& result) const
     {
+        return method( selector.get(), result );
         // adapt function
         // call selector member
-        return false;
+        // return false;
     }
 };
