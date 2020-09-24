@@ -8,6 +8,25 @@
  */
 struct BeerOrganizer
 {
+  size_t current_index {0};
+  std::array<BeerBrand, 8> beer_arr {
+        BeerBrand::HoeGaarden,
+        BeerBrand::Corona,
+        BeerBrand::Carlsberg,
+        BeerBrand::Bud,
+        BeerBrand::ZlataPraha,
+        BeerBrand::Leffe
+  };
+
+
+  BeerBrand operator() (){
+    if(current_index == beer_arr.size())
+      {
+        current_index = 0;
+      }
+    return beer_arr[current_index++];
+  }
+
 };
 
 /**
@@ -16,16 +35,31 @@ struct BeerOrganizer
  *
  * @note Only Corona and HoeGaarden are expensive
  */
-bool isExpensiveBeer(/**???*/)
+bool isExpensiveBeer(BeerBrand brand)
 {
+  switch(brand){
+      case BeerBrand::Corona:
+      {
+        return true;
+      }
+      case BeerBrand::HoeGaarden:
+      {
+        return true;
+      }
+      default:
+      {
+        return false;
+      }
+  }
 }
 
 /**
  * @todo Implement lambda beer country equality comparator
  * @return true if beer county is the same, false otherwise
  */
-auto sameCountry = [](/**???*/)
+auto sameCountry = [](BeerBrand lhv, BeerBrand rhv)
 {
+  return getBeerCountry(lhv) == getBeerCountry(rhv);
 };
 
 struct MixingPolicy
@@ -40,9 +74,24 @@ struct MixingPolicy
      * Whiskey + SevenUp = SevenPlusSeven;
      * Others + Others = Oops;
      */
-    static Cocktail mix(/**???*/)
+    static Cocktail mix(AlcoholDrink alco, NonAlcoholDrink nonAlco)
     {
+      if(alco == AlcoholDrink::Gin && nonAlco == NonAlcoholDrink::LimeJuice)
+        {
+          return Cocktail::Gimlet;
+        }
+      else if(alco == AlcoholDrink::Gin && nonAlco == NonAlcoholDrink::GrapefruitJuice)
+        {
+          return Cocktail::Greyhount;
+        }
+      else if(alco == AlcoholDrink::Whiskey && nonAlco == NonAlcoholDrink::SevenUp)
+        {
+          return Cocktail::SevenPlusSeven;
+        }
+      else{
+          return Cocktail::Oops;
+        }
     }
 };
 
-std::function</**???*/> mixer {&MixingPolicy::mix};
+std::function<Cocktail(AlcoholDrink, NonAlcoholDrink)> mixer {&MixingPolicy::mix};
