@@ -24,8 +24,6 @@ set_target_properties(slide PROPERTIES
                         PUBLIC_HEADER "${headers}"
 )
 
-target_compile_options(slide PRIVATE -Wall -Wextra)
-
 target_include_directories(slide
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
     PUBLIC

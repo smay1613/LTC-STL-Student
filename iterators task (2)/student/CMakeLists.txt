@@ -25,7 +25,7 @@ set_target_properties(key_value_iterator_HOMEWORK PROPERTIES
                         PUBLIC_HEADER "${headers}"
 )
 
-target_compile_options(key_value_iterator_HOMEWORK PRIVATE -Wall -Wextra)
+)
 
 target_include_directories(key_value_iterator_HOMEWORK
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src

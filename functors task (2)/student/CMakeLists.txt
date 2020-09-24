@@ -25,7 +25,7 @@ set_target_properties(SafeCallTaskHomework PROPERTIES
                         PUBLIC_HEADER "${headers}"
 )
 
-target_compile_options(SafeCallTaskHomework PRIVATE -Wall -Wextra)
+
 
 target_include_directories(SafeCallTaskHomework
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src

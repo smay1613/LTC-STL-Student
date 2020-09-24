@@ -28,7 +28,7 @@ set_target_properties(duplicates_search_HOMEWORK PROPERTIES
 
 
 target_link_libraries(duplicates_search_HOMEWORK PRIVATE stdc++fs)
-target_compile_options(duplicates_search_HOMEWORK PRIVATE -Wall -Wextra)
+
 
 target_include_directories(duplicates_search_HOMEWORK
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
