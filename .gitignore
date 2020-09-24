@@ -61,3 +61,5 @@ gmock
 *release-*
 bin*
 solved*
+.vscode/
+build/
