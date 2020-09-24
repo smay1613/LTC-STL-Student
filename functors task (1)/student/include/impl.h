@@ -8,37 +8,15 @@
  */
 struct BeerOrganizer
 {
-  size_t current_index {0};
-  std::array<BeerBrand, 6> beer_arr {
-        BeerBrand::HoeGaarden,
-        BeerBrand::Corona,
-        BeerBrand::Carlsberg,
-        BeerBrand::Bud,
-        BeerBrand::ZlataPraha,
-        BeerBrand::Leffe
-  };
-
+  size_t current_index {static_cast<size_t>(BeerBrand::HoeGaarden)};
 
   BeerBrand operator() (){
-    if(current_index == beer_arr.size())
+    if(current_index == static_cast<size_t>(BeerBrand::Max))
       {
-        current_index = 0;
+        current_index = static_cast<size_t>(BeerBrand::HoeGaarden);
       }
-    return beer_arr[current_index++];
+    return static_cast<BeerBrand>(current_index++);
   }
-
-};
-
-enum class lol
-{
-    None = 0,
-    HoeGaarden,
-    Corona,
-    Carlsberg,
-    Bud,
-    ZlataPraha,
-    Leffe,
-    Max = 7
 };
 
 /**
@@ -49,20 +27,7 @@ enum class lol
  */
 bool isExpensiveBeer(BeerBrand brand)
 {
-  switch(brand){
-      case BeerBrand::Corona:
-      {
-        return true;
-      }
-      case BeerBrand::HoeGaarden:
-      {
-        return true;
-      }
-      default:
-      {
-        return false;
-      }
-  }
+  return brand == BeerBrand::Corona || brand == BeerBrand::HoeGaarden;
 }
 
 /**
@@ -88,21 +53,19 @@ struct MixingPolicy
      */
     static Cocktail mix(AlcoholDrink alco, NonAlcoholDrink nonAlco)
     {
-      if(alco == AlcoholDrink::Gin && nonAlco == NonAlcoholDrink::LimeJuice)
-        {
-          return Cocktail::Gimlet;
-        }
-      else if(alco == AlcoholDrink::Gin && nonAlco == NonAlcoholDrink::GrapefruitJuice)
-        {
-          return Cocktail::Greyhount;
-        }
-      else if(alco == AlcoholDrink::Whiskey && nonAlco == NonAlcoholDrink::SevenUp)
-        {
-          return Cocktail::SevenPlusSeven;
-        }
-      else{
-          return Cocktail::Oops;
-        }
+      switch(alco){
+        case AlcoholDrink::Gin:
+          {
+            if(nonAlco == NonAlcoholDrink::LimeJuice) return Cocktail::Gimlet;
+            if(nonAlco == NonAlcoholDrink::GrapefruitJuice) return Cocktail::Greyhount;
+            break;
+          }
+        case AlcoholDrink::Whiskey:
+          {
+            if(nonAlco == NonAlcoholDrink::SevenUp) return Cocktail::SevenPlusSeven;
+          }
+       }
+       return Cocktail::Oops;
     }
 };
 
