@@ -1,6 +1,9 @@
 #pragma once
 #include "bar_serving.h"
 #include <functional>
+#include <vector>
+#include <map>
+
 
 /**
  * @todo Implement functor-generator that will return next beer brand (cyclic)
@@ -8,6 +11,17 @@
  */
 struct BeerOrganizer
 {
+    BeerBrand operator()()
+    {
+        if(mCurrentBrand == OrderedBrands.end())
+        {
+            mCurrentBrand = OrderedBrands.begin();
+        }
+        return *(mCurrentBrand++);
+    }
+private:
+    static const std::vector<BeerBrand> OrderedBrands;
+    std::vector<BeerBrand>::const_iterator mCurrentBrand = OrderedBrands.begin();
 };
 
 /**
@@ -16,16 +30,18 @@ struct BeerOrganizer
  *
  * @note Only Corona and HoeGaarden are expensive
  */
-bool isExpensiveBeer(/**???*/)
+bool isExpensiveBeer(BeerBrand beer)
 {
+    return beer == BeerBrand::Corona || beer == BeerBrand::HoeGaarden;
 }
 
 /**
  * @todo Implement lambda beer country equality comparator
  * @return true if beer county is the same, false otherwise
  */
-auto sameCountry = [](/**???*/)
+auto sameCountry = [](BeerBrand beer1, BeerBrand beer2)
 {
+    return getBeerCountry(beer1) == getBeerCountry(beer2);
 };
 
 struct MixingPolicy
@@ -40,9 +56,16 @@ struct MixingPolicy
      * Whiskey + SevenUp = SevenPlusSeven;
      * Others + Others = Oops;
      */
-    static Cocktail mix(/**???*/)
+    static Cocktail mix(AlcoholDrink alcohol, NonAlcoholDrink non_alcohol)
     {
+        static const std::map<std::pair<AlcoholDrink, NonAlcoholDrink>, Cocktail> recipes = {
+            { {AlcoholDrink::Gin,     NonAlcoholDrink::LimeJuice},       Cocktail::Gimlet },
+            { {AlcoholDrink::Gin,     NonAlcoholDrink::GrapefruitJuice}, Cocktail::Greyhount },
+            { {AlcoholDrink::Whiskey, NonAlcoholDrink::SevenUp},         Cocktail::SevenPlusSeven }
+        };
+        auto recipe = recipes.find(std::make_pair(alcohol, non_alcohol));
+        return (recipe == recipes.end()) ? Cocktail::Oops : recipe->second;
     }
 };
 
-std::function</**???*/> mixer {&MixingPolicy::mix};
+std::function<Cocktail(AlcoholDrink, NonAlcoholDrink)> mixer {&MixingPolicy::mix};
