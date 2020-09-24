@@ -8,6 +8,16 @@
  */
 struct BeerOrganizer
 {
+    int x = 1;
+
+    BeerBrand operator()()
+    {
+       int currentBeer = x;
+       if(x < 6) x++;
+       else x = 1;
+
+       return static_cast<BeerBrand>(currentBeer);
+    }
 };
 
 /**
@@ -16,16 +26,18 @@ struct BeerOrganizer
  *
  * @note Only Corona and HoeGaarden are expensive
  */
-bool isExpensiveBeer(/**???*/)
+bool isExpensiveBeer(BeerBrand & brand)
 {
+    return (brand == BeerBrand::HoeGaarden || brand == BeerBrand::Corona);
 }
 
 /**
  * @todo Implement lambda beer country equality comparator
  * @return true if beer county is the same, false otherwise
  */
-auto sameCountry = [](/**???*/)
+auto sameCountry = [](BeerBrand lhr , BeerBrand rhs)
 {
+    return getBeerCountry(lhr) == getBeerCountry(rhs);
 };
 
 struct MixingPolicy
@@ -40,9 +52,27 @@ struct MixingPolicy
      * Whiskey + SevenUp = SevenPlusSeven;
      * Others + Others = Oops;
      */
-    static Cocktail mix(/**???*/)
+    static Cocktail mix(AlcoholDrink alcohol, NonAlcoholDrink noAlcohol)
     {
+        Cocktail currentCoctail = Cocktail::Oops;
+        if(alcohol == AlcoholDrink::Gin)
+        {
+            if(noAlcohol == NonAlcoholDrink::LimeJuice)
+            {
+                currentCoctail = Cocktail::Gimlet;
+            }
+            else if(noAlcohol == NonAlcoholDrink::GrapefruitJuice)
+            {
+                currentCoctail = Cocktail::Greyhount;
+            }
+        }
+        else if(alcohol == AlcoholDrink::Whiskey && noAlcohol == NonAlcoholDrink::SevenUp)
+        {
+            currentCoctail = Cocktail::SevenPlusSeven;
+        }
+
+        return currentCoctail;
     }
 };
 
-std::function</**???*/> mixer {&MixingPolicy::mix};
+std::function<Cocktail(AlcoholDrink,NonAlcoholDrink)> mixer {&MixingPolicy::mix};
