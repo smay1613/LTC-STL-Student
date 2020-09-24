@@ -75,7 +75,7 @@ _`sudo apt-get install wget unzip cmake`_
 2. [Setup ssh access](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh)
 2. Learn how to:
    * _Clone repository_:  
-        `git clone git@github.com:smay1613/LTC-STL-Student.git`
+        `git clone git@github.com:smay1613/LTC-STL-Student.git` (with your fork!)
    * _Check current status (branch, remote, etc) - do this before and after any command!_:  
         `git status`
    * _Switch to another branch_:  
