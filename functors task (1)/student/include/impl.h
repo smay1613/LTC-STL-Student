@@ -9,7 +9,7 @@
 struct BeerOrganizer
 {
     private:
-        uint currentBeerIndex = 1;
+        size_t currentBeerIndex = static_cast<size_t>(BeerBrand::HoeGaarden);
 
     public:
         BeerBrand operator()();

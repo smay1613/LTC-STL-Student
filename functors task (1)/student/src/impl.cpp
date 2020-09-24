@@ -2,9 +2,9 @@
 
 BeerBrand BeerOrganizer::operator()()
 {
-    if (currentBeerIndex == static_cast<int>(BeerBrand::Max))
+    if (currentBeerIndex == static_cast<size_t>(BeerBrand::Max))
     {
-        currentBeerIndex = 1;
+        currentBeerIndex = static_cast<size_t>(BeerBrand::HoeGaarden);
     }
     return static_cast<BeerBrand>(currentBeerIndex++);
 }
