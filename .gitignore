@@ -57,7 +57,5 @@ compile_commands.json
 
 #Project specific
 part2
-gmock
-*release-*
 bin*
 solved*
