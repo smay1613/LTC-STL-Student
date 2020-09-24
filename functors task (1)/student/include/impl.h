@@ -9,7 +9,7 @@
 struct BeerOrganizer
 {
   size_t current_index {0};
-  std::array<BeerBrand, 8> beer_arr {
+  std::array<BeerBrand, 6> beer_arr {
         BeerBrand::HoeGaarden,
         BeerBrand::Corona,
         BeerBrand::Carlsberg,
@@ -27,6 +27,18 @@ struct BeerOrganizer
     return beer_arr[current_index++];
   }
 
+};
+
+enum class lol
+{
+    None = 0,
+    HoeGaarden,
+    Corona,
+    Carlsberg,
+    Bud,
+    ZlataPraha,
+    Leffe,
+    Max = 7
 };
 
 /**
