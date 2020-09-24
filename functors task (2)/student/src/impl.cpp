@@ -1,54 +1,58 @@
 #include "impl.h"
 
+#include <deque>
+
 void DataBrowser::userLeave(const std::string &userId)
 {
     m_dataReaders.erase(userId);
 }
 
+void DataBrowser::userEnter(const std::string& userId)
+{
+    m_dataReaders.emplace(userId, getSelector());
+}
+
 bool DataBrowser::getDataType1(const std::string &userId, std::vector<size_t> &returnValues) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
+    // Variant #1: Lambda and std::bind().
+
+    auto getDataTypeAdapter = [this, &returnValues](const std::unique_ptr<IDataSelector>& selector)
     {
-        return false;
-    }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
-    return it->second->getDataType1(returnValues, 0);
+        using namespace std::placeholders;
+        return invokeDataRequest(
+            std::bind(&IDataSelector::getDataType1, _1, _2, 0), selector, returnValues);
+    };
+    return safeCall(userId, getDataTypeAdapter);
 }
 
 bool DataBrowser::getDataType2(std::vector<size_t> &returnValues, const std::string &userId) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
+    // Variant #2: Two lambdas.
+
+    auto getDataTypeAdapter = [this, &returnValues](const std::unique_ptr<IDataSelector>& selector)
     {
-        return false;
-    }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
-    return it->second->getDataType2(returnValues);
+        auto getDataTypeCaller = [](const IDataSelector* selector, std::vector<size_t>& returnValues)
+        {
+            return selector->getDataType2(returnValues);
+        };
+        return invokeDataRequest(getDataTypeCaller, selector, returnValues);
+    };
+    return safeCall(userId, getDataTypeAdapter);
 }
 
 bool DataBrowser::getDataType3(const std::string &userId, std::vector<std::string> &returnValues) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
-    {
-        return false;
-    }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
+    // Variant #3: One lambda only. Looks like the simplest variant, but violates requirement of
+    //             calling invokeDataRequest() method.
 
-    std::deque<size_t> unprocessedResults {};
-    bool success {it->second->getDataType3(unprocessedResults)};
-    returnValues = process(unprocessedResults);
-    return success;
+    auto getDataTypeAdapter = [this, &returnValues](const std::unique_ptr<IDataSelector>& selector)
+    {
+        std::deque<size_t> unprocessedReturnValues;
+        const bool success = selector->getDataType3(unprocessedReturnValues);
+        returnValues = process(unprocessedReturnValues);
+        return success;
+    };
+    return safeCall(userId, getDataTypeAdapter);
 }
 
 template<class T>

@@ -1,8 +1,11 @@
 #pragma once
+
 #include <map>
 #include <memory>
 #include <functional>
 #include <algorithm>
+#include <utility>
+
 #include "selector.h"
 
 // for testing purposes
@@ -19,10 +22,7 @@ public:
     /**
      * Adds data reader to map
      */
-    void userEnter(const std::string& userId)
-    {  // awful, but in header for testing
-        m_dataReaders.emplace(userId, getSelector());
-    }
+    void userEnter(const std::string& userId);
 
     /** @todo THIS METHOD MUST USE safeCall idiom AND invokeDataRequest ON SUCCESS
     * "normal" method
@@ -62,10 +62,17 @@ private:
     bool safeCall(const std::string &userId, T&& f) const
     {
         static_assert(std::is_same<decltype(f(nullptr)), bool>::value, "Provided Callable must return bool");
-        // find reader
-        // check for errors
-        // call functor
-        return false;
+
+        const auto& it = m_dataReaders.find(userId);
+        if (it == m_dataReaders.cend())
+        {
+            return false;
+        }
+        if (it->second == nullptr)
+        {
+            return false;
+        }
+        return std::forward<T>(f)(it->second);
     }
 
     /**
@@ -76,8 +83,6 @@ private:
     template<class Functional, typename Output>
     bool invokeDataRequest(Functional method, const std::unique_ptr<IDataSelector>& selector, Output& result) const
     {
-        // adapt function
-        // call selector member
-        return false;
+        return method(selector.get(), result);
     }
 };
