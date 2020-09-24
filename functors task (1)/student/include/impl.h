@@ -15,7 +15,6 @@ struct BeerOrganizer {
     if (index == 7) {
       index = 1;
     }
-
     return bb;
   }
 
@@ -31,17 +30,11 @@ struct BeerOrganizer {
  * @note Only Corona and HoeGaarden are expensive
  */
 bool isExpensiveBeer(BeerBrand const& bb) {
-  bool result = false;
-  switch (bb) {
-    case BeerBrand::Corona:
-    case BeerBrand::HoeGaarden:
-      result = true;
-      break;
-    default:
-      result = false;
+  if (BeerBrand::Corona == bb || BeerBrand::HoeGaarden == bb) {
+    return true;
+  } else {
+    return false;
   }
-
-  return result;
 }
 
 /**
