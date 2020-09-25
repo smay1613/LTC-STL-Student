@@ -61,7 +61,7 @@ TEST(Generator, SemiFit)
                                      BeerBrand::ZlataPraha,
                                      BeerBrand::Leffe};
 
-    std::vector<wall_shelf<18>::iterator> subsequencesBegin;
+    std::vector<wall_shelf<10>::iterator> subsequencesBegin;
     auto it = std::find(shelf.begin(), shelf.end(), BeerBrand::HoeGaarden);
 
     while (it != shelf.end())
