@@ -8,13 +8,13 @@
  */
 struct BeerOrganizer
 {
-    int firstBeer = static_cast<int>(BeerBrand::HoeGaarden);
-    int lastBeer = static_cast<int>(BeerBrand::Leffe);
-    int beer = firstBeer;
+    size_t firstBeer = static_cast<int>(BeerBrand::HoeGaarden);
+    size_t lastBeer = static_cast<int>(BeerBrand::Leffe);
+    size_t beer = firstBeer;
 
     BeerBrand operator()()
     {
-       int currentBeer = beer;
+       size_t currentBeer = beer;
        if(beer < lastBeer)
        {
            beer ++;
@@ -34,7 +34,7 @@ struct BeerOrganizer
  *
  * @note Only Corona and HoeGaarden are expensive
  */
-bool isExpensiveBeer(BeerBrand & brand)
+bool isExpensiveBeer(BeerBrand brand)
 {
     return (brand == BeerBrand::HoeGaarden || brand == BeerBrand::Corona);
 }
