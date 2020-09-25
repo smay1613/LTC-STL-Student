@@ -8,13 +8,20 @@
  */
 struct BeerOrganizer
 {
-    int x = 1;
+    int firstBeer = static_cast<int>(BeerBrand::HoeGaarden);
+    int beer = firstBeer;
 
     BeerBrand operator()()
     {
-       int currentBeer = x;
-       if(x < 6) x++;
-       else x = 1;
+       int currentBeer = beer;
+       if(beer < static_cast<int>(BeerBrand::Leffe))
+       {
+           beer ++;
+       }
+       else
+       {
+           beer = firstBeer;
+       }
 
        return static_cast<BeerBrand>(currentBeer);
     }
