@@ -51,7 +51,7 @@ struct MixingPolicy
      * Whiskey + SevenUp = SevenPlusSeven;
      * Others + Others = Oops;
      */
-    static Cocktail mix( AlcoholDrink& ad, NonAlcoholDrink& nad)
+    static Cocktail mix( const AlcoholDrink& ad, const NonAlcoholDrink& nad)
     {
         if( nad == NonAlcoholDrink::LimeJuice && ad == AlcoholDrink::Gin )
         {
@@ -72,4 +72,4 @@ struct MixingPolicy
     }
 };
 
-std::function<Cocktail( AlcoholDrink&, NonAlcoholDrink& )> mixer {&MixingPolicy::mix};
+std::function<Cocktail( const AlcoholDrink&, const NonAlcoholDrink& )> mixer {&MixingPolicy::mix};
