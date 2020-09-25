@@ -9,15 +9,15 @@
 struct BeerOrganizer
 {
     BeerBrand operator()() {
-        if(static_cast<int>(BeerBrand::Max) == (curr_beer + 1))
+        if(static_cast<int>(BeerBrand::Max) == (current_beer + 1))
         {
-            curr_beer = 0;
+            current_beer = static_cast<int>(BeerBrand::None);
         }
 
-        return static_cast<BeerBrand>(++curr_beer);
+        return static_cast<BeerBrand>(++current_beer);
     }
 private:
-    int curr_beer {0};
+    int current_beer {static_cast<int>(BeerBrand::None)};
 };
 
 /**
@@ -67,8 +67,6 @@ struct MixingPolicy
             if(NonAlcoholDrink::SevenUp == drink_nalc){
                 result = Cocktail::SevenPlusSeven;
             }
-            break;
-        default:
             break;
         }
         return result;
