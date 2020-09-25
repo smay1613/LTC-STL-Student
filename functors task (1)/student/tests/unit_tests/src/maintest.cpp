@@ -35,7 +35,7 @@ TEST(Generator, FullFit)
     while (it != shelf.end())
     {
         subsequencesBegin.push_back(it);
-        it = std::find(std::next(it, expectedShelfPart.size()),
+        it = std::find(std::next(it),
                        shelf.end(),
                        BeerBrand::HoeGaarden);
     };
@@ -75,9 +75,12 @@ TEST(Generator, SemiFit)
     EXPECT_EQ(subsequencesBegin.size(), 2);
     for (const auto& subsequence : subsequencesBegin)
     {
+        auto elementsLeft = std::abs(std::distance(subsequence, shelf.end()));
+        auto endOfSubSequenceIt = elementsLeft > expectedShelfPart.size() ?
+                                                                      std::next(subsequence, expectedShelfPart.size())
+                                                                      : shelf.end();
         EXPECT_TRUE(std::equal(subsequence,
-                               std::next(subsequence, std::min<size_t>(expectedShelfPart.size(),
-                                                                       std::distance(subsequence, shelf.end()))),
+                               endOfSubSequenceIt,
                                expectedShelfPart.begin()));
     }
 }
