@@ -10,7 +10,7 @@ struct BeerOrganizer
 {
     BeerBrand operator()()
     {
-        if (currentIndex == (int)BeerBrand::Max - 1)
+        if (currentIndex == static_cast<int>(BeerBrand::Max) - 1)
         {
             currentIndex = 0;
         }
@@ -18,7 +18,7 @@ struct BeerOrganizer
     }
 private:
     int currentIndex = {0};
-    std::array<BeerBrand, (int)BeerBrand::Max> beerStock
+    std::array<BeerBrand, static_cast<int>(BeerBrand::Max) - 1> beerStock
     {
         BeerBrand::HoeGaarden,
         BeerBrand::Corona,
@@ -62,19 +62,31 @@ struct MixingPolicy
      * Whiskey + SevenUp = SevenPlusSeven;
      * Others + Others = Oops;
      */
-    static Cocktail mix(const AlcoholDrink adrink, const NonAlcoholDrink nadrink)
+    static Cocktail mix(const AlcoholDrink alcoholicDrink, const NonAlcoholDrink nonAlcoholicDrink)
     {
-        if (AlcoholDrink::Gin == adrink && NonAlcoholDrink::LimeJuice == nadrink)
-        {
-            return Cocktail::Gimlet;
-        }
-        if (AlcoholDrink::Gin == adrink && NonAlcoholDrink::GrapefruitJuice == nadrink)
-        {
-            return Cocktail::Greyhount;
-        }
-        if (AlcoholDrink::Whiskey == adrink && NonAlcoholDrink::SevenUp == nadrink)
-        {
-            return Cocktail::SevenPlusSeven;
+        switch (alcoholicDrink){
+            case AlcoholDrink::Gin:
+            {
+                if (NonAlcoholDrink::LimeJuice == nonAlcoholicDrink)
+                {
+                    return Cocktail::Gimlet;
+                }
+                if (NonAlcoholDrink::GrapefruitJuice == nonAlcoholicDrink)
+                {
+                    return Cocktail::Greyhount;
+                }
+            }
+            break;
+            case AlcoholDrink::Whiskey:
+            {
+                if (NonAlcoholDrink::SevenUp == nonAlcoholicDrink)
+                {
+                    return Cocktail::SevenPlusSeven;
+                }
+            }
+            break;
+            default:
+            break;
         }
         return Cocktail::Oops;
     }
