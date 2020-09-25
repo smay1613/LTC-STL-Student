@@ -10,18 +10,14 @@ struct BeerOrganizer
 {
     BeerBrand operator()() {
 
-        static BeerBrand beer = BeerBrand::Leffe;
+        static int curr_beer {0};
 
-        switch(beer){
-        case BeerBrand::HoeGaarden: beer = BeerBrand::Corona; break;
-        case BeerBrand::Corona:     beer = BeerBrand::Carlsberg; break;
-        case BeerBrand::Carlsberg:  beer = BeerBrand::Bud; break;
-        case BeerBrand::Bud:        beer = BeerBrand::ZlataPraha; break;
-        case BeerBrand::ZlataPraha: beer = BeerBrand::Leffe; break;
-        case BeerBrand::Leffe:      beer = BeerBrand::HoeGaarden; break;
-        default: break;
+        if(static_cast<int>(BeerBrand::Max) == (curr_beer + 1))
+        {
+            curr_beer = 0;
         }
-        return beer;
+
+        return static_cast<BeerBrand>(++curr_beer);
     }
 };
 
