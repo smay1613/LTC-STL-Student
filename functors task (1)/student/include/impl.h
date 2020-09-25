@@ -49,15 +49,25 @@ struct MixingPolicy
      */
     static Cocktail mix(AlcoholDrink alcohol, NonAlcoholDrink nonAlcohol)
     {
-        Cocktail cocktail;
-        if (alcohol == AlcoholDrink::Gin && nonAlcohol == NonAlcoholDrink::LimeJuice) {
-            cocktail = Cocktail::Gimlet;
-        } else if (alcohol == AlcoholDrink::Gin && nonAlcohol == NonAlcoholDrink::GrapefruitJuice) {
-            cocktail = Cocktail::Greyhount;
-        } else if (alcohol == AlcoholDrink::Whiskey && nonAlcohol == NonAlcoholDrink::SevenUp) {
-            cocktail = Cocktail::SevenPlusSeven;
-        } else {
-            cocktail = Cocktail::Oops;
+        Cocktail cocktail = Cocktail::Oops;
+        switch (alcohol)
+        {
+        case AlcoholDrink::Gin:
+            if (nonAlcohol == NonAlcoholDrink::LimeJuice)
+            {
+                cocktail = Cocktail::Gimlet;
+            }
+            else if (nonAlcohol == NonAlcoholDrink::GrapefruitJuice)
+            {
+                cocktail = Cocktail::Greyhount;
+            }
+            break;
+        case AlcoholDrink::Whiskey:
+            if (nonAlcohol == NonAlcoholDrink::SevenUp)
+            {
+                cocktail = Cocktail::SevenPlusSeven;
+            }
+            break;
         }
         return cocktail;
     }
