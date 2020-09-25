@@ -1,22 +1,18 @@
 #include "impl.h"
 
-BeerOrganizer::BeerOrganizer()
-   : currentBeerBand((int)BeerBrand::None)
-{}
-
 BeerBrand BeerOrganizer::operator()()
 {
-    if (++currentBeerBand == (int)BeerBrand::Max) {
-        currentBeerBand = (int)BeerBrand::None;
-        currentBeerBand++;
+    currentBeerBrand++;
+
+    if (currentBeerBrand == static_cast<size_t>(BeerBrand::Max)) {
+        currentBeerBrand = static_cast<size_t>(BeerBrand::None);
+        currentBeerBrand++;
     }
 
-    return (BeerBrand)currentBeerBand;
+    return static_cast<BeerBrand>(currentBeerBrand);
 }
 
 bool isExpensiveBeer(const BeerBrand beerBrand)
 {
-    if (beerBrand == BeerBrand::Corona || beerBrand == BeerBrand::HoeGaarden)
-        return true;
-    return false;
+    return beerBrand == BeerBrand::Corona || beerBrand == BeerBrand::HoeGaarden;
 }

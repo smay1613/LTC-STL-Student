@@ -8,10 +8,9 @@
  */
 struct BeerOrganizer
 {
-    BeerOrganizer();
     BeerBrand operator()();
 private:
-    int currentBeerBand;
+    size_t currentBeerBrand = static_cast<size_t>(BeerBrand::None);
 };
 
 /**
