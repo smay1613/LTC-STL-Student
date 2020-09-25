@@ -8,7 +8,19 @@
  */
 struct BeerOrganizer
 {
+     size_t currentIndex {1};
+     BeerBrand beer;
+     BeerBrand operator()()
+     {
+       if(static_cast<BeerBrand>(currentIndex) == BeerBrand::Max){
+           currentIndex = 1;
+       }
+       beer = static_cast<BeerBrand>(currentIndex++);
+       return beer;
+     }
+
 };
+
 
 /**
  * @todo Implement unary predicate function that will determine if beer is expensive
@@ -16,16 +28,23 @@ struct BeerOrganizer
  *
  * @note Only Corona and HoeGaarden are expensive
  */
-bool isExpensiveBeer(/**???*/)
+bool isExpensiveBeer(BeerBrand beer)
 {
+    if( (beer == BeerBrand::Corona) || (beer == BeerBrand::HoeGaarden)){
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 
 /**
  * @todo Implement lambda beer country equality comparator
  * @return true if beer county is the same, false otherwise
  */
-auto sameCountry = [](/**???*/)
+auto sameCountry = [](BeerBrand beer1, BeerBrand beer2)
 {
+    return getBeerCountry(beer1) == getBeerCountry(beer2);
 };
 
 struct MixingPolicy
@@ -40,9 +59,22 @@ struct MixingPolicy
      * Whiskey + SevenUp = SevenPlusSeven;
      * Others + Others = Oops;
      */
-    static Cocktail mix(/**???*/)
+    static Cocktail mix(AlcoholDrink alcoholDrink, NonAlcoholDrink nonAlcoholDrink)
     {
+        if ((alcoholDrink == AlcoholDrink::Gin) && (nonAlcoholDrink == NonAlcoholDrink::LimeJuice))
+        {
+            return Cocktail::Gimlet;
+        }
+        else if ((alcoholDrink == AlcoholDrink::Gin) && (nonAlcoholDrink == NonAlcoholDrink::GrapefruitJuice)) {
+            return Cocktail::Greyhount;
+        }
+        else if ((alcoholDrink == AlcoholDrink::Whiskey) && (nonAlcoholDrink == NonAlcoholDrink::SevenUp)) {
+            return Cocktail::SevenPlusSeven;
+        }
+        else {
+             return Cocktail::Oops;
+        }
     }
 };
 
-std::function</**???*/> mixer {&MixingPolicy::mix};
+std::function<Cocktail(AlcoholDrink, NonAlcoholDrink)> mixer {&MixingPolicy::mix};
