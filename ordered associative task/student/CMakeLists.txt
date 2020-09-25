@@ -25,7 +25,7 @@ set_target_properties(points_converter PROPERTIES
                         PUBLIC_HEADER "${headers}"
 )
 
-target_compile_options(points_converter PRIVATE -Wall -Wextra)
+
 
 target_include_directories(points_converter
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src

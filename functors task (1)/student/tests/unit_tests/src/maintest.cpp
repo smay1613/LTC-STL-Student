@@ -67,7 +67,7 @@ TEST(Generator, SemiFit)
     while (it != shelf.end())
     {
         subsequencesBegin.push_back(it);
-        it = std::find(std::next(it, expectedShelfPart.size()),
+        it = std::find(std::next(it),
                        shelf.end(),
                        BeerBrand::HoeGaarden);
     };

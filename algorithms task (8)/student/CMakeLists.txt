@@ -24,7 +24,7 @@ set_target_properties(cv_analyzer_HOMEWORK PROPERTIES
                         PUBLIC_HEADER "${headers}"
 )
 
-target_compile_options(cv_analyzer_HOMEWORK PRIVATE -Wall -Wextra)
+
 
 target_include_directories(cv_analyzer_HOMEWORK
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
