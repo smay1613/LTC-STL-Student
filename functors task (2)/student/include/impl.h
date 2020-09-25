@@ -3,6 +3,7 @@
 #include <memory>
 #include <functional>
 #include <algorithm>
+#include <string>
 #include "selector.h"
 
 // for testing purposes
@@ -62,10 +63,10 @@ private:
     bool safeCall(const std::string &userId, T&& f) const
     {
         static_assert(std::is_same<decltype(f(nullptr)), bool>::value, "Provided Callable must return bool");
-        // find reader
-        // check for errors
-        // call functor
-        return false;
+        const auto it = m_dataReaders.find(userId);
+        const bool is_user_exist = it != m_dataReaders.end();
+        const bool is_valid_selector = it->second ? true : false;
+        return is_user_exist && is_valid_selector ? f(it->second) : false;
     }
 
     /**
@@ -76,8 +77,6 @@ private:
     template<class Functional, typename Output>
     bool invokeDataRequest(Functional method, const std::unique_ptr<IDataSelector>& selector, Output& result) const
     {
-        // adapt function
-        // call selector member
-        return false;
+        return method(selector.get(), result);
     }
 };
