@@ -60,7 +60,7 @@ struct MixingPolicy {
   static const std::map<std::pair<AlcoholDrink, NonAlcoholDrink>, Cocktail>
       cocktailsRecipes;
 
-  static Cocktail mix(AlcoholDrink alcohol, NonAlcoholDrink nonAlcohol) {
+  static Cocktail mix(const AlcoholDrink alcohol, const NonAlcoholDrink nonAlcohol) {
     if (cocktailsRecipes.count({alcohol, nonAlcohol}) > 0) {
       return cocktailsRecipes.at({alcohol, nonAlcohol});
     }
