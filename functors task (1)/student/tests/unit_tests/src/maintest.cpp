@@ -67,9 +67,12 @@ TEST(Generator, SemiFit)
     while (it != shelf.end())
     {
         subsequencesBegin.push_back(it);
-        it = std::find(std::next(it, expectedShelfPart.size()),
+        auto distance = std::distance(it, shelf.end());
+        auto step = distance >= expectedShelfPart.size() ? expectedShelfPart.size() : distance;
+        it = std::find(std::next(it, step),
                        shelf.end(),
                        BeerBrand::HoeGaarden);
+
     };
 
     EXPECT_EQ(subsequencesBegin.size(), 2);
