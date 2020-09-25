@@ -56,13 +56,22 @@ struct MixingPolicy
       switch(alco){
         case AlcoholDrink::Gin:
           {
-            if(nonAlco == NonAlcoholDrink::LimeJuice) return Cocktail::Gimlet;
-            if(nonAlco == NonAlcoholDrink::GrapefruitJuice) return Cocktail::Greyhount;
+            if(nonAlco == NonAlcoholDrink::LimeJuice)
+              {
+                return Cocktail::Gimlet;
+              }
+            if(nonAlco == NonAlcoholDrink::GrapefruitJuice)
+              {
+                return Cocktail::Greyhount;
+              }
             break;
           }
         case AlcoholDrink::Whiskey:
           {
-            if(nonAlco == NonAlcoholDrink::SevenUp) return Cocktail::SevenPlusSeven;
+            if(nonAlco == NonAlcoholDrink::SevenUp)
+              {
+                return Cocktail::SevenPlusSeven;
+              }
           }
        }
        return Cocktail::Oops;
