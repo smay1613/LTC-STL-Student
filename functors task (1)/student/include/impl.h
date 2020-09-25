@@ -9,12 +9,13 @@
 struct BeerOrganizer
 {
     int firstBeer = static_cast<int>(BeerBrand::HoeGaarden);
+    int lastBeer = static_cast<int>(BeerBrand::Leffe);
     int beer = firstBeer;
 
     BeerBrand operator()()
     {
        int currentBeer = beer;
-       if(beer < static_cast<int>(BeerBrand::Leffe))
+       if(beer < lastBeer)
        {
            beer ++;
        }
