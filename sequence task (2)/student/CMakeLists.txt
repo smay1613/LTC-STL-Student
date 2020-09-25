@@ -24,7 +24,7 @@ set_target_properties(rotate_list PROPERTIES
                         PUBLIC_HEADER "${headers}"
 )
 
-target_compile_options(rotate_list PRIVATE -Wall -Wextra)
+
 
 target_include_directories(rotate_list
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src

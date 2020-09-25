@@ -25,7 +25,7 @@ set_target_properties(consecutive_groups PROPERTIES
                         PUBLIC_HEADER "${headers}"
 )
 
-target_compile_options(consecutive_groups PRIVATE -Wall -Wextra)
+
 
 target_include_directories(consecutive_groups
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src

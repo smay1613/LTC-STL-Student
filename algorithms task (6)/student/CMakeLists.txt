@@ -24,7 +24,7 @@ set_target_properties(insert_to_sorted PROPERTIES
                         PUBLIC_HEADER "${headers}"
 )
 
-target_compile_options(insert_to_sorted PRIVATE -Wall -Wextra)
+
 
 target_include_directories(insert_to_sorted
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src

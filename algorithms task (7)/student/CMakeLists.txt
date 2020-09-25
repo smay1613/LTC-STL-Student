@@ -25,7 +25,7 @@ set_target_properties(fibonacci PROPERTIES
                         PUBLIC_HEADER "${headers}"
 )
 
-target_compile_options(fibonacci PRIVATE -Wall -Wextra)
+
 
 target_include_directories(fibonacci
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
