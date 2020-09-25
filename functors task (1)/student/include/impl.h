@@ -8,6 +8,9 @@
  */
 struct BeerOrganizer
 {
+    BeerBrand operator()();
+
+    int i = 1;
 };
 
 /**
@@ -16,16 +19,18 @@ struct BeerOrganizer
  *
  * @note Only Corona and HoeGaarden are expensive
  */
-bool isExpensiveBeer(/**???*/)
+bool isExpensiveBeer(BeerBrand bb)
 {
+    return (bb == BeerBrand::HoeGaarden || bb == BeerBrand::Corona) ? true : false;
 }
 
 /**
  * @todo Implement lambda beer country equality comparator
  * @return true if beer county is the same, false otherwise
  */
-auto sameCountry = [](/**???*/)
+auto sameCountry = [](BeerBrand bb1, BeerBrand bb2)
 {
+    return (getBeerCountry(bb1) == getBeerCountry(bb2)) ? true : false;
 };
 
 struct MixingPolicy
@@ -40,9 +45,7 @@ struct MixingPolicy
      * Whiskey + SevenUp = SevenPlusSeven;
      * Others + Others = Oops;
      */
-    static Cocktail mix(/**???*/)
-    {
-    }
+    static Cocktail mix(AlcoholDrink ad, NonAlcoholDrink nad);
 };
 
-std::function</**???*/> mixer {&MixingPolicy::mix};
+std::function<Cocktail(AlcoholDrink ad, NonAlcoholDrink nad)> mixer {&MixingPolicy::mix};
