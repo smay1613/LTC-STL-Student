@@ -14,6 +14,8 @@ set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(BUILDDIR ${ROOT_DIR}/build)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BUILDDIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${BUILDDIR}/bin)
+set(LESSONS_ROOT ${ROOT_DIR}/../../)
+
 set(TEST ON)
 
 add_library(SafeCallTaskHomework SHARED ${sources})
