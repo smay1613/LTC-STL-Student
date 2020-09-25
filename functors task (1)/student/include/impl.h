@@ -9,9 +9,6 @@
 struct BeerOrganizer
 {
     BeerBrand operator()() {
-
-        static int curr_beer {0};
-
         if(static_cast<int>(BeerBrand::Max) == (curr_beer + 1))
         {
             curr_beer = 0;
@@ -19,6 +16,8 @@ struct BeerOrganizer
 
         return static_cast<BeerBrand>(++curr_beer);
     }
+private:
+    int curr_beer {0};
 };
 
 /**
