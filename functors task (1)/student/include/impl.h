@@ -1,7 +1,6 @@
 #pragma once
 #include "bar_serving.h"
 #include <functional>
-#include <iostream>
 
 /**
  * @todo Implement functor-generator that will return next beer brand (cyclic)
@@ -9,14 +8,19 @@
  */
 struct BeerOrganizer
 {
-    size_t state {static_cast<size_t>(BeerBrand::None)};
     BeerBrand operator()(){
-        if (static_cast<BeerBrand>(state) == BeerBrand::None||static_cast<BeerBrand>(state) == BeerBrand::Max)
+        beerBrandType = static_cast<BeerBrand>(static_cast <size_t> (beerBrandType) +1); 
+        if (beerBrandType == BeerBrand::Max)
         {
-            state = static_cast<size_t>(BeerBrand::HoeGaarden);
-        }        
-        return static_cast<BeerBrand>(state++);
+            beerBrandType = BeerBrand::HoeGaarden;
+        }    
+           
+        return beerBrandType;
     }
+
+private:
+
+ BeerBrand beerBrandType {BeerBrand::None};
 };
 
 /**
@@ -51,25 +55,33 @@ struct MixingPolicy
      * Whiskey + SevenUp = SevenPlusSeven;
      * Others + Others = Oops;
      */
-    static Cocktail mix(AlcoholDrink lhs, NonAlcoholDrink rhs)
-    {       
-            if (AlcoholDrink::Gin == lhs && NonAlcoholDrink::LimeJuice == rhs)
+    static Cocktail mix(const AlcoholDrink alcoholDrink, const NonAlcoholDrink nonAlcoholDrink)
+    {
+        switch (alcoholDrink){
+            case AlcoholDrink::Gin:
             {
-                return Cocktail::Gimlet;
+                if (NonAlcoholDrink::LimeJuice == nonAlcoholDrink)
+                {
+                    return Cocktail::Gimlet;
+                }
+                if (NonAlcoholDrink::GrapefruitJuice == nonAlcoholDrink)
+                {
+                    return Cocktail::Greyhount;
+                }
             }
-            else if (AlcoholDrink::Gin == lhs && NonAlcoholDrink::GrapefruitJuice == rhs)
+            break;
+            case AlcoholDrink::Whiskey:
             {
-                return Cocktail::Greyhount;
-            }         
-            else if (AlcoholDrink::Whiskey == lhs && NonAlcoholDrink::SevenUp == rhs)
-            {
-                return Cocktail::SevenPlusSeven;
-            }   
-            else
-            {
-                return Cocktail::Oops;
-            }      
-        
+                if (NonAlcoholDrink::SevenUp == nonAlcoholDrink)
+                {
+                    return Cocktail::SevenPlusSeven;
+                }
+            }
+            break;
+            default:
+            break;
+        }
+        return Cocktail::Oops;
     }
 };
 
