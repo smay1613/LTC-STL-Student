@@ -69,7 +69,7 @@ TEST_F(Usage, BasicAssign)
     std::list<size_t> values {valuesView.begin(),
                                 valuesView.end()};
 
-    EXPECT_EQ(data.size(), values.size());
+    EXPECT_EQ(data.size(), keys.size());
     EXPECT_EQ(data.size(), values.size());
 }
 
@@ -85,7 +85,7 @@ TEST_F(Usage, BasicAlgorithm)
                       make_value_iterator(data.end()),
                       std::back_inserter(values));
 
-    EXPECT_EQ(data.size(), values.size());
+    EXPECT_EQ(data.size(), keys.size());
     EXPECT_EQ(data.size(), values.size());
 
 }
