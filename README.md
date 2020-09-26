@@ -91,3 +91,13 @@ _`sudo apt-get install wget unzip cmake`_
    * _....create pull request on [Github](https://github.com/smay1613/LTC-STL-Student/pulls)...._
    * _Switch back to master branch:_  
         `git checkout master`
+        
+## Help wanted!
+If you want to get some experience, you can contribute to this repository:
+* Add more tests for practice
+* Improve CMake
+* If you have bash experience, you can help with repository automation (for pull requests) using Github Actions API:
+  * Build
+  * Testing
+  * Labeling
+  * Mark counter
