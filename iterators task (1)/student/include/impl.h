@@ -9,10 +9,10 @@ private:
 public:
     /** Iterator traits*/
     using iterator_category = std::output_iterator_tag;
-    using value_type =  typename Container::value_type;
-    using difference_type = typename Container::difference_type;
-    using pointer = typename Container::pointer;
-    using reference = typename Container::reference;
+    using value_type = void;
+    using difference_type = void;
+    using pointer = void;
+    using reference = void;
     
     /** Constructor with container*/
     explicit accumulator(Container & container)
@@ -22,37 +22,18 @@ public:
     }
 
     /** Copy assignment operator*/  
-    accumulator& operator=(const value_type& value)
+    template <typename SourceContainer>
+    accumulator& operator=(const SourceContainer& container)
     {
-	    mContainer.push_back(value);
-	    return *this;
-    }
-
-    template <typename T>
-    accumulator& operator=(const T& value)
-    {
-        for (auto && item: value)
-        {
-            mContainer.push_back(item);
-        }
+        mContainer.insert(mContainer.end(), container.begin(), container.end());
         return *this;
     }
 
     /** Move assignment operator*/
-    accumulator& operator=(value_type&& value)
+    template <typename SourceContainer>
+    accumulator& operator=(SourceContainer&& container)
     {
-        mContainer.push_back(std::move(value));
-        return *this;
-    }
-
-    template <typename T>
-    accumulator& operator=(T&& value)
-    {
-        for (auto && item: value)
-        {
-            mContainer.push_back(std::move(item));
-        }
-        
+        std::move(container.begin(), container.end(), std::back_inserter(mContainer));        
         return *this;
     }
 
