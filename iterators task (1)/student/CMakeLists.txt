@@ -25,7 +25,7 @@ set_target_properties(accumulator PROPERTIES
                         PUBLIC_HEADER "${headers}"
 )
 
-target_compile_options(accumulator PRIVATE -Wall -Wextra)
+
 
 target_include_directories(accumulator
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src

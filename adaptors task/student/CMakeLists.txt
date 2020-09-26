@@ -25,8 +25,6 @@ set_target_properties(valid_parentheses PROPERTIES
                         PUBLIC_HEADER "${headers}"
 )
 
-target_compile_options(valid_parentheses PRIVATE -Wall -Wextra)
-
 target_include_directories(valid_parentheses
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
     PUBLIC
