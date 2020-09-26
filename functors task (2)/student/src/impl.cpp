@@ -7,48 +7,41 @@ void DataBrowser::userLeave(const std::string &userId)
 
 bool DataBrowser::getDataType1(const std::string &userId, std::vector<size_t> &returnValues) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
-    {
-        return false;
-    }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
-    return it->second->getDataType1(returnValues, 0);
+    auto funcAdaptor = [this, &returnValues] (const std::unique_ptr<IDataSelector>& selector){
+        auto adaptation = [](const IDataSelector* selector, std::vector<size_t> &returnValues){
+            return selector->getDataType1(returnValues, 0);
+          };
+        return invokeDataRequest(adaptation, selector, returnValues);
+      };
+
+    return safeCall(userId, funcAdaptor);
 }
 
 bool DataBrowser::getDataType2(std::vector<size_t> &returnValues, const std::string &userId) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
-    {
-        return false;
-    }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
-    return it->second->getDataType2(returnValues);
+    auto funcAdaptor = [this, &returnValues] (const std::unique_ptr<IDataSelector>& selector){
+        auto adaptation = [](const IDataSelector* selector, std::vector<size_t> &returnValues){
+            return selector->getDataType2(returnValues);
+          };
+        return invokeDataRequest(adaptation, selector, returnValues);
+      };
+
+    return safeCall(userId, funcAdaptor);
 }
 
 bool DataBrowser::getDataType3(const std::string &userId, std::vector<std::string> &returnValues) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
-    {
-        return false;
-    }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
+    auto funcAdaptor = [this, &returnValues] (const std::unique_ptr<IDataSelector>& selector){
+        auto adaptation = [this](const IDataSelector* selector, std::vector<std::string> &returnValues){
+            std::deque<size_t> unprocessedResults {};
+            bool success {selector->getDataType3(unprocessedResults)};
+            returnValues = process(unprocessedResults);
+            return success;
+          };
+        return invokeDataRequest(adaptation, selector, returnValues);
+      };
 
-    std::deque<size_t> unprocessedResults {};
-    bool success {it->second->getDataType3(unprocessedResults)};
-    returnValues = process(unprocessedResults);
-    return success;
+    return safeCall(userId, funcAdaptor);
 }
 
 template<class T>
