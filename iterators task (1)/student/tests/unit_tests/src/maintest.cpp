@@ -4,6 +4,7 @@
 #include <forward_list>
 #include <list>
 #include <deque>
+#include <unordered_set>
 
 using namespace ::testing;
 
@@ -39,6 +40,25 @@ TEST(StringAccumulate, Forward)
 
     std::string expected {std::accumulate(dataToConcatenate.begin(), dataToConcatenate.end(),
                                            std::string {})};
+
+    EXPECT_EQ(expected, result);
+}
+
+TEST(StringAccumulate, Unordered)
+{
+    std::string result;
+
+    std::unordered_set<std::string> dataToConcatenate {"011",
+                                                       "012",
+                                                       "013",
+                                                       "014"};
+
+    std::copy(dataToConcatenate.begin(),
+              dataToConcatenate.end(),
+              make_accumulator(result));
+
+    std::string expected { std::accumulate(
+        dataToConcatenate.begin(), dataToConcatenate.end(), std::string {}) };
 
     EXPECT_EQ(expected, result);
 }
