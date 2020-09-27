@@ -147,4 +147,5 @@ TEST_F(Usage, DISABLED_Const)
             EXPECT_TRUE(canAssign);
         }
     };
+    constContext();
 }
