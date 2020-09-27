@@ -1,7 +1,7 @@
 #include "impl.h"
 #include <array>
 
-constexpr int count = 6;
+constexpr int count = static_cast<int>(BeerBrand::Max) - 1;
 std::array<BeerBrand, count> states = { BeerBrand::HoeGaarden, BeerBrand::Corona, BeerBrand::Carlsberg, BeerBrand::Bud, BeerBrand::ZlataPraha, BeerBrand::Leffe };
 
 BeerBrand BeerOrganizer::operator()()
