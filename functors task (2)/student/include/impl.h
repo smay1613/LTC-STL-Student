@@ -53,31 +53,39 @@ private:
             > m_dataReaders;
 
     /**
-     * @todo SafeCall idiom
-     * You should implement this method, that is responsible for request validation.
-     * If request is valid (user exists and a valid selector exists),
-     * this method calls passed callback with a valid selector pointer
+     * Checks user id for existing and valid selector and performs the call of data request.
+     * Passed @param f must have the signature bool(const std::unique_ptr<IDataSelector>&)
      */
     template <typename T>
-    bool safeCall(const std::string &userId, T&& f) const
-    {
-        static_assert(std::is_same<decltype(f(nullptr)), bool>::value, "Provided Callable must return bool");
-        // find reader
-        // check for errors
-        // call functor
-        return false;
-    }
+    bool safeCall(const std::string &userId, T&& f) const;
 
     /**
-     * @todo You should implement this method, that is responsible for a "general" data requesting
-     * General data request will return bool, accept the selector and output param
-     * You must adapt functors before invocation
+     * General data requesting via a single interface.
+     * Passed @param method should have the signature bool(IDataSelector*, std::vector<size_t>&)
+     * and represents adapted function which requests data via selector and saves results in result
      */
     template<class Functional, typename Output>
     bool invokeDataRequest(Functional method, const std::unique_ptr<IDataSelector>& selector, Output& result) const
     {
-        // adapt function
-        // call selector member
-        return false;
+        return method(selector.get(), result);
     }
 };
+
+template <typename T>
+bool DataBrowser::safeCall(const std::string &userId, T&& f) const
+{
+    static_assert(
+        std::is_same<decltype(f(nullptr)), bool>::value,
+        "Provided Callable must return bool");
+
+    const auto& it = m_dataReaders.find(userId);
+
+    if (it == m_dataReaders.cend()) {
+        return false;
+    }
+    if (it->second == nullptr) {
+        return false;
+    }
+
+    return f(it->second);
+}
