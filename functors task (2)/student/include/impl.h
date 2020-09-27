@@ -63,9 +63,15 @@ private:
     {
         static_assert(std::is_same<decltype(f(nullptr)), bool>::value, "Provided Callable must return bool");
         // find reader
+        const auto& it = m_dataReaders.find(userId);
         // check for errors
+        if (m_dataReaders.cend() == it || nullptr == it->second)
+        {
+            return false;
+        }
         // call functor
-        return false;
+        auto functor = [&f](const std::unique_ptr<IDataSelector>& selector) { return f(selector); };
+        return functor(it->second);
     }
 
     /**
@@ -77,7 +83,8 @@ private:
     bool invokeDataRequest(Functional method, const std::unique_ptr<IDataSelector>& selector, Output& result) const
     {
         // adapt function
+        auto adaptFunc = [&method](const IDataSelector * pSelector, std::vector<size_t>& data) { return method(pSelector,data); };
         // call selector member
-        return false;
+        return adaptFunc(selector.get(), result);
     }
 };
