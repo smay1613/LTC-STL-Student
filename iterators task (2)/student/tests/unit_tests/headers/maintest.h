@@ -13,8 +13,8 @@ protected:
     using map = std::map<key_type, value_type>;
     using iterator = map::iterator;
 
-    using key_iterator = key_iterator<iterator>;
-    using value_iterator = value_iterator<iterator>;
+    using key_iterator = pair_iterator<iterator, true>;
+    using value_iterator = pair_iterator<iterator, false>;
 };
 
 class Usage : public ::testing::Test
