@@ -132,20 +132,6 @@ TEST_F(Usage, DISABLED_Const)
         EXPECT_FALSE(canAssign);
     }
 
-    auto constContext = [constData]()
-    {
-
-        for (const auto& value : make_values_view(constData))
-        {
-            bool canAssign = std::is_assignable<decltype (value), size_t>::value;
-            EXPECT_FALSE(canAssign);
-        }
-
-        for (auto& value : make_values_view(constData))
-        {
-            bool canAssign = std::is_assignable<decltype (value), size_t>::value;
-            EXPECT_TRUE(canAssign);
-        }
-    };
-    constContext();
+    EXPECT_TRUE(static_cast<bool>(std::is_same<decltype(make_value_iterator(data.cbegin()))::reference,
+                                               const size_t&>::value));
 }
