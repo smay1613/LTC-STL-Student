@@ -9,25 +9,71 @@ struct pair_iterator : public Iterator
 };
 
 /**
- * @todo Implement iterator for pair key type
+ * iterator for pair key type
  */
 template<class Iterator, class T>
 struct pair_iterator<Iterator, true, T> : public Iterator
 {
-    /** @todo Iterator traits */
-    /** @todo Iterator operations */
-    /** @todo Constructor from original iterator */
+    /** Iterator traits */
+    using iterator_category = typename Iterator::iterator_category;
+    using difference_type = typename Iterator::difference_type;
+    
+    using value_type = typename T::first_type;
+    using pointer = value_type*;
+    using reference = value_type&;
+
+    /** Iterator operations */
+
+    reference operator*() const 
+    {
+        return Iterator::operator*().first;
+    }
+
+    pointer operator->() const
+    {
+        return Iterator::operator->().first;
+    }
+
+    /** Constructor from original iterator */
+    pair_iterator(Iterator base_iterator) : Iterator(base_iterator)
+    {
+
+    }
 };
 
 /**
- * @todo Implement iterator for pair value type
+ * @ iterator for pair value type
  */
 template<class Iterator, class T>
 struct pair_iterator<Iterator, false, T> : public Iterator
 {
-    /** @todo Iterator traits */
-    /** @todo Iterator operations */
-    /** @todo Constructor from original iterator */
+    /** Iterator traits */
+
+    using iterator_category = typename Iterator::iterator_category;
+    using difference_type = typename Iterator::difference_type;
+    
+    using value_type = typename T::second_type;
+
+    using pointer = value_type*;
+    using reference = value_type&;
+
+    /** Iterator operations */
+
+    reference operator*() const 
+    {
+        return Iterator::operator*().second;
+    }
+
+    pointer operator->() const
+    {
+        return Iterator::operator->().second;
+    }
+
+    /** Constructor from original iterator */
+    pair_iterator(Iterator base_iterator) : Iterator(base_iterator)
+    {
+
+    }
 };
 
 template<class Iterator>
