@@ -12,7 +12,9 @@
 bool startsWith(const std::string& source, const std::string& prefix)
 {
     if (prefix.size() > source.size())
+    {
         return false;
+    }
     return std::equal(source.begin(),
                       source.begin() + prefix.size(),
                       prefix.begin());
