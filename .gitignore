@@ -47,7 +47,6 @@ target_wrapper.*
 # QtCreator CMake
 CMakeLists.txt.user
 CMakeFiles
-*.cmake
 CMakeCache.txt
 
 # QtCreator 4.8< compilation database 
@@ -58,7 +57,6 @@ compile_commands.json
 
 #Project specific
 part2
-gmock
-*release-*
 bin*
 solved*
+.vscode

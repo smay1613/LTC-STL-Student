@@ -24,7 +24,7 @@ set_target_properties(max_intersection PROPERTIES
                         PUBLIC_HEADER "${headers}"
 )
 
-target_compile_options(max_intersection PRIVATE -Wall -Wextra)
+
 
 target_include_directories(max_intersection
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src

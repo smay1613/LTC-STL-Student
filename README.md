@@ -75,7 +75,7 @@ _`sudo apt-get install wget unzip cmake`_
 2. [Setup ssh access](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh)
 2. Learn how to:
    * _Clone repository_:  
-        `git clone git@github.com:smay1613/LTC-STL-Student.git`
+        `git clone git@github.com:smay1613/LTC-STL-Student.git` (with your fork!)
    * _Check current status (branch, remote, etc) - do this before and after any command!_:  
         `git status`
    * _Switch to another branch_:  
@@ -91,3 +91,13 @@ _`sudo apt-get install wget unzip cmake`_
    * _....create pull request on [Github](https://github.com/smay1613/LTC-STL-Student/pulls)...._
    * _Switch back to master branch:_  
         `git checkout master`
+        
+## Help wanted!
+If you want to get some experience, you can contribute to this repository:
+* Add more tests for practice
+* Improve CMake
+* If you have bash experience, you can help with repository automation (for pull requests) using Github Actions API:
+  * Build
+  * Testing
+  * Labeling
+  * Mark counter

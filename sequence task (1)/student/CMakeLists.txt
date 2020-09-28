@@ -24,7 +24,7 @@ set_target_properties(reverse_words PROPERTIES
                         PUBLIC_HEADER "${headers}"
 )
 
-target_compile_options(reverse_words PRIVATE -Wall -Wextra)
+
 
 target_include_directories(reverse_words
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
