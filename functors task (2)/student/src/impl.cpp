@@ -7,48 +7,44 @@ void DataBrowser::userLeave(const std::string &userId)
 
 bool DataBrowser::getDataType1(const std::string &userId, std::vector<size_t> &returnValues) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
-    {
-        return false;
-    }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
-    return it->second->getDataType1(returnValues, 0);
+    auto selectorInvokerFunc = [this, &returnValues](const std::unique_ptr<IDataSelector>& selector){
+        auto requestDataFunc = [](const IDataSelector* selector, std::vector<size_t> &outp ){
+            return selector->getDataType1(outp, 0);
+        };
+        
+        return invokeDataRequest(requestDataFunc, selector, returnValues);
+    };
+
+    return safeCall(userId, selectorInvokerFunc);
 }
 
 bool DataBrowser::getDataType2(std::vector<size_t> &returnValues, const std::string &userId) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
-    {
-        return false;
-    }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
-    return it->second->getDataType2(returnValues);
+    auto selectorInvokerFunc = [this, &returnValues](const std::unique_ptr<IDataSelector>& selector){
+        auto requestDataFunc = [](const IDataSelector* selector, std::vector<size_t> &outp ){
+            return selector->getDataType2(outp);
+        };
+
+        return invokeDataRequest(requestDataFunc, selector, returnValues);
+    };
+
+    return safeCall(userId, selectorInvokerFunc);
 }
 
 bool DataBrowser::getDataType3(const std::string &userId, std::vector<std::string> &returnValues) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
-    {
-        return false;
-    }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
+    auto selectorInvokerFunc = [this, &returnValues](const std::unique_ptr<IDataSelector>& selector){
+        auto requestDataFunc = [this](const IDataSelector* selector, std::vector<std::string> &outp ){
+            std::deque<size_t> unprocessedResults {};
+            bool success {selector->getDataType3(unprocessedResults)};
+            outp = process(unprocessedResults);
+            return success;
+        };
+        
+        return invokeDataRequest(requestDataFunc, selector, returnValues);
+    };
 
-    std::deque<size_t> unprocessedResults {};
-    bool success {it->second->getDataType3(unprocessedResults)};
-    returnValues = process(unprocessedResults);
-    return success;
+    return safeCall(userId, selectorInvokerFunc);
 }
 
 template<class T>
