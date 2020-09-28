@@ -6,9 +6,6 @@ struct accumulator : public std::iterator_traits< typename Container::iterator >
 {
     /** @todo Iterator traits*/
     using iterator_category = std::output_iterator_tag;
-    // using value_type = typename Container::value_type;
-    // using pointer    = accumulator*;
-    // using reference  = accumulator&; 
 
     /** @todo Constructor with container*/
 
@@ -47,12 +44,13 @@ struct accumulator : public std::iterator_traits< typename Container::iterator >
     /** @todo Iterator operations */
     accumulator& operator*( )
     {
+        // empty since output iterator
         return *this;
     }
 
     accumulator& operator++( )
     {
-        // move to next value
+        // empty since output iterator
         return *this;
     }
 
