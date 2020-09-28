@@ -5,6 +5,7 @@
 #include <algorithm>
 #include "selector.h"
 
+
 // for testing purposes
 extern IDataSelector* getSelector();
 
@@ -45,6 +46,7 @@ private:
     template<class T>
     std::vector<std::string> process(const T& source) const;
 
+
     /**
      * Each user has an asociated data reader
      */
@@ -62,10 +64,13 @@ private:
     bool safeCall(const std::string &userId, T&& f) const
     {
         static_assert(std::is_same<decltype(f(nullptr)), bool>::value, "Provided Callable must return bool");
-        // find reader
-        // check for errors
-        // call functor
-        return false;
+        auto reader = m_dataReaders.find(userId);
+        if(reader == m_dataReaders.end() || !reader->second)
+        {
+            return false;
+        }
+
+        return f(reader->second);
     }
 
     /**
@@ -76,8 +81,6 @@ private:
     template<class Functional, typename Output>
     bool invokeDataRequest(Functional method, const std::unique_ptr<IDataSelector>& selector, Output& result) const
     {
-        // adapt function
-        // call selector member
-        return false;
+        return std::bind(method, selector.get(), std::ref(result))();
     }
 };
