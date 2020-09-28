@@ -70,8 +70,7 @@ private:
             return false;
         }
         // call functor
-        auto functor = [&f](const std::unique_ptr<IDataSelector>& selector) { return f(selector); };
-        return functor(it->second);
+        return f(it->second);
     }
 
     /**
@@ -83,8 +82,7 @@ private:
     bool invokeDataRequest(Functional method, const std::unique_ptr<IDataSelector>& selector, Output& result) const
     {
         // adapt function
-        auto adaptFunc = [&method](const IDataSelector * pSelector, std::vector<size_t>& data) { return method(pSelector,data); };
         // call selector member
-        return adaptFunc(selector.get(), result);
+        return method(selector.get(), result);
     }
 };
