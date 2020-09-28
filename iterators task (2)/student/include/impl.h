@@ -3,6 +3,7 @@
 #include <iterator>
 #include <type_traits>
 
+
 template <class Iterator, bool IsFirst, class T = typename std::iterator_traits<Iterator>::value_type>
 struct pair_iterator : public Iterator
 {
@@ -14,9 +15,35 @@ struct pair_iterator : public Iterator
 template<class Iterator, class T>
 struct pair_iterator<Iterator, true, T> : public Iterator
 {
+    using traits = std::iterator_traits<Iterator>;
+    using self   = pair_iterator<Iterator, true, T>;
+
     /** @todo Iterator traits */
+    using iterator_category = typename traits::iterator_category;
+    using value_type        = typename traits::value_type::first_type;
+    using difference_type   = typename traits::difference_type;
+    using pointer           = value_type*;
+    using reference         = value_type&;
+
+
     /** @todo Iterator operations */
+    self& operator++()
+    {
+        ++base();
+        return *this;
+    }
+    reference operator*()
+    {
+        return base()->first;
+    }
     /** @todo Constructor from original iterator */
+    pair_iterator<Iterator, true, T>(const Iterator& iter):Iterator(iter) {}
+
+private:
+    Iterator& base()
+    {
+        return static_cast<Iterator&>(*this);
+    }
 };
 
 /**
@@ -25,9 +52,36 @@ struct pair_iterator<Iterator, true, T> : public Iterator
 template<class Iterator, class T>
 struct pair_iterator<Iterator, false, T> : public Iterator
 {
+    using traits = std::iterator_traits<Iterator>;
+    using self   = pair_iterator<Iterator, false, T>;
+
     /** @todo Iterator traits */
+    using iterator_category = typename traits::iterator_category;
+    using value_type        = typename traits::value_type::second_type;
+    using difference_type   = typename traits::difference_type;
+    using pointer           = value_type*;
+    using reference         = value_type&;
+
+
     /** @todo Iterator operations */
+    self& operator++()
+    {
+        ++base();
+        return *this;
+    }
+    reference operator*()
+    {
+        return base()->second;
+    }
+
     /** @todo Constructor from original iterator */
+    pair_iterator<Iterator, false, T>(const Iterator& iter):Iterator(iter) {}
+
+private:
+    Iterator& base()
+    {
+        return static_cast<Iterator&>(*this);
+    }
 };
 
 template<class Iterator>
