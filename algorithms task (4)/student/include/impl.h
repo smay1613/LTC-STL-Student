@@ -11,4 +11,8 @@
  * @return new slided range position
  */
 template <typename RandomAccessIterator>
-std::pair<RandomAccessIterator, RandomAccessIterator> slide(RandomAccessIterator begin, RandomAccessIterator last, RandomAccessIterator pos);
+std::pair<RandomAccessIterator, RandomAccessIterator> slide(RandomAccessIterator begin, RandomAccessIterator last, RandomAccessIterator pos){
+    auto newFirstElement = std::rotate(begin, last, pos);
+    auto newLastElement = std::next(newFirstElement, last - begin);
+    return std::make_pair(newFirstElement, newLastElement);
+}
