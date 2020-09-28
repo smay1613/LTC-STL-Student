@@ -9,11 +9,15 @@
  */
 struct BeerOrganizer {
  private:
-  size_t _current;
+  size_t _current{static_cast<size_t>(BeerBrand::None)};
 
  public:
-  BeerOrganizer() : _current(0){};
-  BeerBrand operator()();
+  BeerBrand operator()() {
+    if (static_cast<size_t>(BeerBrand::Max) - 1 == _current) {
+      _current = static_cast<size_t>(BeerBrand::None);
+    }
+    return static_cast<BeerBrand>(++_current);
+  };
 };
 
 /**
@@ -48,14 +52,33 @@ struct MixingPolicy {
    */
   static Cocktail mix(const AlcoholDrink drink1, const NonAlcoholDrink drink2) {
     auto cocktail = Cocktail::Oops;
-    if (AlcoholDrink::Gin == drink1 && NonAlcoholDrink::LimeJuice == drink2) {
-      cocktail = Cocktail::Gimlet;
-    } else if (AlcoholDrink::Gin == drink1 &&
-               NonAlcoholDrink::GrapefruitJuice == drink2) {
-      cocktail = Cocktail::Greyhount;
-    } else if (AlcoholDrink::Whiskey == drink1 &&
-               NonAlcoholDrink::SevenUp == drink2) {
-      cocktail = Cocktail::SevenPlusSeven;
+    switch (drink1) {
+      case AlcoholDrink::Gin:
+        switch (drink2) {
+          case NonAlcoholDrink::LimeJuice:
+            cocktail = Cocktail::Gimlet;
+            break;
+          case NonAlcoholDrink::GrapefruitJuice:
+            cocktail = Cocktail::Greyhount;
+            break;
+          default:
+            cocktail = Cocktail::Oops;
+            break;
+        }
+        break;
+      case AlcoholDrink::Whiskey:
+        switch (drink2) {
+          case NonAlcoholDrink::SevenUp:
+            cocktail = Cocktail::SevenPlusSeven;
+            break;
+          default:
+            cocktail = Cocktail::Oops;
+            break;
+        }
+        break;
+      default:
+        cocktail = Cocktail::Oops;
+        break;
     }
     return cocktail;
   }
