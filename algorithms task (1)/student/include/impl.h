@@ -1,5 +1,7 @@
 #pragma once
+
 #include <utility>
+#include <iterator>
 #include <algorithm>
 #include <functional>
 
@@ -11,4 +13,15 @@
   * @return consecutive range
 */
 template<class FI, class Comparator = std::equal_to<typename std::iterator_traits<FI>::value_type>>
-std::pair<FI, FI> consecutive_group(FI start, FI end, Comparator comp = {});
+std::pair<FI, FI> consecutive_group(FI start, FI end, Comparator comp = {})
+{
+    const auto startIt = std::adjacent_find(start, end, comp);
+    if (startIt == end)
+    {
+        return std::make_pair(end, end);
+    }
+    const auto endIt = std::find_if_not(std::next(startIt, 2),
+                                        end,
+                                        std::bind(comp, std::cref(*startIt), std::placeholders::_1));
+    return std::make_pair(startIt, endIt);
+}
