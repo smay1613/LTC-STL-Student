@@ -15,8 +15,19 @@ template<class Iterator, class T>
 struct pair_iterator<Iterator, true, T> : public Iterator
 {
     /** @todo Iterator traits */
+    using value_type = typename T::first_type;
+
     /** @todo Iterator operations */
+    value_type& operator*()
+    {
+        return Iterator::operator*().first;
+    }
+    
     /** @todo Constructor from original iterator */
+    pair_iterator( Iterator& iter ) : Iterator( std::move( iter ) )
+    {
+
+    }
 };
 
 /**
@@ -26,8 +37,19 @@ template<class Iterator, class T>
 struct pair_iterator<Iterator, false, T> : public Iterator
 {
     /** @todo Iterator traits */
+    using value_type = typename T::second_type;
+    
     /** @todo Iterator operations */
+    value_type& operator*()
+    {
+        return Iterator::operator*().second;
+    }
+
     /** @todo Constructor from original iterator */
+    pair_iterator( Iterator& iter ) : Iterator( std::move( iter ) )
+    {
+
+    }
 };
 
 template<class Iterator>
