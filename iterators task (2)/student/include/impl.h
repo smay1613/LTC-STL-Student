@@ -1,33 +1,56 @@
 #pragma once
+
 #include <map>
 #include <iterator>
 #include <type_traits>
+#include <utility>
+
+template <class FromRefType, class ToRefType>
+struct copy_reference_constness
+{
+    using type =
+        typename std::conditional<
+            std::is_const<typename std::remove_reference<FromRefType>::type>::value,
+            const typename std::remove_reference<ToRefType>::type&,
+            ToRefType
+        >::type;
+};
 
 template <class Iterator, bool IsFirst, class T = typename std::iterator_traits<Iterator>::value_type>
 struct pair_iterator : public Iterator
 {
 };
 
-/**
- * @todo Implement iterator for pair key type
- */
 template<class Iterator, class T>
 struct pair_iterator<Iterator, true, T> : public Iterator
 {
-    /** @todo Iterator traits */
-    /** @todo Iterator operations */
-    /** @todo Constructor from original iterator */
+    using value_type = typename T::first_type;
+    using reference = typename copy_reference_constness<typename std::iterator_traits<Iterator>::reference,
+                                                        value_type&>::type;
+    using pointer = typename std::add_pointer<reference>::type;
+
+    explicit pair_iterator(Iterator iterator) : Iterator(iterator) {}
+
+    reference operator*()
+    {
+        return (*this)->first;
+    }
 };
 
-/**
- * @todo Implement iterator for pair value type
- */
 template<class Iterator, class T>
 struct pair_iterator<Iterator, false, T> : public Iterator
 {
-    /** @todo Iterator traits */
-    /** @todo Iterator operations */
-    /** @todo Constructor from original iterator */
+    using value_type = typename T::second_type;
+    using reference = typename copy_reference_constness<typename std::iterator_traits<Iterator>::reference,
+                                                        value_type&>::type;
+    using pointer = typename std::add_pointer<reference>::type;
+
+    explicit pair_iterator(Iterator iterator) : Iterator(iterator) {}
+
+    reference operator*()
+    {
+        return (*this)->second;
+    }
 };
 
 template<class Iterator>

@@ -118,7 +118,7 @@ TEST_F(Usage, BasicRangeFor)
 }
 
 /** @warning ADVANCED TASK! */
-TEST_F(Usage, DISABLED_Const)
+TEST_F(Usage, Const)
 {
     const auto constData = data;
     for (auto& key : make_keys_view(constData))
@@ -134,4 +134,6 @@ TEST_F(Usage, DISABLED_Const)
 
     EXPECT_TRUE(static_cast<bool>(std::is_same<decltype(make_value_iterator(data.cbegin()))::reference,
                                                const size_t&>::value));
+    EXPECT_TRUE(static_cast<bool>(std::is_same<decltype(make_value_iterator(data.cbegin()))::pointer,
+                                               const size_t*>::value));
 }
