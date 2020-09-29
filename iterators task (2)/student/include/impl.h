@@ -54,8 +54,19 @@ struct pair_iterator<Iterator, false, T> : public Iterator
     
     using value_type = typename T::second_type;
 
-    using pointer = value_type*;
-    using reference = value_type&;
+    // https://en.cppreference.com/w/cpp/types/is_const
+    // if T is a reference type then is_const<T>::value is always false. 
+    // The proper way to check a potentially-reference type for const-ness is to remove the reference: is_const<typename remove_reference<T>::type>.
+    using pointer = typename std::conditional< 
+                                        std::is_const<typename std::remove_reference<typename Iterator::pointer>::type>::value,
+                                        const value_type*,
+                                        value_type*
+                                    >::type ;
+    using reference  = typename std::conditional< 
+                                         std::is_const<typename std::remove_reference<typename Iterator::reference>::type>::value,
+                                         const value_type&,
+                                         value_type&
+                                      >::type ;
 
     /** Iterator operations */
 
