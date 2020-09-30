@@ -18,7 +18,7 @@ std::pair<FI, FI> consecutive_group(FI start, FI end, Comparator comp = {})
     {
         return std::make_pair(end, end);
     }
-    auto lambda = [&first](typename std::iterator_traits<FI>::value_type value)
+    auto lambda = [&first](typename std::iterator_traits<FI>::reference value)
     {
         return *first == value;
     };
