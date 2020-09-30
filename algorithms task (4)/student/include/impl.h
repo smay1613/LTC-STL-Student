@@ -15,5 +15,5 @@ std::pair<RandomAccessIterator, RandomAccessIterator>
 slide(RandomAccessIterator begin, RandomAccessIterator last, RandomAccessIterator pos)
 {
     auto first = std::rotate(begin, last, pos);
-    return std::make_pair(first, std::next(last, std::distance(last, pos)));
+    return std::make_pair(first, std::next(first, std::distance(begin, last)));
 }
