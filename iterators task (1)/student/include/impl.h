@@ -5,8 +5,7 @@ template <class Container>
 struct accumulator
 {
     /** @todo Iterator traits*/
-    using traits = std::iterator_traits<typename Container::iterator>;
-    using difference_type = typename traits::difference_type;
+    using difference_type = void;
     using value_type = void;
     using pointer = void;
     using reference = void;
