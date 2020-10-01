@@ -20,15 +20,17 @@ void test_iterators (Iterator first, Iterator last, Predicate comp, std::size_t 
     //  Create the pivot point
     Iterator off = std::next(first, offset);
     //  Gather the elements
-    std::pair<Iterator, Iterator> res = gather (first, last, off, comp);
+    std::pair<Iterator, Iterator> res = gather(first, last, off, comp);
 
     //  We should now have three sequences, any of which may be empty:
     //      * [begin .. result.first)         - items that do not satisfy the predicate
     //      * [result.first .. result.second) - items that do satisfy the predicate
     //      * [result.second .. end)          - items that do not satisfy the predicate
+    //      *  off                            - item that does satisfy the predicate if result is not empty
     EXPECT_TRUE(std::none_of(first, res.first, comp));
     EXPECT_TRUE(std::all_of(res.first, res.second, comp));
     EXPECT_TRUE(std::none_of(res.second, last, comp));
+    EXPECT_TRUE(res.first == res.second && res.second == off || comp(*off));
 }
 
 TEST_F(GatherSequence, AtBeginning)
