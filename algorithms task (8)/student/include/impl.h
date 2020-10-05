@@ -1,4 +1,5 @@
 #pragma once
+
 #include <map>
 #include <vector>
 #include <set>
@@ -6,14 +7,18 @@
 #include <algorithm>
 #include <sstream>
 #include <numeric>
+#include <unordered_map>
 
 /** @warning: FOR LEARNING PURPOSES YOU ARE NOT ALLOWED TO USE LOOPS!*/
 
-/** @todo Must compare two strings without case checking*/
 struct NoCaseComparator
 {
     bool operator()(const std::string& lhs, const std::string& rhs) const
     {
+        return std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), [](char a, char b)
+        {
+            return std::tolower(a) < std::tolower(b);
+        });
     }
 };
 
@@ -107,3 +112,5 @@ std::vector<CVGroup> getPossibleCVGroups(const groupsRatio& relations);
  * For example, row "CPP: C++ (7 times), C (3 times), STL (1 time)"
  * Weight will be 11
  */
+std::unordered_map<CVGroup, size_t>
+getGroupWeights(const std::string& text, const skillMatrix& generalMatrix);
