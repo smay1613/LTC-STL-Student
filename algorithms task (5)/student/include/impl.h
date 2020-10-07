@@ -14,9 +14,11 @@
 template <typename BiIt, typename UnaryPredicate>
 std::pair<BiIt, BiIt> gather(BiIt begin, BiIt end, BiIt position, UnaryPredicate predicate)
 {
-    using Type = decltype(*begin);
-    auto not_predicate = [predicate](Type& x) { return !predicate(x); };
-    auto first = std::stable_partition(begin, position, not_predicate);
-    auto last = std::stable_partition(position, end, predicate);
+    auto not_predicate = [predicate](typename std::iterator_traits<BiIt>::reference x)
+    {
+        return !predicate(x);
+    };
+    auto first = std::partition(begin, position, not_predicate);
+    auto last = std::partition(position, end, predicate);
     return std::make_pair(first, last);
 }
