@@ -55,7 +55,7 @@ If google test does not compile, try define in CMake:
   
 For Windows:  
 _[cmake](https://cmake.org/download/)_  
-_[Qt Creator + compiler](https://www.qt.io/download-qt-installer)_
+_[Qt Creator + compiler](https://www.qt.io/download-qt-installer)_  
 _[Git](https://git-scm.com/downloads)_
   
 For Ubuntu:  
