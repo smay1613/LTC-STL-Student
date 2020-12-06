@@ -25,8 +25,6 @@ set_target_properties(cpp_bar_serving PROPERTIES
                         PUBLIC_HEADER "${headers}"
 )
 
-target_compile_options(cpp_bar_serving PRIVATE -Wall -Wextra)
-
 target_include_directories(cpp_bar_serving
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
     PUBLIC

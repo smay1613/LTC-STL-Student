@@ -27,7 +27,7 @@ set_target_properties(is_anagram PROPERTIES
 
 
 target_link_libraries(is_anagram PRIVATE stdc++fs)
-target_compile_options(is_anagram PRIVATE -Wall -Wextra)
+
 
 target_include_directories(is_anagram
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src

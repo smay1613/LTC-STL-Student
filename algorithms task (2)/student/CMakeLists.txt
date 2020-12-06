@@ -25,8 +25,6 @@ set_target_properties(starts_with PROPERTIES
                         PUBLIC_HEADER "${headers}"
 )
 
-target_compile_options(starts_with PRIVATE -Wall -Wextra)
-
 target_include_directories(starts_with
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
     PUBLIC

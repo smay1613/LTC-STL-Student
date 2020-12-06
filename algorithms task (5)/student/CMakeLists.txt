@@ -24,7 +24,7 @@ set_target_properties(gather PROPERTIES
                         PUBLIC_HEADER "${headers}"
 )
 
-target_compile_options(gather PRIVATE -Wall -Wextra)
+
 
 target_include_directories(gather
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
