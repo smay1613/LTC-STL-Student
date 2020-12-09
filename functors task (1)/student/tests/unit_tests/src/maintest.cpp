@@ -1,5 +1,27 @@
 #include "maintest.h"
 #include "impl.h"
+#include <map>
+
+template<BeerBrand... Args>
+struct IsSorted {
+    static constexpr bool value = true;
+};
+
+template<BeerBrand A, BeerBrand B, BeerBrand... Args>
+struct IsSorted<A, B, Args...> {
+    static constexpr bool value = static_cast<size_t>(A) <= static_cast<size_t>(B)
+                                  && (static_cast<size_t>(A) == static_cast<size_t>(B) - 1) && IsSorted<B, Args...>::value;
+};
+
+static_assert (IsSorted<BeerBrand::None,
+                       BeerBrand::HoeGaarden,
+                       BeerBrand::Corona,
+                       BeerBrand::Carlsberg,
+                       BeerBrand::Bud,
+                       BeerBrand::ZlataPraha,
+                       BeerBrand::Leffe,
+                       BeerBrand::Max>::value,
+               "Enum values should be ordered and not changed!");
 
 auto equalTo = [](const BeerBrand brand)
 {
