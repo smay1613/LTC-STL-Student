@@ -48,7 +48,8 @@ target_wrapper.*
 CMakeLists.txt.user
 CMakeFiles
 CMakeCache.txt
-
+cmake_install.cmake
+CTestTestfile.cmake
 # QtCreator 4.8< compilation database 
 compile_commands.json
 
