@@ -62,7 +62,7 @@ TEST(Initialization, RangeFor)
     basic_container data { Song { "example1" }, Song { "example2" } };
     Tracklist playlist { data };
 
-    for (auto const& entry : playlist) {
+    for (auto& entry : playlist) {
         static_assert(std::is_const<std::remove_reference<decltype(entry)>::type>::value,
             "Iterator must be only const");
     }

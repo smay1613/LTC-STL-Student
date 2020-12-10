@@ -31,19 +31,10 @@ public:
     /** @todo Member traits */
 
     /** @todo Iterators */
-    iterator begin()
-    {
-        return m_tracklist.begin();
-    }
 
     const_iterator begin() const
     {
         return m_tracklist.begin();
-    }
-
-    iterator end()
-    {
-        return m_tracklist.end();
     }
 
     const_iterator end() const
