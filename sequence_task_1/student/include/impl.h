@@ -24,6 +24,9 @@ public:
     /** @todo Iterators */
 
     /** @todo Constructor from any reversible sequence container */
+    template<class AnyContainer> StaticPlaylist(AnyContainer& trackList):
+        m_tracklist(trackList) {
+    }
 
     /** @todo Assignment from any reversible sequence container */
 
