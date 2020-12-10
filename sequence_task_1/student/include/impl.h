@@ -54,12 +54,6 @@ public:
     /** @todo Constructor from any reversible sequence container */
 
     template <typename T>
-    StaticPlaylist(std::initializer_list<T>& list)
-    {
-        copy(list.begin(), list.end(), m_tracklist.begin());
-    }
-
-    template <typename T>
     StaticPlaylist(const T& container)
     {
         m_tracklist.assign(container.begin(), container.end());
@@ -69,7 +63,7 @@ public:
     template <typename T>
     StaticPlaylist& operator=(T &container)
     {
-        m_tracklist.clear();
+        //assigns new songs to the container from the begging;
         m_tracklist.assign(container.begin(), container.end());
         return *this;
     }
