@@ -24,11 +24,15 @@ public:
     /** @todo Iterators */
 
     /** @todo Constructor from any reversible sequence container */
-    template<class AnyContainer> StaticPlaylist(AnyContainer& trackList):
+    template<class AnyContainer> StaticPlaylist(const AnyContainer& trackList):
         m_tracklist(trackList) {
     }
 
     /** @todo Assignment from any reversible sequence container */
+    template<class AnyContainer> StaticPlaylist& operator=(const AnyContainer& trackList){
+        m_tracklist = trackList;
+        return *this;
+    }
 
     /** @todo Add track from initializer */
     template<class... Args>
