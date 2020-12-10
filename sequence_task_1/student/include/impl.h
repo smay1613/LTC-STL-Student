@@ -82,7 +82,7 @@ public:
     const Song& play(const Song& song)
     {
         m_tracklist.push_back(song);
-        return song;
+        return m_tracklist.back();
     }
 
     /** @todo Get first track in playlist stack */
