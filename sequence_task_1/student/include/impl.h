@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <stdexcept>
 #include <string>
 
@@ -18,19 +19,17 @@ bool operator==(const Song& lhs, const Song& rhs)
 template <class Container>
 class StaticPlaylist {
 public:
+    /** @todo Member traits */
     using value_type = typename Container::value_type;
     using difference_type = typename Container::difference_type;
+    using size_type = typename Container::size_type;
     using reference = typename Container::reference;
     using const_reference = typename Container::const_reference;
     using iterator = typename Container::iterator;
     using const_iterator = typename Container::const_iterator;
     using reverse_iterator = typename Container::reverse_iterator;
-    using size_type = typename Container::size_type;
-
-    /** @todo Member traits */
 
     /** @todo Iterators */
-
     const_iterator begin() const
     {
         return m_tracklist.begin();
@@ -62,8 +61,7 @@ public:
     template <typename OtherContainer>
     StaticPlaylist& operator=(const OtherContainer& c)
     {
-        Container tmp(c.begin(), c.end());
-        std::swap(m_tracklist, tmp);
+        m_tracklist.assign(c.begin(), c.end());
         return *this;
     }
 
@@ -71,6 +69,7 @@ public:
     template <typename... Args>
     const Song& play(Args&&... songData)
     {
+        std::cout << "const Song& play(Args&&... songData)" << std::endl;
         m_tracklist.insert(m_tracklist.begin(), Song {  songData } ...);
         return *m_tracklist.begin();
     }
@@ -78,6 +77,7 @@ public:
     /** @todo Add track */
     const Song& play(Song const& song)
     {
+        std::cout << "const Song& play(Song const& song)" << std::endl;
         m_tracklist.insert(m_tracklist.begin(), song);
         return *m_tracklist.begin();
     }
