@@ -16,8 +16,8 @@ std::string reverseWords(const std::string& input)
 {
     std::istringstream iss(input);
     std::deque<std::string> words;
-    for_each(std::istream_iterator<std::string>(iss), std::istream_iterator<std::string>(),
-        [&words](const std::string& word) { words.push_front(word); });
+    std::copy(std::istream_iterator<std::string>(iss), std::istream_iterator<std::string>(),
+        std::front_inserter(words));
 
     std::ostringstream oss;
     std::copy(words.begin(), words.end(), std::ostream_iterator<std::string>(oss, " "));
