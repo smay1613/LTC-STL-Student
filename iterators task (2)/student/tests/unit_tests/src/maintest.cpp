@@ -6,12 +6,12 @@ using namespace ::testing;
 TEST_F(TypesAndTraits, Properties)
 {
     static_assert(std::is_same<
-                  key_iterator,
+                  map_key_iterator,
                   pair_iterator<iterator, true>>::value,
                   "Do not change key iterator type!");
 
     static_assert(std::is_same<
-                  value_iterator,
+                  map_value_iterator,
                   pair_iterator<iterator, false>>::value,
                   "Do not change value iterator type!");
 }
@@ -24,37 +24,37 @@ GENERATE_HAS_MEMBER_TYPE(difference_type)
 
 TEST_F(TypesAndTraits, Traits)
 {
-    static_assert (has_member_type_value_type<key_iterator>::value,
+    static_assert (has_member_type_value_type<map_key_iterator>::value,
                    "Traits are not provided for key iterator!");
-    static_assert (has_member_type_pointer<key_iterator>::value,
+    static_assert (has_member_type_pointer<map_key_iterator>::value,
                    "Traits are not provided for key iterator!");
-    static_assert (has_member_type_reference<key_iterator>::value,
+    static_assert (has_member_type_reference<map_key_iterator>::value,
                    "Traits are not provided for key iterator!");
-    static_assert (has_member_type_iterator_category<key_iterator>::value,
+    static_assert (has_member_type_iterator_category<map_key_iterator>::value,
                    "Traits are not provided for key iterator!");
-    static_assert (has_member_type_difference_type<key_iterator>::value,
+    static_assert (has_member_type_difference_type<map_key_iterator>::value,
                    "Traits are not provided for key iterator!");
 
-    static_assert (has_member_type_value_type<value_iterator>::value,
+    static_assert (has_member_type_value_type<map_value_iterator>::value,
                    "Traits are not provided for value iterator!");
-    static_assert (has_member_type_pointer<value_iterator>::value,
+    static_assert (has_member_type_pointer<map_value_iterator>::value,
                    "Traits are not provided for value iterator!");
-    static_assert (has_member_type_reference<value_iterator>::value,
+    static_assert (has_member_type_reference<map_value_iterator>::value,
                    "Traits are not provided for value iterator!");
-    static_assert (has_member_type_iterator_category<value_iterator>::value,
+    static_assert (has_member_type_iterator_category<map_value_iterator>::value,
                    "Traits are not provided for value iterator!");
-    static_assert (has_member_type_difference_type<value_iterator>::value,
+    static_assert (has_member_type_difference_type<map_value_iterator>::value,
                    "Traits are not provided for value iterator!");
 }
 
 TEST_F(TypesAndTraits, ValueTypeTraits)
 {
     static_assert (std::is_same<const key_type,
-                                key_iterator::value_type>::value,
+                                map_key_iterator::value_type>::value,
                    "Expected correct key value_type trait");
 
     static_assert (std::is_same<value_type,
-                                value_iterator::value_type>::value,
+                                map_value_iterator::value_type>::value,
                    "Expected correct key type property");
 }
 
@@ -69,7 +69,7 @@ TEST_F(Usage, BasicAssign)
     std::list<size_t> values {valuesView.begin(),
                                 valuesView.end()};
 
-    EXPECT_EQ(data.size(), values.size());
+    EXPECT_EQ(data.size(), keys.size());
     EXPECT_EQ(data.size(), values.size());
 }
 
@@ -85,7 +85,7 @@ TEST_F(Usage, BasicAlgorithm)
                       make_value_iterator(data.end()),
                       std::back_inserter(values));
 
-    EXPECT_EQ(data.size(), values.size());
+    EXPECT_EQ(data.size(), keys.size());
     EXPECT_EQ(data.size(), values.size());
 
 }
@@ -132,19 +132,6 @@ TEST_F(Usage, DISABLED_Const)
         EXPECT_FALSE(canAssign);
     }
 
-    auto constContext = [constData]()
-    {
-
-        for (const auto& value : make_values_view(constData))
-        {
-            bool canAssign = std::is_assignable<decltype (value), size_t>::value;
-            EXPECT_FALSE(canAssign);
-        }
-
-        for (auto& value : make_values_view(constData))
-        {
-            bool canAssign = std::is_assignable<decltype (value), size_t>::value;
-            EXPECT_TRUE(canAssign);
-        }
-    };
+    EXPECT_TRUE(static_cast<bool>(std::is_same<decltype(make_value_iterator(data.cbegin()))::reference,
+                                               const size_t&>::value));
 }

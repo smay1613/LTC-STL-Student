@@ -47,21 +47,19 @@ If google test does not compile, try define in CMake:
   
   
 ## Requirements
-1. **Packages:**  
-     * **unzip**
-      * **wget**  
-2. **Tools:**  
-     * **CMake 3.0+**
-     * **C++ compiler that supports C++17 filesystem**
+**Tools:**  
+  * **CMake 3.0+**
+  * **C++ compiler that supports C++17 filesystem** (**gcc** recommended, because code tested only for it)
+  * **Git**
   
   
 For Windows:  
-_[unzip](http://gnuwin32.sourceforge.net/packages/unzip.htm)   
-[wget](http://gnuwin32.sourceforge.net/packages/wget.htm)  
-[cmake](https://cmake.org/download/)_    
+_[cmake](https://cmake.org/download/)_  
+_[Qt Creator + compiler](https://www.qt.io/download-qt-installer)_  
+_[Git](https://git-scm.com/downloads)_
   
 For Ubuntu:  
-_`sudo apt-get install wget unzip cmake`_  
+_`sudo apt-get install cmake qtcreator git`_  
   
   
 ## Recommended environment
@@ -91,3 +89,13 @@ _`sudo apt-get install wget unzip cmake`_
    * _....create pull request on [Github](https://github.com/smay1613/LTC-STL-Student/pulls)...._
    * _Switch back to master branch:_  
         `git checkout master`
+        
+## Help wanted!
+If you want to get some experience, you can contribute to this repository:
+* Add more tests for practice
+* Improve CMake
+* If you have bash experience, you can help with repository automation (for pull requests) using Github Actions API:
+  * Build
+  * Testing
+  * Labeling
+  * Mark counter
