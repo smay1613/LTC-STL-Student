@@ -73,11 +73,11 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/functors task (1)/build-student-Desktop_Qt_5_9_2_GCC_64bit-Debug/lib/libgtestd.a")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/sequence task (1)/build-student-Desktop_Qt_5_9_2_GCC_64bit-Debug/lib/libgtestd.a")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/functors task (1)/build-student-Desktop_Qt_5_9_2_GCC_64bit-Debug/lib/libgtest_maind.a")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/sequence task (1)/build-student-Desktop_Qt_5_9_2_GCC_64bit-Debug/lib/libgtest_maind.a")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)

@@ -5,7 +5,7 @@
 		<Option title="googletest-distribution"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;CMake Files\tests\;CMake Files\tests\cmake_modules\;CMake Files\tests\unit_tests\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\googletest-release-1.10.0\;CMake Files\..\..\googletest-release-1.10.0\googlemock\;CMake Files\..\..\googletest-release-1.10.0\googlemock\cmake\;CMake Files\..\..\googletest-release-1.10.0\googletest\;CMake Files\..\..\googletest-release-1.10.0\googletest\cmake\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\googletest-release-1.10.0\;CMake Files\..\..\googletest-release-1.10.0\googlemock\;CMake Files\..\..\googletest-release-1.10.0\googlemock\cmake\;CMake Files\..\..\googletest-release-1.10.0\googletest\;CMake Files\..\..\googletest-release-1.10.0\googletest\cmake\;CMake Files\tests\;CMake Files\tests\cmake_modules\;CMake Files\tests\unit_tests\;"/>
 		<Build>
 			<Target title="all">
 				<Option working_dir="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/gmock"/>
@@ -18,7 +18,7 @@
 				</MakeCommands>
 			</Target>
 			<Target title="gmock_main">
-				<Option output="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/functors task (1)/build-student-Desktop_Qt_5_9_2_GCC_64bit-Debug/lib/libgmock_maind.a" prefix_auto="0" extension_auto="0"/>
+				<Option output="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/sequence task (1)/build-student-Desktop_Qt_5_9_2_GCC_64bit-Debug/lib/libgmock_maind.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/gmock/googlemock"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
@@ -28,12 +28,11 @@
 					<Add directory="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/googletest-release-1.10.0/googlemock"/>
 					<Add directory="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/googletest-release-1.10.0/googletest/include"/>
 					<Add directory="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/googletest-release-1.10.0/googletest"/>
-					<Add directory="/usr/include/c++/7"/>
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
-					<Add directory="/usr/include/c++/7/backward"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
 				</Compiler>
@@ -45,7 +44,7 @@
 				</MakeCommands>
 			</Target>
 			<Target title="gmock_main/fast">
-				<Option output="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/functors task (1)/build-student-Desktop_Qt_5_9_2_GCC_64bit-Debug/lib/libgmock_maind.a" prefix_auto="0" extension_auto="0"/>
+				<Option output="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/sequence task (1)/build-student-Desktop_Qt_5_9_2_GCC_64bit-Debug/lib/libgmock_maind.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/gmock/googlemock"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
@@ -55,12 +54,11 @@
 					<Add directory="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/googletest-release-1.10.0/googlemock"/>
 					<Add directory="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/googletest-release-1.10.0/googletest/include"/>
 					<Add directory="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/googletest-release-1.10.0/googletest"/>
-					<Add directory="/usr/include/c++/7"/>
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
-					<Add directory="/usr/include/c++/7/backward"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
 				</Compiler>
@@ -72,7 +70,7 @@
 				</MakeCommands>
 			</Target>
 			<Target title="gmock">
-				<Option output="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/functors task (1)/build-student-Desktop_Qt_5_9_2_GCC_64bit-Debug/lib/libgmockd.a" prefix_auto="0" extension_auto="0"/>
+				<Option output="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/sequence task (1)/build-student-Desktop_Qt_5_9_2_GCC_64bit-Debug/lib/libgmockd.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/gmock/googlemock"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
@@ -82,12 +80,11 @@
 					<Add directory="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/googletest-release-1.10.0/googlemock"/>
 					<Add directory="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/googletest-release-1.10.0/googletest/include"/>
 					<Add directory="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/googletest-release-1.10.0/googletest"/>
-					<Add directory="/usr/include/c++/7"/>
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
-					<Add directory="/usr/include/c++/7/backward"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
 				</Compiler>
@@ -99,7 +96,7 @@
 				</MakeCommands>
 			</Target>
 			<Target title="gmock/fast">
-				<Option output="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/functors task (1)/build-student-Desktop_Qt_5_9_2_GCC_64bit-Debug/lib/libgmockd.a" prefix_auto="0" extension_auto="0"/>
+				<Option output="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/sequence task (1)/build-student-Desktop_Qt_5_9_2_GCC_64bit-Debug/lib/libgmockd.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/gmock/googlemock"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
@@ -109,12 +106,11 @@
 					<Add directory="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/googletest-release-1.10.0/googlemock"/>
 					<Add directory="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/googletest-release-1.10.0/googletest/include"/>
 					<Add directory="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/googletest-release-1.10.0/googletest"/>
-					<Add directory="/usr/include/c++/7"/>
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
-					<Add directory="/usr/include/c++/7/backward"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
 				</Compiler>
@@ -126,7 +122,7 @@
 				</MakeCommands>
 			</Target>
 			<Target title="gtest_main">
-				<Option output="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/functors task (1)/build-student-Desktop_Qt_5_9_2_GCC_64bit-Debug/lib/libgtest_maind.a" prefix_auto="0" extension_auto="0"/>
+				<Option output="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/sequence task (1)/build-student-Desktop_Qt_5_9_2_GCC_64bit-Debug/lib/libgtest_maind.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/gmock/googletest"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
@@ -134,12 +130,11 @@
 				<Compiler>
 					<Add directory="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/googletest-release-1.10.0/googletest/include"/>
 					<Add directory="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/googletest-release-1.10.0/googletest"/>
-					<Add directory="/usr/include/c++/7"/>
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
-					<Add directory="/usr/include/c++/7/backward"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
 				</Compiler>
@@ -151,7 +146,7 @@
 				</MakeCommands>
 			</Target>
 			<Target title="gtest_main/fast">
-				<Option output="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/functors task (1)/build-student-Desktop_Qt_5_9_2_GCC_64bit-Debug/lib/libgtest_maind.a" prefix_auto="0" extension_auto="0"/>
+				<Option output="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/sequence task (1)/build-student-Desktop_Qt_5_9_2_GCC_64bit-Debug/lib/libgtest_maind.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/gmock/googletest"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
@@ -159,12 +154,11 @@
 				<Compiler>
 					<Add directory="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/googletest-release-1.10.0/googletest/include"/>
 					<Add directory="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/googletest-release-1.10.0/googletest"/>
-					<Add directory="/usr/include/c++/7"/>
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
-					<Add directory="/usr/include/c++/7/backward"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
 				</Compiler>
@@ -176,7 +170,7 @@
 				</MakeCommands>
 			</Target>
 			<Target title="gtest">
-				<Option output="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/functors task (1)/build-student-Desktop_Qt_5_9_2_GCC_64bit-Debug/lib/libgtestd.a" prefix_auto="0" extension_auto="0"/>
+				<Option output="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/sequence task (1)/build-student-Desktop_Qt_5_9_2_GCC_64bit-Debug/lib/libgtestd.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/gmock/googletest"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
@@ -184,12 +178,11 @@
 				<Compiler>
 					<Add directory="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/googletest-release-1.10.0/googletest/include"/>
 					<Add directory="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/googletest-release-1.10.0/googletest"/>
-					<Add directory="/usr/include/c++/7"/>
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
-					<Add directory="/usr/include/c++/7/backward"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
 				</Compiler>
@@ -201,7 +194,7 @@
 				</MakeCommands>
 			</Target>
 			<Target title="gtest/fast">
-				<Option output="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/functors task (1)/build-student-Desktop_Qt_5_9_2_GCC_64bit-Debug/lib/libgtestd.a" prefix_auto="0" extension_auto="0"/>
+				<Option output="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/sequence task (1)/build-student-Desktop_Qt_5_9_2_GCC_64bit-Debug/lib/libgtestd.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/gmock/googletest"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
@@ -209,12 +202,11 @@
 				<Compiler>
 					<Add directory="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/googletest-release-1.10.0/googletest/include"/>
 					<Add directory="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/googletest-release-1.10.0/googletest"/>
-					<Add directory="/usr/include/c++/7"/>
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
-					<Add directory="/usr/include/c++/7/backward"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
 				</Compiler>
@@ -238,47 +230,47 @@
 		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/googletest-release-1.10.0/googletest/src/gtest_main.cc">
 			<Option target="gtest_main"/>
 		</Unit>
-		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/functors task (1)/student/CMakeLists.txt">
+		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/sequence task (1)/student/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
-		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/functors task (1)/student/tests/CMakeLists.txt">
-			<Option virtualFolder="CMake Files\tests\"/>
-		</Unit>
-		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/functors task (1)/student/tests/cmake_modules/AddGMock.cmake">
-			<Option virtualFolder="CMake Files\tests\cmake_modules\"/>
-		</Unit>
-		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/functors task (1)/student/tests/cmake_modules/AddGTestTest.cmake">
-			<Option virtualFolder="CMake Files\tests\cmake_modules\"/>
-		</Unit>
-		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/functors task (1)/student/tests/unit_tests/CMakeLists.txt">
-			<Option virtualFolder="CMake Files\tests\unit_tests\"/>
-		</Unit>
-		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/functors task (1)/student/../../googletest-release-1.10.0/CMakeLists.txt">
+		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/sequence task (1)/student/../../googletest-release-1.10.0/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\..\..\googletest-release-1.10.0\"/>
 		</Unit>
-		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/functors task (1)/student/../../googletest-release-1.10.0/googlemock/CMakeLists.txt">
+		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/sequence task (1)/student/../../googletest-release-1.10.0/googlemock/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\..\..\googletest-release-1.10.0\googlemock\"/>
 		</Unit>
-		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/functors task (1)/student/../../googletest-release-1.10.0/googlemock/cmake/gmock.pc.in">
+		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/sequence task (1)/student/../../googletest-release-1.10.0/googlemock/cmake/gmock.pc.in">
 			<Option virtualFolder="CMake Files\..\..\googletest-release-1.10.0\googlemock\cmake\"/>
 		</Unit>
-		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/functors task (1)/student/../../googletest-release-1.10.0/googlemock/cmake/gmock_main.pc.in">
+		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/sequence task (1)/student/../../googletest-release-1.10.0/googlemock/cmake/gmock_main.pc.in">
 			<Option virtualFolder="CMake Files\..\..\googletest-release-1.10.0\googlemock\cmake\"/>
 		</Unit>
-		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/functors task (1)/student/../../googletest-release-1.10.0/googletest/CMakeLists.txt">
+		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/sequence task (1)/student/../../googletest-release-1.10.0/googletest/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\..\..\googletest-release-1.10.0\googletest\"/>
 		</Unit>
-		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/functors task (1)/student/../../googletest-release-1.10.0/googletest/cmake/Config.cmake.in">
+		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/sequence task (1)/student/../../googletest-release-1.10.0/googletest/cmake/Config.cmake.in">
 			<Option virtualFolder="CMake Files\..\..\googletest-release-1.10.0\googletest\cmake\"/>
 		</Unit>
-		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/functors task (1)/student/../../googletest-release-1.10.0/googletest/cmake/gtest.pc.in">
+		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/sequence task (1)/student/../../googletest-release-1.10.0/googletest/cmake/gtest.pc.in">
 			<Option virtualFolder="CMake Files\..\..\googletest-release-1.10.0\googletest\cmake\"/>
 		</Unit>
-		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/functors task (1)/student/../../googletest-release-1.10.0/googletest/cmake/gtest_main.pc.in">
+		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/sequence task (1)/student/../../googletest-release-1.10.0/googletest/cmake/gtest_main.pc.in">
 			<Option virtualFolder="CMake Files\..\..\googletest-release-1.10.0\googletest\cmake\"/>
 		</Unit>
-		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/functors task (1)/student/../../googletest-release-1.10.0/googletest/cmake/internal_utils.cmake">
+		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/sequence task (1)/student/../../googletest-release-1.10.0/googletest/cmake/internal_utils.cmake">
 			<Option virtualFolder="CMake Files\..\..\googletest-release-1.10.0\googletest\cmake\"/>
+		</Unit>
+		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/sequence task (1)/student/tests/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\tests\"/>
+		</Unit>
+		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/sequence task (1)/student/tests/cmake_modules/AddGMock.cmake">
+			<Option virtualFolder="CMake Files\tests\cmake_modules\"/>
+		</Unit>
+		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/sequence task (1)/student/tests/cmake_modules/AddGTestTest.cmake">
+			<Option virtualFolder="CMake Files\tests\cmake_modules\"/>
+		</Unit>
+		<Unit filename="/home/bill/Repo/stl_study/STL-Student/LTC-STL-Student/sequence task (1)/student/tests/unit_tests/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\tests\unit_tests\"/>
 		</Unit>
 	</Project>
 </CodeBlocks_project_file>
