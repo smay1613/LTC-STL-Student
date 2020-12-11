@@ -71,7 +71,7 @@ public:
     template <typename... Args>
     const Song& play(Args&&... songData)
     {
-        m_tracklist.insert(m_tracklist.end(), Song {  songData } ...);
+        m_tracklist.insert(m_tracklist.begin(), Song {  songData } ...);
         return *m_tracklist.begin();
     }
 
