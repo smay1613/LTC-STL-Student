@@ -14,26 +14,26 @@ using Tracklist = StaticPlaylist<basic_container>;
 TEST(Traits, ContainerTraits)
 {
     static_assert (std::is_same<Tracklist::value_type,
-                               Song>::value,
-                  "Wrong value_type trait!");
+                                Song>::value,
+                   "Wrong value_type trait!");
     static_assert (std::is_same<Tracklist::reference,
-                               Song&>::value,
-                  "Wrong reference trait!");
+                                Song&>::value,
+                   "Wrong reference trait!");
     static_assert (std::is_same<Tracklist::const_reference,
-                               const Song&>::value,
-                  "Wrong const_reference trait!");
+                                const Song&>::value,
+                   "Wrong const_reference trait!");
     static_assert (std::is_same<Tracklist::iterator,
-                               basic_container::iterator>::value,
-                  "Wrong iterator trait!");
+                                basic_container::iterator>::value,
+                   "Wrong iterator trait!");
     static_assert (std::is_same<Tracklist::const_iterator,
-                               basic_container::const_iterator>::value,
-                  "Wrong const_iterator trait!");
+                                basic_container::const_iterator>::value,
+                   "Wrong const_iterator trait!");
     static_assert (std::is_same<Tracklist::difference_type,
-                               ptrdiff_t>::value,
-                  "Wrong difference_type trait!");
+                                ptrdiff_t>::value,
+                   "Wrong difference_type trait!");
     static_assert (std::is_same<Tracklist::size_type,
-                               size_t>::value,
-                  "Wrong size_type trait!");
+                                size_t>::value,
+                   "Wrong size_type trait!");
 }
 
 TEST(Initialization, PlaylistInitBasic)
@@ -65,7 +65,7 @@ TEST(Initialization, RangeFor)
     for (auto& entry : playlist)
     {
         static_assert (std::is_const<std::remove_reference<decltype (entry)>::type>::value,
-                      "Iterator must be only const");
+                       "Iterator must be only const");
     }
 }
 
@@ -103,7 +103,7 @@ TEST(Initialization, FromLvalue)
     basic_container data {Song{"example1"}, Song{"example2"}};
     Tracklist playlist {data};
 
-    Song const newSong {"example3"};
+    Song newSong {"example3"};
 
     EXPECT_EQ(playlist.play(newSong), newSong);
 }
@@ -118,8 +118,8 @@ TEST(Initialization, NoUBToday)
 TEST(Initialization, Switch)
 {
     basic_container data {Song {"example1"},
-                         Song {"example2"},
-                         Song {"example3"}};
+                          Song {"example2"},
+                          Song {"example3"}};
     Tracklist playlist {data};
     EXPECT_EQ(playlist.current(), Song {"example1"});
     playlist.switchNext();

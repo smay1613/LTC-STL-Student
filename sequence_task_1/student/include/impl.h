@@ -18,9 +18,8 @@ bool operator==(const Song& lhs, const Song& rhs)
 template <class Container>
 class StaticPlaylist {
 public:
-    using ContainerTraits = std::iterator_traits<typename Container::iterator>;
-    using value_type = typename ContainerTraits::value_type;
-    using difference_type = typename ContainerTraits::difference_type;
+    using value_type = typename Container::value_type;
+    using difference_type = typename Container::difference_type;
     using reference = typename Container::reference;
     using const_reference = typename Container::const_reference;
     using iterator = typename Container::iterator;
@@ -40,6 +39,16 @@ public:
     const_iterator end() const
     {
         return m_tracklist.end();
+    }
+
+    const_iterator cbegin() const
+    {
+        return m_tracklist.cbegin();
+    }
+
+    const_iterator cend() const
+    {
+        return m_tracklist.cend();
     }
 
     /** @todo Constructor from any reversible sequence container */
@@ -62,7 +71,7 @@ public:
     template <typename... Args>
     const Song& play(Args&&... songData)
     {
-        m_tracklist.insert(m_tracklist.begin(), std::forward<Song>(Song { std::string { songData } })...);
+        m_tracklist.insert(m_tracklist.end(), Song {  songData } ...);
         return *m_tracklist.begin();
     }
 
