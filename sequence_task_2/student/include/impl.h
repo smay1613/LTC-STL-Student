@@ -1,5 +1,6 @@
 #pragma once
 #include <list>
+#include <iostream>
 
 /** @todo implement effective list rotation algorithm
  *
@@ -14,4 +15,14 @@
  * @note See https://en.cppreference.com/w/cpp/algorithm/rotate
  */
 template<class T, class BI>
-void rotate(std::list<T>& list, BI begin, BI new_begin, BI end);
+void rotate(std::list<T>& list, BI begin, BI new_begin, BI end) {
+    std::list<T> tempList;
+    if (new_begin != end) {
+        while(std::distance(begin, new_begin)) {
+            tempList.push_back(*begin);
+            begin = list.erase(begin);
+            //std::cout << std::distance(begin, new_begin) << "\n";
+        }
+        list.splice(end, tempList);
+    }
+}
