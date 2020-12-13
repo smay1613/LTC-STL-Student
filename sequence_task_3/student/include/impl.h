@@ -23,7 +23,7 @@ std::string reverseWords(const std::string& input)
     std::copy(words.begin(), words.end(), std::ostream_iterator<std::string>(oss, " "));
     std::string result { oss.str() };
     if (!result.empty()) {
-        result.resize(result.size() - 1);
+        result.pop_back();
     }
     return result;
 }
