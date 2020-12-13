@@ -18,6 +18,12 @@
 template<class T, class BI>
 void rotate(std::list<T>& list, BI begin, BI new_begin, BI end)
 {
+    list.splice(begin, list, new_begin, end);
+}
+
+
+
+/*{
     std::reverse(begin, new_begin);
     std::reverse(new_begin, end);
 
@@ -26,4 +32,4 @@ void rotate(std::list<T>& list, BI begin, BI new_begin, BI end)
 
     if   (begin == new_begin) std::reverse(new_begin, end);
     else                      std::reverse(begin, new_begin);
-}
+}*/
