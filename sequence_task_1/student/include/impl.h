@@ -34,11 +34,11 @@ public:
 
     /** @todo Iterators */
 
-    const_iterator begin()
+    const_iterator begin () const
     {
         return m_tracklist.begin();
     }
-    const_iterator end()
+    const_iterator end () const
     {
         return m_tracklist.end();
     }
@@ -74,8 +74,7 @@ public:
     template<class... Args>
     const Song& play(Args&&... songData)
     {
-        m_tracklist.insert(m_tracklist.end(), {Song(songData)...});
-        return *prev(m_tracklist.end());
+        play(songData...);
     }
 
     /** @todo Add track */
