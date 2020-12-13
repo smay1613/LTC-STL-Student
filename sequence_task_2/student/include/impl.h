@@ -16,5 +16,5 @@
 template<class T, class BI>
 void rotate(std::list<T>& list, BI begin, BI new_begin, BI end)
 {
-    list.splice(list.begin(), list, std::next(begin, std::distance(begin, new_begin)), end);
+    list.splice(begin, list, new_begin, end);
 }
