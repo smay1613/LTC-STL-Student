@@ -29,3 +29,17 @@ TEST(Reverse, Corner)
     const std::string expected {""};
     EXPECT_EQ(reverseWords(input), expected);
 }
+
+TEST(Reverse, Corner_2)
+{
+    const std::string input {" "};
+    const std::string expected {""};
+    EXPECT_EQ(reverseWords(input), expected);
+}
+
+TEST(Reverse, Corner_3)
+{
+    const std::string input {" . "};
+    const std::string expected {"."};
+    EXPECT_EQ(reverseWords(input), expected);
+}
