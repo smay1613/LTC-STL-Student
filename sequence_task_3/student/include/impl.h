@@ -24,3 +24,12 @@ std::string reverseWords(const std::string& input)
     }
     return oss.str();
 }
+
+/*
+    for(auto& it : std::reverse(strings.begin(), strings.end()))
+    {
+        oss << it;
+        if(std::next(it) != strings.end()) oss << " ";
+    }
+    return oss.str();
+*/
