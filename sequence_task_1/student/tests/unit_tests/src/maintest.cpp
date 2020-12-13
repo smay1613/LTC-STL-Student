@@ -71,14 +71,26 @@ TEST(Initialization, RangeFor)
 
 TEST(Initialization, Order)
 {
-    basic_container data {Song{"example1"}, Song{"example2"}};
+    basic_container const data {Song{"example1"}, Song{"example2"}, Song{"example3"}};
     Tracklist playlist {data};
 
-    std::reverse(data.begin(), data.end());
-    std::equal(playlist.begin(), playlist.end(), data.begin());
+    basic_container expected_data {data.rbegin(), data.rend()};
+    EXPECT_TRUE(std::equal(playlist.begin(), playlist.end(), expected_data.begin()));
 }
 
 TEST(Initialization, AssignLvalue)
+{
+    basic_container const data {Song{"example1"}, Song{"example2"}};
+    Tracklist playlist {data};
+
+    other_container1 const newData {Song {"example0"}, Song {"example3"}};
+    playlist = newData;
+
+    EXPECT_EQ(playlist.count(), 2);
+    EXPECT_EQ(playlist.current(), Song {"example0"});
+}
+
+TEST(Initialization, AssignRvalue)
 {
     basic_container data {Song{"example1"}, Song{"example2"}};
     Tracklist playlist {data};
@@ -125,4 +137,7 @@ TEST(Initialization, Switch)
     playlist.switchNext();
     EXPECT_EQ(playlist.current(), Song {"example2"});
     EXPECT_EQ(playlist.count(), 2);
+    playlist.switchNext();
+    EXPECT_EQ(playlist.current(), Song {"example3"});
+    EXPECT_EQ(playlist.count(), 1);
 }
