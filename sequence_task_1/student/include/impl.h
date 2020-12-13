@@ -28,6 +28,7 @@ public:
     using iterator = typename Container::iterator;
     using const_iterator = typename Container::const_iterator;
     using reverse_iterator = typename Container::reverse_iterator;
+    using const_reverse_iterator = typename Container::const_reverse_iterator;
 
     /** @todo Iterators */
     const_iterator begin() const
@@ -50,18 +51,46 @@ public:
         return m_tracklist.cend();
     }
 
+    const_reverse_iterator rbegin()
+    {
+        return const_reverse_iterator(end());
+    }
+
+    const_reverse_iterator rend()
+    {
+        return const_reverse_iterator(begin());
+    }
+
     /** @todo Constructor from any reversible sequence container */
     template <typename OtherContainer>
-    StaticPlaylist(OtherContainer c)
-        : m_tracklist(std::make_move_iterator(c.begin()), std::make_move_iterator(c.end()))
+    StaticPlaylist(OtherContainer&& c)
+        : m_tracklist(std::make_move_iterator(c.rbegin()), std::make_move_iterator(c.rend()))
     {
+        std::cout << "StaticPlaylist(OtherContainer&& c)" << std::endl;
+    }
+
+    template <typename OtherContainer>
+    StaticPlaylist(OtherContainer const& c)
+        : m_tracklist(c.rbegin(), c.rend())
+    {
+        std::cout << "StaticPlaylist(OtherContainer const& c)" << std::endl;
     }
 
     /** @todo Assignment from any reversible sequence container */
     template <typename OtherContainer>
     StaticPlaylist& operator=(const OtherContainer& c)
     {
-        m_tracklist.assign(c.begin(), c.end());
+        std::cout << "StaticPlaylist& operator=(const OtherContainer& c))" << std::endl;
+        m_tracklist.assign(c.rbegin(), c.rend());
+        return *this;
+    }
+
+    template <typename OtherContainer>
+    StaticPlaylist& operator=(OtherContainer&& c)
+    {
+        std::cout << "StaticPlaylist& operator=(OtherContainer&& c)" << std::endl;
+        Container tmp_container(std::make_move_iterator(c.rbegin()), std::make_move_iterator(c.rend()));
+        m_tracklist.swap(tmp_container);
         return *this;
     }
 
@@ -70,16 +99,16 @@ public:
     const Song& play(Args&&... songData)
     {
         std::cout << "const Song& play(Args&&... songData)" << std::endl;
-        m_tracklist.emplace(m_tracklist.begin(), Song { songData }...);
-        return *begin();
+        m_tracklist.emplace_back(Song { songData }...);
+        return *std::prev(end());
     }
 
     /** @todo Add track */
     const Song& play(Song const& song)
     {
         std::cout << "const Song& play(Song const& song)" << std::endl;
-        m_tracklist.insert(m_tracklist.begin(), song);
-        return *begin();
+        m_tracklist.push_back(song);
+        return *std::prev(end());
     }
 
     /** @todo Get first track in playlist stack */
@@ -88,7 +117,7 @@ public:
         if (!hasTracks()) {
             throw std::out_of_range("");
         }
-        return *begin();
+        return *std::prev(end());
     }
 
     /** @todo Skip to the next track in playlist, remove current */
@@ -97,7 +126,7 @@ public:
         if (!hasTracks()) {
             throw std::out_of_range("");
         }
-        m_tracklist.erase(begin());
+        m_tracklist.erase(std::prev(end()));
     }
 
     /** @todo Amount of tracks in playlist */
