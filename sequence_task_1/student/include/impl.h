@@ -100,7 +100,7 @@ public:
     {
         std::cout << "const Song& play(Args&&... songData)" << std::endl;
         m_tracklist.emplace_back(Song { songData }...);
-        return *std::prev(end());
+        return *rbegin();
     }
 
     /** @todo Add track */
@@ -108,7 +108,7 @@ public:
     {
         std::cout << "const Song& play(Song const& song)" << std::endl;
         m_tracklist.push_back(song);
-        return *std::prev(end());
+        return *rbegin();
     }
 
     /** @todo Get first track in playlist stack */
@@ -126,7 +126,7 @@ public:
         if (!hasTracks()) {
             throw std::out_of_range("");
         }
-        m_tracklist.erase(std::prev(end()));
+        m_tracklist.erase(end());
     }
 
     /** @todo Amount of tracks in playlist */
