@@ -21,22 +21,14 @@ class StaticPlaylist
 {
 public:
     /** Member traits */
-    /*
-     // simple ...
-    typedef Song         value_type;
-    typedef Song&        reference;
-    typedef const Song&  const_reference;
-    typedef size_t	     size_type;
-    typedef ptrdiff_t    difference_type;
-    */
-    typedef typename Container::value_type       value_type;
-    typedef typename Container::reference        reference;
-    typedef typename Container::const_reference  const_reference;
-    typedef typename Container::size_type        size_type;
-    typedef typename Container::difference_type  difference_type;
-    //i don't know any other way to iterators
-    typedef typename Container::iterator        iterator;
-    typedef typename Container::const_iterator  const_iterator;
+
+    using value_type = typename Container::value_type;
+    using reference = typename Container::reference;
+    using const_reference = typename Container::const_reference;
+    using size_type = typename Container::size_type;
+    using difference_type = typename Container::difference_type;
+    using iterator = typename Container::iterator;
+    using const_iterator = typename Container::const_iterator;
 
     /** Iterators */
     const_iterator begin() const
@@ -49,6 +41,16 @@ public:
         return m_tracklist.end();
     }
 
+    const_iterator cbegin()  const
+    {
+        return m_tracklist.cbegin();
+    }
+
+    const_iterator cend() const
+    {
+        return m_tracklist.cend();
+    }
+
     StaticPlaylist()
     : m_tracklist()
     {
@@ -59,13 +61,13 @@ public:
     //any container? Cheking needed AnyContainer is supported in compile time, like static_assert. Out of scope.
     template<class AnyContainer>
     StaticPlaylist(const AnyContainer& ac)
-    : m_tracklist(ac.begin(), ac.end())
+    : m_tracklist(ac.rbegin(), ac.rend())
     {
 
     }
 
     StaticPlaylist( const StaticPlaylist& other )
-    : m_tracklist(other.m_tracklist.begin(), other.m_tracklist.end())
+    : m_tracklist(other.m_tracklist.rbegin(), other.m_tracklist.rend())
     {
 
     }
@@ -75,17 +77,7 @@ public:
     template<class AnyContainer>
     StaticPlaylist& operator=(const AnyContainer& ac)
     {
-        m_tracklist.clear();
-        m_tracklist.insert(m_tracklist.begin(), ac.begin(), ac.end());
-        return *this;
-    }
-
-    StaticPlaylist& operator=( const StaticPlaylist& other )
-    {
-        if (this != &other && m_tracklist != other.m_tracklist)
-        {
-            m_tracklist = other.m_tracklist;
-        }
+        m_tracklist.assign(ac.rbegin(), ac.rend());
         return *this;
     }
 
@@ -93,7 +85,7 @@ public:
     template<class... Args>
     const Song& play(Args&&... songData)
     {
-        m_tracklist.emplace_back(songData...);
+        m_tracklist.emplace_back(std::forward<Args>(songData)...);
         return m_tracklist.back();
     }
 
@@ -107,7 +99,7 @@ public:
     /** Get first track in playlist stack */
     const Song& current() const
     {
-        return m_tracklist.front();
+        return m_tracklist.back();
     }
 
     /** Skip to the next track in playlist, remove current */
@@ -115,8 +107,7 @@ public:
     {
         if(hasTracks())
         {
-            //first is current, so erase first, second will be current
-            m_tracklist.erase(m_tracklist.begin());
+            (void)m_tracklist.pop_back();
         }
         else
         {
