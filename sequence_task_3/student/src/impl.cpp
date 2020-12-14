@@ -2,18 +2,22 @@
 #include <algorithm>
 #include <string>
 #include <numeric>
-#include <iostream>
+#include <sstream>
 
 std::string reverseWords(const std::string& input) {
-    std::deque<std::string> strDeq;
+    std::deque<std::string> dequeResultString;
     std::string world;
-    std::stringstream myString(input);
+    std::stringstream inputString(input);
 
-    while (myString >> world) {
-        strDeq.push_front(world);
-        strDeq.push_front(" ");
-    }
+    for_each(std::istream_iterator<std::string>(inputString), std::istream_iterator<std::string>(),
+        [&dequeResultString](const std::string& word) { dequeResultString.push_front(word);
+                                                        dequeResultString.push_front(" ");});
 
-    std::string result = std::accumulate(strDeq.begin(), strDeq.end(), result);
+    std::ostringstream outputString;
+
+    std::copy(dequeResultString.rbegin(), dequeResultString.rend(),
+                std::ostream_iterator<std::string>(outputString));
+
+    std::string result(outputString.str());
     return result;
 }
