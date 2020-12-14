@@ -31,12 +31,12 @@ public:
     using const_reference = typename Container::const_reference;
 
     /** @todo Iterators */
-    const_iterator begin()
+    const_iterator begin() const
     {
         return m_tracklist.cbegin();
     }
 
-    const_iterator end()
+    const_iterator end() const
     {
         return m_tracklist.cend();
     }
@@ -44,14 +44,14 @@ public:
     /** @todo Constructor from any reversible sequence container */
     template<class OtherContainer>
     StaticPlaylist(const OtherContainer& otherConatiner)
-        : m_tracklist(otherConatiner.cbegin(), otherConatiner.cend())
+        : m_tracklist(otherConatiner.crbegin(), otherConatiner.crend())
     {}
 
     /** @todo Assignment from any reversible sequence container */
     template<class OtherContainer>
     Container& operator=(const OtherContainer& otherConatiner)
     {
-        m_tracklist.assign(otherConatiner.cbegin(), otherConatiner.cend());
+        m_tracklist.assign(otherConatiner.crbegin(), otherConatiner.crend());
         return m_tracklist;
     }
 
@@ -59,13 +59,13 @@ public:
     template<class... Args>
     const Song& play(Args&&... songData)
     {
-        return *m_tracklist.insert(end(), {Song(std::forward<Args>(songData))...});
+        return *m_tracklist.emplace(begin(), Song(std::forward<Args>(songData))...);
     }
 
     /** @todo Add track */
     const Song& play(const Song& song)
     {
-        return m_tracklist.push_back(song);
+        return *m_tracklist.emplace(begin(), song);
     }
 
     /** @todo Get first track in playlist stack */
@@ -75,7 +75,7 @@ public:
         {
             throw std::out_of_range("Playlist is empty");
         }
-        return m_tracklist.front();
+        return m_tracklist.back();
     }
 
     /** @todo Skip to the next track in playlist, remove current */
@@ -85,7 +85,7 @@ public:
         {
             throw std::out_of_range("Playlist is empty");
         }
-        m_tracklist.erase(begin());
+        m_tracklist.pop_back();
     }
 
     /** @todo Amount of tracks in playlist */
