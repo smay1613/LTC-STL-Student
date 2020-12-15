@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <algorithm>
+#include <memory>
 
 struct Song
 {
@@ -51,9 +52,9 @@ public:
     template<class T>
     StaticPlaylist& operator=(const T& other)
     {
-        m_tracklist.clear()
+        m_tracklist.clear();
         m_tracklist.assign(other.begin(), other.end());
-        
+
         return *this;
     }
 
