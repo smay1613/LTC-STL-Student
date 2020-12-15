@@ -14,16 +14,12 @@ bool isValid(const std::string& source)
     std::stack<char> stack;
     for (const auto& bracket : source) {
         auto it = std::find_if(brackets.begin(), brackets.end(), [&](std::pair<char, char> const p) {
-            if (p.first == bracket || p.second == bracket) {
-                return true;
-            }
-            return false;
+            return (p.first == bracket || p.second == bracket) ? true : false;
         });
         if (it == brackets.end()) {
             continue;
         }
-
-        if (bracket == it->first) {
+        if (it->first == bracket) {
             stack.push(bracket);
         } else {
             if (stack.empty()) {
@@ -35,9 +31,5 @@ bool isValid(const std::string& source)
             stack.pop();
         }
     }
-    if (stack.empty()) {
-        return true;
-    } else {
-        return false;
-    }
+    return stack.empty();
 }
