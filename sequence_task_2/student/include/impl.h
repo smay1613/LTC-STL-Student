@@ -1,6 +1,6 @@
 #pragma once
 #include <list>
-
+#include <algorithm>
 /** @todo implement effective list rotation algorithm
  *
  * T - value type
@@ -14,4 +14,8 @@
  * @note See https://en.cppreference.com/w/cpp/algorithm/rotate
  */
 template<class T, class BI>
-void rotate(std::list<T>& list, BI begin, BI new_begin, BI end);
+void rotate(std::list<T>& list, BI begin, BI new_begin, BI end){
+
+    std::rotate(begin, new_begin, end);
+}
+
