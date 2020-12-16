@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
-#include <map>
-
+#include <unordered_set>
 /**
  * @todo Implement function that will check if one string has the same characters
  * as the second one
@@ -15,24 +14,7 @@
  */
 
 bool is_anagram(const std::string& first, const std::string& second){
-    std::map<char,int> charMap;
-    for (char currentChar : first) {
-        auto iterator = charMap.lower_bound(currentChar);
-        if (iterator == charMap.end())
-            charMap[currentChar] = 1;
-        else
-            charMap[currentChar] = charMap[currentChar] + 1;
-    }
-    for (char currentChar : second) {
-        auto iterator = charMap.lower_bound(currentChar);
-        if (iterator == charMap.end())
-            return false;
-        else
-            charMap[currentChar] = charMap[currentChar] - 1;
-    }
-    for (auto i : charMap) {
-        if(i.second != 0)
-            return false;
-    }
-    return true;
+    std::unordered_multiset<char> firstWord(first.begin(), first.end());
+    std::unordered_multiset<char> secondWord(second.begin(), second.end());
+    return firstWord == secondWord;
 }
