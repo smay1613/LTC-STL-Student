@@ -13,48 +13,5 @@
  *
  * @return true if expression is valid
  */
-bool isValid(const std::string& source)
-{
-   std::stack<char> charsStack;
-   bool result = true;
+bool isValid(const std::string& source);
 
-   auto checkCloseBrackets{[&charsStack](const char ch){
-         if (!charsStack.empty() && ch == charsStack.top())
-         {
-            charsStack.pop();
-            return true;
-         }
-         else
-         {
-            return false;
-         }
-      }};
-
-   for (const char& ch : source)
-   {
-      switch (ch) {
-      case '(':
-      case '[':
-      case '{':
-         charsStack.push(ch);
-         break;
-      case ')':
-         result = checkCloseBrackets('(');
-         break;
-      case ']':
-         result = checkCloseBrackets('[');
-         break;
-      case '}':
-         result = checkCloseBrackets('{');
-         break;
-      default:
-         continue;
-         break;
-      }
-
-      if (!result){
-         break;
-      }
-   }
-   return result && charsStack.empty();
-}
