@@ -18,11 +18,14 @@ bool isValid(const std::string &source)
         const auto typeIt = std::find_if(brackets.cbegin(), brackets.cend(),
                                          [c](const std::pair<char, char>& type)
                                          { return c == type.first || c == type.second; });
+        const auto isMatchingClosingBracket = [c, typeIt, &stack]()
+                                              { return !stack.empty() && stack.top() == typeIt->first && c == typeIt->second; };
+
         if (brackets.cend() == typeIt)
         {
             continue;
         }
-        else if (!stack.empty() && stack.top() == typeIt->first && c == typeIt->second)
+        else if (isMatchingClosingBracket())
         {
             stack.pop();
         }
