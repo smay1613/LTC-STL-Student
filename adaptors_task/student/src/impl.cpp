@@ -16,7 +16,7 @@ bool isValid(const std::string& source)
         auto it = std::find_if(brackets.begin(), brackets.end(), [&](std::pair<char, char> const p) {
             return p.first == bracket || p.second == bracket;
         });
-        if (it != brackets.end()) {
+        if (const bool isBracket = it != brackets.end()) {
             if (const bool isOpenBracket = it->first == bracket) {
                 stack.push(bracket);
             }
