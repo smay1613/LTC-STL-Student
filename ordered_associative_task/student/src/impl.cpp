@@ -2,7 +2,15 @@
 
 size_t convertMarkTo5PointSystem(size_t markIn100Point)
 {
-    std::map <size_t, size_t> converter {{29, 1}, {49, 2}, {69, 3}, {89, 4}, {90, 5}};
-    auto result = converter.lower_bound(markIn100Point);
-    return converter.end() != result ? result->second : converter.at(90);
+    enum Point
+    {
+        ONE = 1,
+        TWO,
+        THREE,
+        FOUR,
+        MAX_POINT
+    };
+    const std::map <size_t, size_t> converter {{29, Point::ONE}, {49, Point::TWO}, {69, Point::THREE}, {89, Point::FOUR}, {90, Point::MAX_POINT}};
+    const auto result = converter.lower_bound(markIn100Point);
+    return converter.end() != result ? result->second : Point::MAX_POINT;
 }
