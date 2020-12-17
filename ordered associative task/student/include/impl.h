@@ -17,18 +17,14 @@
  */
 
 size_t convertMarkTo5PointSystem(size_t markIn100Point){
-    std::map<size_t, size_t> MarksMap {
-        {29,1},
-        {49,2},
-        {69,3},
-        {89,4},
-        {100,5}
+    const std::map<size_t, size_t> MarksMap {
+        {0, 1},
+        {30, 2},
+        {50, 3},
+        {70, 4},
+        {90, 5}
     };
 
-    std::map<size_t,size_t>::iterator iterator;
-
-    iterator = MarksMap.lower_bound(markIn100Point);
-    if (iterator == MarksMap.end())
-        return 5;
-    return iterator->second;
+    auto iterator = MarksMap.upper_bound(markIn100Point);
+    return (--iterator)->second;
 }
