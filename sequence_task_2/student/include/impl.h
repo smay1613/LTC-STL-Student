@@ -1,7 +1,5 @@
 #pragma once
 #include <list>
-#include <iterator>
-#include <algorithm>
 
 /** @todo implement effective list rotation algorithm
  *
@@ -16,14 +14,4 @@
  * @note See https://en.cppreference.com/w/cpp/algorithm/rotate
  */
 template<class T, class BI>
-void rotate(std::list<T>& list, BI begin, BI new_begin, BI end)
-{
-    std::reverse(begin, new_begin);
-    std::reverse(new_begin, end);
-
-    while(begin != new_begin && new_begin != end)
-        std::iter_swap(begin++, --end);
-
-    if   (begin == new_begin) std::reverse(new_begin, end);
-    else                      std::reverse(begin, new_begin);
-}
+void rotate(std::list<T>& list, BI begin, BI new_begin, BI end);
