@@ -21,10 +21,8 @@ bool isValid(const std::string& source) {
     if (it != brackets.end()) {
       if (symbol == it->first) {
         result.push(symbol);
-      } else if (result.empty()) {
-        return false;
       } else {
-        if (result.top() == it->first) {
+        if (!result.empty() && result.top() == it->first) {
           result.pop();
         } else {
           return false;
