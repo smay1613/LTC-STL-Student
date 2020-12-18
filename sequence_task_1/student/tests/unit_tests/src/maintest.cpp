@@ -103,7 +103,7 @@ TEST(Initialization, FromLvalue)
     basic_container data {Song{"example1"}, Song{"example2"}};
     Tracklist playlist {data};
 
-    Song newSong {"example3"};
+    const Song newSong {"example3"};
 
     EXPECT_EQ(playlist.play(newSong), newSong);
 }
