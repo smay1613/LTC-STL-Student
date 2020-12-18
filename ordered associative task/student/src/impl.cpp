@@ -9,5 +9,5 @@ size_t convertMarkTo5PointSystem(size_t markIn100Point) {
 
     auto result = markMap.lower_bound(markIn100Point);
 
-    return result != markMap.end() ? result->second : (--markMap.end())->second + 1;
+    return result != markMap.end() ? result->second : 5;
 }
