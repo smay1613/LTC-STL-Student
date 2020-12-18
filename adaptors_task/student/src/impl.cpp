@@ -12,8 +12,7 @@ const std::vector<std::pair<char, char>> brackets {
 
 bool isValid(const std::string& source)
 {
-    bool ret = true;
-    std::stack<char> tempBrackets;
+    std::stack<char> parsedBrackets;
     for (const char c : source)
     {
         auto currentBracket = std::find_if(brackets.cbegin(), brackets.cend(),
@@ -21,20 +20,21 @@ bool isValid(const std::string& source)
 
         if (currentBracket != brackets.cend())
         {
-            if (c == currentBracket->first)
+            const bool isBracketOpen = c == currentBracket->first;
+            const bool isCloseBracketEqualOpened = !parsedBrackets.empty() && parsedBrackets.top() == currentBracket->first;
+            if (isBracketOpen)
             {
-                tempBrackets.push(c);
+                parsedBrackets.push(c);
             }
-            else if (!tempBrackets.empty() && tempBrackets.top() == currentBracket->first)
+            else if (isCloseBracketEqualOpened)
             {
-                tempBrackets.pop();
+                parsedBrackets.pop();
             }
             else
             {
-                ret = false;
-                break;
+                return false; //violation principe "one entry - one exit"
             }
         }
     }
-    return ret && tempBrackets.empty();
+    return parsedBrackets.empty();
 }
