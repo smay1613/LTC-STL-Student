@@ -17,22 +17,26 @@
  */
 size_t convertMarkTo5PointSystem(size_t markIn100Point)
 {
-    std::map<size_t, size_t> conv = { {0, 1},
-                                 {29, 1},
-                                 {30, 2},
-                                 {49, 2},
-                                 {50, 3},
-                                 {69, 3},
-                                 {70, 4},
-                                 {89, 4},
-                                 {90, 5}
-                                };
+    const size_t DEFAULT_VALID_VALUE = 5;
 
-    auto lower_ = conv.lower_bound(markIn100Point);
+    std::map<size_t, size_t> conv = {{0, 1},
+                                     {30, 2},
+                                     {50, 3},
+                                     {70, 4},
+                                     {90, 5}
+                                    };
 
-    if(lower_ != conv.end()) {
-        return lower_->second;
+    auto upper_ = conv.upper_bound(markIn100Point);
+
+    size_t result;
+
+    if(upper_ == conv.begin()) {
+        result = DEFAULT_VALID_VALUE;
+    } else if(upper_ != conv.end()) {
+        result = --upper_->second;
     } else {
-        return 5;
+        result = DEFAULT_VALID_VALUE;
     }
+
+    return result;
 }
