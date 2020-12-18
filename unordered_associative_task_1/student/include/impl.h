@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <set>
 
 /**
  * @todo Implement function that will check if one string has the same characters
@@ -12,4 +13,9 @@
  * @param second - second word
  * @return true if first is anagram of second
  */
-bool is_anagram(const std::string& first, const std::string& second);
+bool is_anagram(const std::string& first, const std::string& second)
+{
+    const std::multiset<char> firstWord{first.cbegin(), first.cend()};
+    const std::multiset<char> secondWord{second.cbegin(), second.cend()};
+    return firstWord == secondWord;
+}
