@@ -1,8 +1,10 @@
 #pragma once
-#include <vector>
+#include <filesystem>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
+namespace fs = std::filesystem;
 using filtering_map = std::unordered_map<size_t, std::vector<std::string>>;
 
 /** @todo With help of std filesystem, lists all regular files under specified directory recursively*/
@@ -12,7 +14,7 @@ std::vector<std::string> listFiles(const std::string& directory);
 void removeUniqueGroups(filtering_map& filteredData);
 
 /** @todo Implement function that will transform map to a vector */
-std::vector<std::string> flattenGrouped (const filtering_map& grouped);
+std::vector<std::string> flattenGrouped(const filtering_map& grouped);
 
 /**
  * @todo Implement function that fill find duplicated files under the directory recursively
