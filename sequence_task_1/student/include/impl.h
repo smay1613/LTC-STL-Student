@@ -1,11 +1,7 @@
 #pragma once
 #include <string>
-
-#if __cplusplus >= 201103L
-#include <initializer_list>
-#endif
-
 #include <memory>
+#include <algorithm>
 
 struct Song
 {
@@ -31,104 +27,121 @@ public:
     using const_reference = typename Container::const_reference;
     using pointer = typename Container::pointer;
     using const_pointer = typename Container::const_pointer;
-    using iterator = __gnu_cxx::__normal_iterator<pointer, Container>;
-    using const_iterator = __gnu_cxx::__normal_iterator<const_pointer, Container>;
-    using difference_type = typename Container::difference_type/*ptrdiff_t*/;
-    using size_type = size_t;
-    using reverse_iterator = std::reverse_iterator<iterator>;
-    using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+    using iterator = typename Container::iterator;
+    using const_iterator = typename Container::const_iterator;
+    using difference_type = typename Container::difference_type;
+    using size_type = typename Container::size_type;//size_t;
+    using reverse_iterator = typename Container::reverse_iterator;//std::reverse_iterator<iterator>;
+    using const_reverse_iterator = typename Container::const_reverse_iterator;//std::reverse_iterator<const_iterator>;
 
     /** @todo Iterators */
     /**
      *  Returns a read-only (constant) iterator that points to the
-     *  first element in the %vector.  Iteration is done in ordinary
+     *  first element in the %underlying container.  Iteration is done in ordinary
      *  element order.
      */
     const_iterator
     begin() const _GLIBCXX_NOEXCEPT
-    { return const_iterator(this->m_tracklist.cbegin()); }
+    {
+        //return const_iterator(this->m_tracklist.cbegin());
+        return m_tracklist.begin();
+    }
 
     /**
      *  Returns a read-only (constant) iterator that points one past
-     *  the last element in the %vector.  Iteration is done in
+     *  the last element in the %underlying container.  Iteration is done in
      *  ordinary element order.
      */
     const_iterator
     end() const _GLIBCXX_NOEXCEPT
-    { return const_iterator(this->m_tracklist.cend()); }
+    {
+        //return const_iterator(this->m_tracklist.cend());
+        m_tracklist.end();
+    }
 
     /**
      *  Returns a read-only (constant) reverse iterator that points
-     *  to the last element in the %vector.  Iteration is done in
+     *  to the last element in the %underlying container.  Iteration is done in
      *  reverse element order.
      */
     const_reverse_iterator
     rbegin() const _GLIBCXX_NOEXCEPT
-    { return const_reverse_iterator(end()); }
+    {
+        //return const_reverse_iterator(end());
+        return m_tracklist.rbegin();
+    }
 
     /**
      *  Returns a read-only (constant) reverse iterator that points
-     *  to one before the first element in the %vector.  Iteration
+     *  to one before the first element in the %underlying container.  Iteration
      *  is done in reverse element order.
      */
     const_reverse_iterator
     rend() const _GLIBCXX_NOEXCEPT
-    { return const_reverse_iterator(begin()); }
+    {
+        //return const_reverse_iterator(begin());
+        return m_tracklist.rend();
+    }
 
 #if __cplusplus >= 201103L
     /**
      *  Returns a read-only (constant) iterator that points to the
-     *  first element in the %vector.  Iteration is done in ordinary
+     *  first element in the %underlying container.  Iteration is done in ordinary
      *  element order.
      */
     const_iterator
     cbegin() const noexcept
-    { return const_iterator(this->m_tracklist.cbegin()); }
+    {
+        //return const_iterator(this->m_tracklist.cbegin());
+        return m_tracklist.cbegin();
+    }
 
     /**
      *  Returns a read-only (constant) iterator that points one past
-     *  the last element in the %vector.  Iteration is done in
+     *  the last element in the %underlying container.  Iteration is done in
      *  ordinary element order.
      */
     const_iterator
     cend() const noexcept
-    { return const_iterator(this->m_tracklist.cend()); }
+    {
+        //return const_iterator(this->m_tracklist.cend());
+        return m_tracklist.cend();
+    }
 
     /**
      *  Returns a read-only (constant) reverse iterator that points
-     *  to the last element in the %vector.  Iteration is done in
+     *  to the last element in the %underlying container.  Iteration is done in
      *  reverse element order.
      */
     const_reverse_iterator
     crbegin() const noexcept
-    { return const_reverse_iterator(end()); }
+    {
+        //return const_reverse_iterator(end());
+        return m_tracklist.crbegin();
+    }
 
     /**
      *  Returns a read-only (constant) reverse iterator that points
-     *  to one before the first element in the %vector.  Iteration
+     *  to one before the first element in the %underlying container.  Iteration
      *  is done in reverse element order.
      */
     const_reverse_iterator
     crend() const noexcept
-    { return const_reverse_iterator(begin()); }
+    {
+        //return const_reverse_iterator(begin());
+        return m_tracklist.crend();
+    }
 #endif
 
     /** @todo Constructor from any reversible sequence container */
     /**
-     *  @brief  Creates a %vector with no elements.
+     *  @brief  Creates a %underlying container with no elements.
      */
-    StaticPlaylist()
-    {
-        m_tracklist();
-    }
+    StaticPlaylist() = default;
 
     template<class T>
-    StaticPlaylist(std::initializer_list<T>& __l)
-    {
-        for(const T& i: __l) {
-            m_tracklist.push_back(i);
-        }
-    }
+    StaticPlaylist(std::initializer_list<T>& __l) : m_tracklist({__l.crbegin(), __l.crend()})
+    {}
 
     /**
      *  @brief  %StaticPlaylist copy constructor.
@@ -137,9 +150,7 @@ public:
     template<class T>
     StaticPlaylist(const T& __x)
     {
-        for(typename T::const_iterator i = __x.begin(); i != __x.end(); ++i) {
-            m_tracklist.push_back(*i);
-        }
+        m_tracklist.assign(__x.rbegin(), __x.rend());
     }
 
 #if __cplusplus >= 201103L
@@ -147,12 +158,10 @@ public:
      *  @brief  %StaticPlaylist move constructor.
      */
     StaticPlaylist(Container&& __x)
-    : m_tracklist(std::forward(__x)) { }
-
-    /**
-     *  @brief  Builds a %StaticPlaylist from an initializer list.
-     *  @param  __l  An initializer_list.
-     */
+    : m_tracklist(/*std::forward(__x)*/__x)
+    {
+        std::reverse(m_tracklist.begin(), m_tracklist.end());
+    }
 #endif
 
     /**
@@ -165,28 +174,19 @@ public:
          typename = std::_RequireInputIter<_InputIterator>>
     StaticPlaylist(_InputIterator __first, _InputIterator __last)
     {
-        m_tracklist(__first, __last);
+        m_tracklist({__first, __last});
+        std::reverse(m_tracklist.begin(), m_tracklist.end());
     }
 #else
     template<typename _InputIterator>
-    vector(_InputIterator __first, _InputIterator __last)
+    StaticPlaylist(_InputIterator __first, _InputIterator __last)
     {
         // Check whether it's an integral type.  If so, it's not an iterator.
         typedef typename std::__is_integer<_InputIterator>::__type _Integral;
         m_tracklist(__first, __last);
+        std::reverse(m_tracklist.begin(), m_tracklist.end());
     }
 #endif
-
-    /**
-     *  The dtor only erases the elements, and note that if the
-     *  elements themselves are pointers, the pointed-to memory is
-     *  not touched in any way.  Managing the pointer is the user's
-     *  responsibility.
-     */
-    ~StaticPlaylist() _GLIBCXX_NOEXCEPT
-    {
-        std::_Destroy(this->m_tracklist.begin(), this->m_tracklist.end());
-    }
 
     /** @todo Assignment from any reversible sequence container */
     /**
@@ -196,7 +196,7 @@ public:
       StaticPlaylist&
       operator=(const T& __x)
       {
-          m_tracklist.assign(__x.cbegin(), __x.cend());
+          m_tracklist.assign(__x.crbegin(), __x.crend());
           return *this;
       }
 
@@ -207,6 +207,7 @@ public:
       operator=(Container&& __x)
       {
           m_tracklist(std::move(__x));
+          std::reverse(m_tracklist.begin(), m_tracklist.end());
           return *this;
       }
 
@@ -217,7 +218,7 @@ public:
       StaticPlaylist&
       operator=(std::initializer_list<value_type> __l)
       {
-          m_tracklist.assign(__l);
+          m_tracklist.assign(__l.begin(), __l.end());
           return *this;
       }
 
@@ -226,7 +227,6 @@ public:
     const Song& play(Args&&... songData)
     {
         m_tracklist.emplace_back(std::forward<Args>(songData)...);
-        std::iter_swap(m_tracklist.begin(), prev(m_tracklist.end()));
         return current();
     }
 
@@ -234,21 +234,20 @@ public:
     const Song& play(const Song& song)
     {
         m_tracklist.push_back(song);
-        std::iter_swap(m_tracklist.begin(), prev(m_tracklist.end()));
         return current();
     }
 
     /** @todo Get first track in playlist stack */
     const Song& current() const
     {
-        return m_tracklist.at(0);
+        return m_tracklist.back();
     }
 
     /** @todo Skip to the next track in playlist, remove current */
     void switchNext()
     {
         if(!m_tracklist.empty()) {
-            m_tracklist.erase(m_tracklist.begin());
+            m_tracklist.erase(prev(m_tracklist.end()));
         } else {
             throw std::out_of_range("error");
         }
