@@ -31,13 +31,6 @@ auto xx_file_size = [](const std::string& file) {
     return fs::file_size(file);
 };
 
-auto xx = [](const std::string& file) {
-    auto size = xx_file_size(file);
-    auto hash = xx_hash(file);
-
-    return size + hash;
-};
-
 struct FileObject {
     explicit FileObject(const std::string& name)
         : filename { name }
@@ -116,7 +109,7 @@ std::vector<std::vector<std::string>> findDuplicates(const std::string& rootPath
 {
     auto files = listFiles(rootPath);
 
-    // filter by size
+    // not filtered by size!
     // filter by content
     auto groupped_duplicates = groupDuplicates(files, xx_hash);
 
