@@ -53,7 +53,7 @@ struct FileObject {
 };
 
 /** @todo Implement filtering files by different buckets by specified criteria */
-template <class FilterCriteria>
+template<class FilterCriteria>
 filtering_map filter(const std::vector<std::string>& files, FilterCriteria filter)
 {
     filtering_map filteredFiles;
@@ -64,8 +64,8 @@ filtering_map filter(const std::vector<std::string>& files, FilterCriteria filte
 }
 
 /** @note HELPER */
-template <class Filter>
-filtering_map groupDuplicates(const std::vector<std::string>& dataSource, Filter filterCriteria)
+template<class Filter>
+filtering_map groupDuplicates (const std::vector<std::string>& dataSource, Filter filterCriteria)
 {
     auto grouped = filter(dataSource, filterCriteria);
     removeUniqueGroups(grouped);
