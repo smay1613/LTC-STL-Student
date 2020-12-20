@@ -7,10 +7,12 @@
 namespace fs = std::filesystem;
 
 // use this for hashing
-auto xx_hash = [](const std::string& file) {
-    std::ifstream stream { file };
+auto xx_hash = [] (const std::string &file)
+{
+    std::ifstream stream {file};
 
-    if (!stream) {
+    if (!stream)
+    {
         std::cerr << "File " << file << " can't be opened" << std::endl;
         return xxh::hash_t<64> {};
     }
