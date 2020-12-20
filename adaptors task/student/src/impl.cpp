@@ -6,30 +6,31 @@ const std::vector<std::pair<char, char>> brackets {
     {'[', ']'},
     {'{', '}'}
 };
+
 bool isValid(const std::string& source){
-    if (source.empty() or source.size()==1)
+    if (source.size()==1)
     {
         return false;
     }
-    std::stack<char> res;
+    std::stack<char> checkString;
 
-    for (auto stringCh : source) {
-        for (auto reg : brackets) {
-            if (stringCh == reg.first)
+    for (auto currentChar : source) {
+        for (auto bracket : brackets) {
+            if (currentChar == bracket.first)
+            {
+                checkString.push(currentChar);
+                continue;
+            }
+            else if (currentChar == bracket.second)
+            {
+                if (source.at(0) == bracket.second or checkString.top() != bracket.first)
                 {
-                    res.push(stringCh);
-                    continue;
+                    return false;
                 }
-                else if (stringCh == reg.second)
-                {
-                    if (res.empty() or source.at(0) == reg.second or res.top() != reg.first)
-                    {
-                        return false;
-                    }
-                    res.pop();
-                    continue;
-                }
+                checkString.pop();
+                continue;
             }
         }
-        return res.empty();
+    }
+    return checkString.empty();
 }
