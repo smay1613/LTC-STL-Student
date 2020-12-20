@@ -15,6 +15,7 @@ set(BUILDDIR ${ROOT_DIR}/build)
 set(TEST ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BUILDDIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${BUILDDIR}/bin)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(LESSONS_ROOT ${ROOT_DIR}/../../)
 
@@ -26,8 +27,9 @@ set_target_properties(duplicates_search_HOMEWORK PROPERTIES
                         PUBLIC_HEADER "${headers}"
 )
 
-
 target_link_libraries(duplicates_search_HOMEWORK PRIVATE stdc++fs)
+#target_link_libraries(duplicates_search_HOMEWORK stdc++fs)
+#target_link_libraries(${PROJECT_NAME} stdc++fs)
 
 
 target_include_directories(duplicates_search_HOMEWORK
