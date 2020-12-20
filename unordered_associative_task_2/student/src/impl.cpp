@@ -77,11 +77,13 @@ std::vector<std::string> listFiles(const std::string& directory)
 /** @todo Implement function that will remove group in if it has only one or zero elements */
 void removeUniqueGroups(filtering_map& filteredData)
 {
-    for (auto& key_files : filteredData) {
+    for (auto const& key_files : filteredData) {
         if (key_files.second.size() == 1) {
             filteredData.erase(key_files.first);
         }
     }
+
+    std::cout << "void removeUniqueGroups(filtering_map& filteredData)" << std::endl;
 }
 
 /** @todo Implement function that will transform map to a vector */
@@ -107,6 +109,9 @@ std::vector<std::vector<std::string>> findDuplicates(const std::string& rootPath
     filtering_map filtered_by_size = filter<>(files, filesize);
     // filter by content
     //    filtering_map filtered_by_content = filter<>(files, xx_hash);
+
+    // remove unique groups
+    removeUniqueGroups(filtered_by_size);
 
     // flatten
     std::vector<std::vector<std::string>> result = { flattenGrouped(filtered_by_size) };

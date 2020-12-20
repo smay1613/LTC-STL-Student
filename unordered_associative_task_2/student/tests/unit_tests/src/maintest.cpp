@@ -19,20 +19,19 @@ TEST_F(ThreeFiles, OneGroupThreeFiles)
     listFiles("sandbox");
 }
 
-//TEST_F(ThreeFiles, ThreeGroupsOneFile)
-//{
-//    files[0] << "11";
-//    files[1] << "12";
-//    files[2] << "13";
+TEST_F(ThreeFiles, ThreeGroupsOneFile)
+{
+    files[0] << "11";
+    files[1] << "12";
+    files[2] << "13";
 
-//    for (auto& file : files)
-//    {
-//        file.close();
-//    }
+    for (auto& file : files) {
+        file.close();
+    }
 
-//    std::vector<std::vector<std::string>> groups {findDuplicates("sandbox")};
-//    EXPECT_EQ(groups.size(), 0);
-//}
+    std::vector<std::vector<std::string>> groups { findDuplicates("sandbox") };
+    EXPECT_EQ(groups.size(), 0);
+}
 
 //TEST_F(ThreeFiles, Reversed)
 //{
