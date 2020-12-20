@@ -1,7 +1,9 @@
 #include "impl.h"
-#include "xxhash.h"
+
 #include <filesystem>
 #include <fstream>
+#include <numeric>
+#include "xxhash.h"
 #include <iostream>
 
 namespace fs = std::filesystem;
