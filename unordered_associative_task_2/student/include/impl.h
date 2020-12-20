@@ -1,7 +1,7 @@
 #pragma once
+#include <vector>
 #include <string>
 #include <unordered_map>
-#include <vector>
 
 using filtering_map = std::unordered_map<size_t, std::vector<std::string>>;
 
