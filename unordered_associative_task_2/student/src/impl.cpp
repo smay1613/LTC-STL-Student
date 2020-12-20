@@ -4,6 +4,8 @@
 #include <fstream>
 #include <iostream>
 
+namespace fs = std::filesystem;
+
 // use this for hashing
 auto xx_hash = [](const std::string& file) {
     std::ifstream stream { file };

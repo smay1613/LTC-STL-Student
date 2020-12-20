@@ -1,10 +1,8 @@
 #pragma once
-#include <filesystem>
 #include <string>
 #include <unordered_map>
 #include <vector>
 
-namespace fs = std::filesystem;
 using filtering_map = std::unordered_map<size_t, std::vector<std::string>>;
 
 /** @todo With help of std filesystem, lists all regular files under specified directory recursively*/
