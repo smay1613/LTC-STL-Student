@@ -6,17 +6,6 @@
 #include <numeric>
 #include <vector>
 
-struct File {
-    std::string filename;
-    size_t size;
-    size_t hash;
-
-    bool operator<(const File& rhs)
-    {
-        return std::tie(size, hash) < std::tie(rhs.size, rhs.hash);
-    }
-};
-
 // use this for hashing
 auto xx_hash = [](const std::string& file) {
     std::ifstream stream { file };
@@ -33,7 +22,7 @@ auto xx_hash = [](const std::string& file) {
     return xxh::xxhash<64>(buffer);
 };
 
-auto filesize = [](const std::string& file) {
+auto xx_file_size = [](const std::string& file) {
     std::ifstream stream { file };
     if (!stream) {
         std::cerr << "File " << file << " can't be opened" << std::endl;
@@ -42,14 +31,38 @@ auto filesize = [](const std::string& file) {
     return fs::file_size(file);
 };
 
+auto xx = [](const std::string& file) {
+    auto size = xx_file_size(file);
+    auto hash = xx_hash(file);
+
+    return size + hash;
+};
+
+struct FileObject {
+    explicit FileObject(const std::string& name)
+        : filename { name }
+        , size { xx_file_size(filename) }
+        , hash { xx_hash(filename) }
+    {
+    }
+
+    bool operator<(const FileObject& rhs)
+    {
+        return std::tie(size, hash) < std::tie(rhs.size, rhs.hash);
+    }
+
+    std::string filename;
+    size_t size;
+    size_t hash;
+};
+
 /** @todo Implement filtering files by different buckets by specified criteria */
 template <class FilterCriteria>
 filtering_map filter(const std::vector<std::string>& files, FilterCriteria filter)
 {
     filtering_map filteredFiles;
-    for (auto const& file : files) {
-        auto criteria = filter(file);
-        filteredFiles[criteria].push_back(file);
+    for (auto const& fileName : files) {
+        filteredFiles[filter(fileName)].push_back(fileName);
     }
     return filteredFiles;
 }
@@ -67,9 +80,10 @@ filtering_map groupDuplicates(const std::vector<std::string>& dataSource, Filter
 std::vector<std::string> listFiles(const std::string& directory)
 {
     std::vector<std::string> fileNames;
-    for (auto& p : fs::directory_iterator(directory)) {
-        std::cout << p.path().filename().string() << '\n';
-        fileNames.push_back(p.path());
+    for (auto& p : fs::recursive_directory_iterator(directory)) {
+        if (fs::is_regular_file(p)) {
+            fileNames.push_back(p.path().string());
+        }
     }
     return fileNames;
 }
@@ -77,43 +91,40 @@ std::vector<std::string> listFiles(const std::string& directory)
 /** @todo Implement function that will remove group in if it has only one or zero elements */
 void removeUniqueGroups(filtering_map& filteredData)
 {
-    for (auto const& key_files : filteredData) {
-        if (key_files.second.size() == 1) {
-            filteredData.erase(key_files.first);
-        }
+    for (auto it = filteredData.begin(); it != filteredData.end();) {
+        if (it->second.size() == 1)
+            it = filteredData.erase(it);
+        else
+            ++it;
     }
-
-    std::cout << "void removeUniqueGroups(filtering_map& filteredData)" << std::endl;
 }
 
 /** @todo Implement function that will transform map to a vector */
-std::vector<std::string> flattenGrouped(const filtering_map& grouped)
+std::vector<std::vector<std::string>> flattenGrouped(const filtering_map& grouped)
 {
-    std::vector<std::string> result;
-    for (auto& key_files : grouped) {
-        for (auto& fileName : key_files.second) {
-            result.push_back(fileName);
+    std::vector<std::vector<std::string>> groups;
+    for (auto const& group : grouped) {
+        if (!group.second.empty()) {
+            std::vector<std::string> files(group.second.begin(), group.second.end());
+            groups.emplace_back(files);
         }
     }
-    return result;
+    return groups;
 }
 
 std::vector<std::vector<std::string>> findDuplicates(const std::string& rootPath)
 {
-    std::cout << "std::vector<std::vector<std::string>> findDuplicates(const std::string& rootPath)" << std::endl;
-    std::cout << rootPath << std::endl;
-
     auto files = listFiles(rootPath);
 
     // filter by size
-    filtering_map filtered_by_size = filter<>(files, filesize);
     // filter by content
-    //    filtering_map filtered_by_content = filter<>(files, xx_hash);
+    auto groupped_duplicates = groupDuplicates(files, xx_hash);
 
     // remove unique groups
-    removeUniqueGroups(filtered_by_size);
+    removeUniqueGroups(groupped_duplicates);
 
     // flatten
-    std::vector<std::vector<std::string>> result = { flattenGrouped(filtered_by_size) };
-    return result;
+    std::vector<std::vector<std::string>> duplicates = flattenGrouped(groupped_duplicates);
+
+    return duplicates;
 }
