@@ -1,6 +1,8 @@
 #include "maintest.h"
+#include <filesystem>
 
 using namespace ::testing;
+namespace fs = std::filesystem;
 
 TEST_F(ThreeFiles, OneGroupThreeFiles)
 {

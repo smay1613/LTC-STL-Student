@@ -1,5 +1,4 @@
 #include "impl.h"
-
 #include <filesystem>
 #include <fstream>
 #include <numeric>
