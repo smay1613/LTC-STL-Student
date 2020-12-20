@@ -3,8 +3,6 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
-#include <numeric>
-#include <vector>
 
 // use this for hashing
 auto xx_hash = [](const std::string& file) {
