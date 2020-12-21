@@ -8,7 +8,6 @@ const std::vector<std::pair<char, char>> brackets {
 };
 
 bool isValid(const std::string& source){
-    if(source.size()==1){return false;}
     std::stack<char> checkString;
 
     for (auto currentChar : source) {
