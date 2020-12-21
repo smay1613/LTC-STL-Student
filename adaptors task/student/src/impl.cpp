@@ -8,10 +8,7 @@ const std::vector<std::pair<char, char>> brackets {
 };
 
 bool isValid(const std::string& source){
-    if (source.size()==1)
-    {
-        return false;
-    }
+    if(source.size()==1){return false;}
     std::stack<char> checkString;
 
     for (auto currentChar : source) {
@@ -23,7 +20,7 @@ bool isValid(const std::string& source){
             }
             else if (currentChar == bracket.second)
             {
-                if (source.at(0) == bracket.second or checkString.top() != bracket.first)
+                if (checkString.empty() or checkString.top() != bracket.first)
                 {
                     return false;
                 }
