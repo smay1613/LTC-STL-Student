@@ -71,7 +71,7 @@ _`sudo apt-get install cmake qtcreator git gcc`_
 ## Best practices and codestyle  
 If you want to improve your code style during the training, **please follow C++ Core Guidelines**.
 Especially, you must follow these rules:
-* https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#S-naming (MAKE YOUR CODE READABLE AS ENGLISH!)
+* https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#S-naming (MAKE YOUR CODE READABLE AS ENGLISH - AVOID ABBREVIATIONS AND MAGIC NUMBERS/VARIABLES!)
 * https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rcpl-C (USE C++, NOT C!)
 * https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#S-resource (DON'T MANUALLY CONTROL THE RESOURCES!)
 * https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#S-performance (DON'T OPTIMIZE JUST BECAUSE YOU WANT!)
