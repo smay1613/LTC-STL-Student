@@ -41,10 +41,13 @@ enum class AlcoholDrink
 
 enum class Cocktail
 {
-    Oops,
+    Oops = 0,
+
     Gimlet,
     Greyhount,
-    SevenPlusSeven
+    SevenPlusSeven,
+
+    MAX = SevenPlusSeven
 };
 
 template<size_t N>

@@ -17,14 +17,18 @@ include_directories(unit_tests
         ${UT_DIRECTORY}/headers
 )
 
-add_definitions(-DGTEST_LANGUAGE_CXX11)
+add_definitions(-DGTEST_LANGUAGE_CXX17)
 
 include(AddGTestTest)
 
 enable_testing()
 add_gtest_test(${PROJECT_NAME} "${sources}" cpp_bar_serving)
 
+set_target_properties(unit_tests PROPERTIES
+                        CXX_STANDARD 17
+)
+
 include_directories(
         PRIVATE
-        ${REPO_DIRECTORY}/include
+        ${ROOT_DIR}/include
         )
