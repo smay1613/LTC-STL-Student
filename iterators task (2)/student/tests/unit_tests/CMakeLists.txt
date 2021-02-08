@@ -26,5 +26,5 @@ add_gtest_test(${PROJECT_NAME} "${sources}" key_value_iterator_HOMEWORK)
 
 include_directories(
         PRIVATE
-        ${REPO_DIRECTORY}/include
+        ${ROOT_DIR}/include
         )

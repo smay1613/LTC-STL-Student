@@ -26,5 +26,5 @@ add_gtest_test(${PROJECT_NAME} "${sources}" duplicates_search_HOMEWORK stdc++fs)
 
 include_directories(
         PRIVATE
-        ${REPO_DIRECTORY}/include
+        ${ROOT_DIR}/include
         )
