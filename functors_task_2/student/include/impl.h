@@ -21,7 +21,7 @@ public:
      */
     void userEnter(const std::string& userId)
     {  // awful, but in header for testing
-        m_dataReaders.emplace(userId, getSelector());
+        m_dataReaders.emplace(userId, std::unique_ptr<IDataSelector>(getSelector()));
     }
 
     /** @todo THIS METHOD MUST USE safeCall idiom AND invokeDataRequest ON SUCCESS

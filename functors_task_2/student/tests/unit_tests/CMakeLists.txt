@@ -22,7 +22,7 @@ add_definitions(-DGTEST_LANGUAGE_CXX11)
 include(AddGTestTest)
 
 enable_testing()
-add_gtest_test(${PROJECT_NAME} "${sources}" SafeCallTaskHomework)
+add_gtest_test(${PROJECT_NAME} "${sources}" safe_call)
 
 include_directories(
         PRIVATE
