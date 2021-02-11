@@ -99,7 +99,11 @@ Especially, you must follow these rules:
    * _....create pull request on [Github](https://github.com/smay1613/LTC-STL-Student/pulls)...._
    * _Switch back to master branch:_  
         `git checkout master`
-        
+
+## How to sync a fork
+1. https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/configuring-a-remote-for-a-fork
+2. https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/syncing-a-fork
+
 ## Help wanted!
 If you want to get some experience, you can contribute to this repository:
 * Add more tests for practice
