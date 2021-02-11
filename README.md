@@ -59,7 +59,7 @@ _[Qt Creator + compiler](https://www.qt.io/download-qt-installer)_
 _[Git](https://git-scm.com/downloads)_
   
 For Ubuntu:  
-_`sudo apt-get install cmake qtcreator git`_  
+_`sudo apt-get install cmake qtcreator git gcc`_  
   
   
 ## Recommended environment
