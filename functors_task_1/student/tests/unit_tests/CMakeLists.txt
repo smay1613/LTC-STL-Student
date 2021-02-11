@@ -22,7 +22,7 @@ add_definitions(-DGTEST_LANGUAGE_CXX17)
 include(AddGTestTest)
 
 enable_testing()
-add_gtest_test(${PROJECT_NAME} "${sources}" is_anagram)
+add_gtest_test(${PROJECT_NAME} "${sources}" cpp_bar_serving)
 
 include_directories(
         PRIVATE
