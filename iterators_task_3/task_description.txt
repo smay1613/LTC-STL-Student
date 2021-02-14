@@ -1,0 +1,6 @@
+You must implement:
+Keys iterator
+Values iterator
+Generators for creating iterators
+ Simple map adaptors for iterating over keys or values
+ Generator for creating map adaptors

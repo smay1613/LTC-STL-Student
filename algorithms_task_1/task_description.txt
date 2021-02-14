@@ -1,0 +1,8 @@
+How could we describe algorithm, that will find a group of consecutive equal values in range and return pair of iterators for this group?
+
+Example: 
+9 9 8 8 8 6 7 7 7
+First group: [0, 2) -> (9, 9)
+Second group: [2, 5) -> (8, 8, 8)
+Third group: [6, 10) -> (7, 7, 7)
+

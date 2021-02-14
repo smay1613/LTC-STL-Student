@@ -1,0 +1,6 @@
+How can we check that string starts with another one?
+What the difference between alternatives? 
+
+Example: 
+“hello” and “hel” -> true
+“hello” and “hol” ->false
