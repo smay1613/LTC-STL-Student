@@ -36,16 +36,16 @@ using key_iterator = pair_iterator<Iterator, true>;
 template<class Iterator>
 using value_iterator = pair_iterator<Iterator, false>;
 
+/** @todo Value iterator generator */
 template <class MapIterator>
 value_iterator<MapIterator> make_value_iterator (MapIterator iterator)
 {
-    return value_iterator<MapIterator> {iterator};
 };
 
+/** @todo Key iterator generator */
 template <class MapIterator>
 key_iterator<MapIterator> make_key_iterator (MapIterator iterator)
 {
-    return key_iterator<MapIterator> {iterator};
 };
 
 template<class Map>
@@ -61,27 +61,11 @@ protected:
 template<class Map>
 struct map_keys_view : public base_map_view<Map>
 {
-    using iterator = key_iterator<typename Map::iterator>;
-    using const_iterator = key_iterator<typename Map::const_iterator>;
+    /** @todo Iterator alias */
 
     using base_map_view<Map>::base_map_view;
 
-    iterator begin()
-    {
-        return make_key_iterator(m_map.begin());
-    }
-    iterator end()
-    {
-        return make_key_iterator(m_map.end());
-    }
-    const_iterator begin() const
-    {
-        return make_key_iterator(m_map.cbegin());
-    }
-    const_iterator end() const
-    {
-        return make_key_iterator(m_map.cend());
-    }
+    /** @todo begin/end iterators */
 private:
     using base_map_view<Map>::m_map;
 };
@@ -89,55 +73,35 @@ private:
 template<class Map>
 struct map_values_view : public base_map_view<Map>
 {
-    using iterator = value_iterator<typename Map::iterator>;
-    using const_iterator = value_iterator<typename Map::const_iterator>;
+    /** @todo Iterator alias */
 
     using base_map_view<Map>::base_map_view;
 
-    iterator begin()
-    {
-        return make_value_iterator(m_map.begin());
-    }
-    iterator end()
-    {
-        return make_value_iterator(m_map.end());
-    }
-    const_iterator begin() const
-    {
-        return make_value_iterator(m_map.cbegin());
-    }
-    const_iterator end() const
-    {
-        return make_value_iterator(m_map.cend());
-    }
+    /** @todo begin/end iterators */
 private:
     using base_map_view<Map>::m_map;
 };
 
-/** Generator for values view*/
+/** @todo Generator for values view*/
 template <class Map>
 map_values_view<Map> make_values_view(Map& map)
 {
-    return map_values_view<Map> {map};
 }
 
-/**  Generator for keys view*/
+/**  @todo Generator for keys view*/
 template <class Map>
 map_keys_view<Map> make_keys_view(Map& map)
 {
-    return map_keys_view<Map> {map};
 }
 
-/**  Generator for const values view*/
+/**  @todo Generator for const values view*/
 template <class Map>
 const map_values_view<const Map> make_values_view(const Map& map)
 {
-    return map_values_view<const Map> {map};
 }
 
-/**  Generator for const keys view*/
+/**  @todo Generator for const keys view*/
 template <class Map>
 const map_keys_view<const Map> make_keys_view(const Map& map)
 {
-    return map_keys_view<const Map> {map};
 }
