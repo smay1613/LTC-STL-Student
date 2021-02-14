@@ -1,0 +1,5 @@
+Given the folder path, find all groups of binary equal files.
+
+Use provided xxHash hashing algorithm.
+
+Implement grouping based on size (first filter) and hash (second filter).

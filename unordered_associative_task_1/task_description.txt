@@ -1,0 +1,5 @@
+You must implement method that will check if one string is an anagram (has the same characters) of another.
+
+Example:
+	beer & reeb -> true
+            beer & neer -> false

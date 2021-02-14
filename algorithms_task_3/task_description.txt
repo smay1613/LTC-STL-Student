@@ -1,0 +1,3 @@
+C++20 brings new features to us: shift_right and shift_left algorithms. Let’s try to make our naïve and simplified implementation.
+
+You must implement method that will shift subrange to a given position to the right.

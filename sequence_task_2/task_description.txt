@@ -1,0 +1,4 @@
+Given a reference to list, iterator to the begin of the sequence, iterator to the end of the sequence, and iterator to the new begin after rotation. 
+Your algorithm should perform left and right rotation of sequence.
+
+Example: “0 1 2 3” -> left rotation (1) -> “1 2 3 0”
