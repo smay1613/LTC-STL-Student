@@ -22,7 +22,7 @@ add_definitions(-DGTEST_LANGUAGE_CXX11)
 include(AddGTestTest)
 
 enable_testing()
-add_gtest_test(${PROJECT_NAME} "${sources}" reverse_words)
+add_gtest_test(${PROJECT_NAME} "${sources}" key_value_iterator_HOMEWORK)
 
 include_directories(
         PRIVATE

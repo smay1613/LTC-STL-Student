@@ -22,7 +22,7 @@ add_definitions(-DGTEST_LANGUAGE_CXX11)
 include(AddGTestTest)
 
 enable_testing()
-add_gtest_test(${PROJECT_NAME} "${sources}" key_value_iterator_HOMEWORK)
+add_gtest_test(${PROJECT_NAME} "${sources}" accumulator)
 
 include_directories(
         PRIVATE
