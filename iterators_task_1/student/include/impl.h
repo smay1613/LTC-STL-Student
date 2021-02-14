@@ -1,21 +1,13 @@
 #pragma once
+#include <sstream>
 #include <iterator>
 
-template <class Container>
-struct accumulator
-{
-    /** @todo Iterator traits*/
-    /** @todo Constructor with container*/
-    /** @todo Copy assignment operator*/
-    /** @todo Move assignment operator*/
-
-    /** @todo Iterator operations */
-};
-
 /**
- *  @todo Implement accumulator object creator
+ * @todo Implement function that will reverse words in a sentence
+ * @example "Hello there" -> "there Hello"
+ * @param input - sentence with words splitted by spaces
+ * @return Sentence with reversed order of words
+ *
+ * @warning YOU MUST USE STRING STREAMS AND STREAM ITERATORS!
  */
-template<class Container>
-accumulator<Container> make_accumulator(Container& container)
-{
-}
+std::string reverseWords(const std::string& input);

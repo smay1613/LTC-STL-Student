@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(accumulator VERSION 1.0.0)
+project(reverse_words VERSION 1.0.0)
 
 set(sources
     "src/impl.cpp"
@@ -14,12 +14,11 @@ set(BUILDDIR ${ROOT_DIR}/build)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BUILDDIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${BUILDDIR}/bin)
 set(LESSONS_ROOT ${ROOT_DIR}/../../)
-
 set(TEST ON)
 
-add_library(accumulator SHARED ${sources})
+add_library(reverse_words SHARED ${sources})
 
-set_target_properties(accumulator PROPERTIES
+set_target_properties(reverse_words PROPERTIES
                         C_STANDARD 11
                         CXX_STANDARD 11
                         PUBLIC_HEADER "${headers}"
@@ -27,7 +26,7 @@ set_target_properties(accumulator PROPERTIES
 
 
 
-target_include_directories(accumulator
+target_include_directories(reverse_words
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
