@@ -1,0 +1,4 @@
+You must implement:
+Text processing (removing punctuation)
+CV skills matrix builder (based on general skills matrix)
+Candidate main technology determination
