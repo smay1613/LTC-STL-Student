@@ -1,0 +1,5 @@
+You must implement function objects for bar serving algorithms:
+Generator functor (for composing wall shelf)
+Unary predicate function (for removing expensive beer from shelf)
+Comparator lambda (to check if every beer is from the same country)
+Transformator static function (for mixing cocktails)

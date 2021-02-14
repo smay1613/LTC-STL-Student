@@ -1,0 +1,2 @@
+For each worker, given the string with “o” (available) and “x” (on vacation) of length 30.
+Find two workers that have maximum intersection of vacations.

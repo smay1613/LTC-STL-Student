@@ -1,0 +1,1 @@
+You must implement method that will generate first N Fibonacci numbers with numeric algorithms.

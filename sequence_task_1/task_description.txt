@@ -1,0 +1,4 @@
+You must implement StaticPlaylist container wrapper that behaves like a tracks stack.
+Playback should start from the first passed file 
+Track switch will remove song from playlist
+You can play a new song, while playlist won’t be changed until explicit switch 
