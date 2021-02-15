@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.8)
 
 project(duplicates_search_HOMEWORK VERSION 1.0.0)
 
@@ -21,7 +21,7 @@ set(LESSONS_ROOT ${ROOT_DIR}/../../)
 add_library(duplicates_search_HOMEWORK SHARED ${sources})
 
 set_target_properties(duplicates_search_HOMEWORK PROPERTIES
-                        C_STANDARD 17
+                        C_STANDARD 11
                         CXX_STANDARD 17
                         PUBLIC_HEADER "${headers}"
 )
