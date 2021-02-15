@@ -110,7 +110,7 @@ TEST(Comparator, NoBeer)
     wall_shelf<6> shelf;
     shelf.fill(BeerBrand::None);
 
-    EXPECT_TRUE(haveSameProperty(shelf, sameCountry));
+    EXPECT_FALSE(haveSameProperty(shelf, sameCountry));
 }
 
 TEST(Comparator, SameCountryDifferentBeer_Belgium)
