@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.8)
 
 project(is_anagram VERSION 1.0.0)
 
@@ -20,7 +20,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_library(is_anagram SHARED ${sources})
 
 set_target_properties(is_anagram PROPERTIES
-                        C_STANDARD 17
+                        C_STANDARD 11
                         CXX_STANDARD 17
                         PUBLIC_HEADER "${headers}"
 )
