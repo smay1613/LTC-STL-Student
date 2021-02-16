@@ -8,6 +8,18 @@
  */
 struct BeerOrganizer
 {
+    BeerBrand operator()() {
+        if (m_currentIndex == m_maxIndex - 1) {
+            m_currentIndex = m_minIndex;
+        }
+
+        return static_cast<BeerBrand>(++m_currentIndex);
+    }
+
+private:
+    size_t m_currentIndex{static_cast<size_t>(BeerBrand::None)};
+    size_t m_minIndex{static_cast<size_t>(BeerBrand::None)};
+    size_t m_maxIndex{static_cast<size_t>(BeerBrand::Max)};
 };
 
 /**
@@ -16,16 +28,18 @@ struct BeerOrganizer
  *
  * @note Only Corona and HoeGaarden are expensive
  */
-bool isExpensiveBeer(/**???*/)
+bool isExpensiveBeer(const BeerBrand brand)
 {
+    return brand == BeerBrand::Corona || brand == BeerBrand::HoeGaarden;
 }
 
 /**
  * @todo Implement lambda beer country equality comparator
  * @return true if beer county is the same, false otherwise
  */
-auto sameCountry = [](/**???*/)
+auto sameCountry = [](const BeerBrand brand1, const BeerBrand brand2)
 {
+    return getBeerCountry(brand1) == getBeerCountry(brand2);
 };
 
 struct MixingPolicy
@@ -40,9 +54,26 @@ struct MixingPolicy
      * Whiskey + SevenUp = SevenPlusSeven;
      * Others + Others = Oops;
      */
-    static Cocktail mix(/**???*/)
+    static Cocktail mix(const AlcoholDrink alcohol, const NonAlcoholDrink nonAlcohol)
     {
+        switch (alcohol) {
+            case AlcoholDrink::Gin:
+
+            switch (nonAlcohol) {
+                case NonAlcoholDrink::LimeJuice:
+                    return Cocktail::Gimlet;
+                case NonAlcoholDrink::GrapefruitJuice:
+                    return Cocktail::Greyhount;
+                default:
+                    return Cocktail::Oops;
+            }
+
+            case AlcoholDrink::Whiskey:
+                return nonAlcohol == NonAlcoholDrink::SevenUp ? Cocktail::SevenPlusSeven : Cocktail::Oops;
+            default:
+                return Cocktail::Oops;
+        }
     }
 };
 
-std::function</**???*/> mixer {&MixingPolicy::mix};
+std::function<Cocktail(const AlcoholDrink, const NonAlcoholDrink)> mixer {&MixingPolicy::mix};
