@@ -8,6 +8,11 @@
  */
 struct BeerOrganizer
 {
+    BeerOrganizer();
+    size_t m_number;
+    static const auto m_max = static_cast<size_t>(BeerBrand::Max);
+    static const auto m_min = static_cast<size_t>(BeerBrand::None);
+    BeerBrand operator()() noexcept;
 };
 
 /**
@@ -16,16 +21,15 @@ struct BeerOrganizer
  *
  * @note Only Corona and HoeGaarden are expensive
  */
-bool isExpensiveBeer(/**???*/)
-{
-}
+bool isExpensiveBeer(const BeerBrand brand);
 
 /**
  * @todo Implement lambda beer country equality comparator
  * @return true if beer county is the same, false otherwise
  */
-auto sameCountry = [](/**???*/)
+auto sameCountry = [](const BeerBrand first, const BeerBrand second)
 {
+    return getBeerCountry(first)==getBeerCountry(second);
 };
 
 struct MixingPolicy
@@ -40,9 +44,7 @@ struct MixingPolicy
      * Whiskey + SevenUp = SevenPlusSeven;
      * Others + Others = Oops;
      */
-    static Cocktail mix(/**???*/)
-    {
-    }
+    static Cocktail mix(const AlcoholDrink alcoholDrink, const NonAlcoholDrink nonAlcoholDrink);
 };
 
-std::function</**???*/> mixer {&MixingPolicy::mix};
+std::function<Cocktail(const AlcoholDrink, const NonAlcoholDrink)> mixer {&MixingPolicy::mix};
