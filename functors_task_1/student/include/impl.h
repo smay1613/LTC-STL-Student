@@ -1,6 +1,10 @@
 #pragma once
 #include "bar_serving.h"
 #include <functional>
+#include <algorithm>
+#include <vector>
+#include <tuple>
+#include <map>
 
 /**
  * @todo Implement functor-generator that will return next beer brand (cyclic)
@@ -8,6 +12,10 @@
  */
 struct BeerOrganizer
 {
+    BeerBrand operator()();
+
+private:
+    size_t currentIndex{1};
 };
 
 /**
@@ -16,16 +24,15 @@ struct BeerOrganizer
  *
  * @note Only Corona and HoeGaarden are expensive
  */
-bool isExpensiveBeer(/**???*/)
-{
-}
+bool isExpensiveBeer(const BeerBrand& brand);
 
 /**
  * @todo Implement lambda beer country equality comparator
  * @return true if beer county is the same, false otherwise
  */
-auto sameCountry = [](/**???*/)
+auto sameCountry = [](const BeerBrand& lhs, const BeerBrand& rhs)
 {
+    return getBeerCountry(lhs) == getBeerCountry(rhs);
 };
 
 struct MixingPolicy
@@ -40,9 +47,7 @@ struct MixingPolicy
      * Whiskey + SevenUp = SevenPlusSeven;
      * Others + Others = Oops;
      */
-    static Cocktail mix(/**???*/)
-    {
-    }
+    static Cocktail mix(AlcoholDrink alcohol, NonAlcoholDrink nonAlcohol);
 };
 
-std::function</**???*/> mixer {&MixingPolicy::mix};
+std::function<Cocktail(AlcoholDrink, NonAlcoholDrink)> mixer {&MixingPolicy::mix};
