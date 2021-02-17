@@ -8,31 +8,19 @@
  */
 struct BeerOrganizer
 {
-    BeerOrganizer()
-    {
-    }
     BeerBrand operator()()
     {
-        auto result = BeerBrand::None;
-        do
+        if(mBrandNumber == static_cast<uint>(BeerBrand::Max))
         {
-            if(0 == mBrands.size())
-            {
-                break;
-            }
-            result = *(std::begin(mBrands) + mBrandIndex);
-            ++mBrandIndex;
-            if(mBrands.size() <= mBrandIndex)
-            {
-                mBrandIndex = 0;
-            }
-        }while(false);
+            mBrandNumber = mFirstValidBrandNumber;
+        }
+        auto result = static_cast<BeerBrand>(mBrandNumber);
+        mBrandNumber++;
         return result;
     }
 private:
-    typedef std::array<BeerBrand, (int)(BeerBrand::Max) - 1> BeerBrandsType;
-    BeerBrandsType mBrands = {BeerBrand::HoeGaarden, BeerBrand::Corona, BeerBrand::Carlsberg, BeerBrand::Bud, BeerBrand::ZlataPraha, BeerBrand::Leffe};
-    uint mBrandIndex{0};
+    const uint mFirstValidBrandNumber{static_cast<uint>(BeerBrand::None) + 1};
+    uint mBrandNumber{mFirstValidBrandNumber};
 };
 
 /**
@@ -41,17 +29,17 @@ private:
  *
  * @note Only Corona and HoeGaarden are expensive
  */
-bool isExpensiveBeer(BeerBrand brand)
+bool isExpensiveBeer(const BeerBrand brand)
 {
     return (brand == BeerBrand::HoeGaarden ||
-            brand == BeerBrand::Corona) ? true : false;
+            brand == BeerBrand::Corona);
 }
 
 /**
  * @todo Implement lambda beer country equality comparator
  * @return true if beer county is the same, false otherwise
  */
-auto sameCountry = [](BeerBrand lhs, BeerBrand rhs)
+auto sameCountry = [](const BeerBrand lhs, const BeerBrand rhs)
 {
     return getBeerCountry(lhs) == getBeerCountry(rhs);
 };
@@ -68,20 +56,31 @@ struct MixingPolicy
      * Whiskey + SevenUp = SevenPlusSeven;
      * Others + Others = Oops;
      */
-    static Cocktail mix(AlcoholDrink lhs, NonAlcoholDrink rhs)
+    static Cocktail mix(const AlcoholDrink alcohol, const NonAlcoholDrink nonalcohol)
     {
         Cocktail result = Cocktail::Oops;
-        if(AlcoholDrink::Gin == lhs && NonAlcoholDrink::LimeJuice == rhs)
+        switch(alcohol)
         {
-            result = Cocktail::Gimlet;
-        }
-        else if(AlcoholDrink::Gin == lhs && NonAlcoholDrink::GrapefruitJuice == rhs)
-        {
-            result = Cocktail::Greyhount;
-        }
-        else if(AlcoholDrink::Whiskey == lhs && NonAlcoholDrink::SevenUp == rhs)
-        {
-            result = Cocktail::SevenPlusSeven;
+            case AlcoholDrink::Gin:
+                switch(nonalcohol)
+                {
+                    case NonAlcoholDrink::LimeJuice:
+                        return Cocktail::Gimlet;
+                    case NonAlcoholDrink::GrapefruitJuice:
+                        return Cocktail::Greyhount;
+                    default:
+                        return Cocktail::Oops;
+                }
+            case AlcoholDrink::Whiskey:
+                switch(nonalcohol)
+                {
+                    case NonAlcoholDrink::SevenUp:
+                        return Cocktail::SevenPlusSeven;
+                    default:
+                        return Cocktail::Oops;
+                }
+            default:
+                return Cocktail::Oops;
         }
         return result;
     }
