@@ -9,9 +9,9 @@
 struct BeerOrganizer
 {
     BeerOrganizer();
-    size_t m_number;
     static const auto m_max = static_cast<size_t>(BeerBrand::Max);
     static const auto m_min = static_cast<size_t>(BeerBrand::None);
+    size_t m_beerNumber = m_min+1;
     BeerBrand operator()() noexcept;
 };
 
