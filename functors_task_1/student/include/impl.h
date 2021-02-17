@@ -8,18 +8,24 @@
  */
 struct BeerOrganizer
 {
-    BeerOrganizer(): currentBear{BeerBrand::None} {}
-
     BeerBrand operator()() {
-        if (currentBear == BeerBrand::Leffe) {
-            currentBear = BeerBrand::HoeGaarden;
+        using convertedBeer = std::underlying_type<BeerBrand>::type;
+        auto nextBeer ([this]() {
+            return BeerBrand(static_cast<convertedBeer>(currentBear) + 1);
+        });
+
+        constexpr BeerBrand first = BeerBrand::HoeGaarden;
+        constexpr BeerBrand last = BeerBrand::Leffe;
+
+        if (currentBear == last) {
+            currentBear = first;
         } else {
-            currentBear = BeerBrand(static_cast<std::underlying_type<BeerBrand>::type>(currentBear) + 1);
+            currentBear = nextBeer();
         }
         return  currentBear;
     }
 private:
-    BeerBrand currentBear;
+    BeerBrand currentBear {BeerBrand::None};
 };
 
 /**
@@ -56,16 +62,33 @@ struct MixingPolicy
      */
     static Cocktail mix(const AlcoholDrink alcohol, const NonAlcoholDrink nonAlcohol)
     {
-        if (alcohol == AlcoholDrink::Gin) {
-            if (nonAlcohol == NonAlcoholDrink::LimeJuice) {
+        auto drinkWithGin ([] (const NonAlcoholDrink nonAlcohol) {
+            switch (nonAlcohol) {
+            case NonAlcoholDrink::LimeJuice:
                 return Cocktail::Gimlet;
-            } else if (nonAlcohol == NonAlcoholDrink::GrapefruitJuice) {
+            case NonAlcoholDrink::GrapefruitJuice:
                 return Cocktail::Greyhount;
+            default:
+                return Cocktail::Oops;
             }
-        } else if (alcohol == AlcoholDrink::Whiskey && nonAlcohol == NonAlcoholDrink::SevenUp) {
-            return Cocktail::SevenPlusSeven;
+        });
+        auto drinkWithWhiskey ([] (const NonAlcoholDrink nonAlcohol) {
+            switch (nonAlcohol) {
+            case NonAlcoholDrink::SevenUp:
+                return Cocktail::SevenPlusSeven;
+            default:
+                return Cocktail::Oops;
+            }
+        });
+
+        switch (alcohol) {
+        case AlcoholDrink::Gin:
+            return drinkWithGin(nonAlcohol);
+        case AlcoholDrink::Whiskey:
+            return drinkWithWhiskey(nonAlcohol);
+        default:
+            return Cocktail::Oops;
         }
-        return  Cocktail::Oops;
     }
 };
 
