@@ -1,6 +1,6 @@
 #pragma once
-#include <sstream>
-#include <iterator>
+
+#include <string>
 
 /**
  * @todo Implement function that will reverse words in a sentence
