@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <vector>
 #include <tuple>
-#include <map>
+#include <unordered_map>
 
 /**
  * @todo Implement functor-generator that will return next beer brand (cyclic)
@@ -15,7 +15,7 @@ struct BeerOrganizer
     BeerBrand operator()();
 
 private:
-    size_t currentIndex{1};
+    size_t currentIndex{static_cast<size_t>(BeerBrand::HoeGaarden)};
 };
 
 /**
@@ -24,13 +24,13 @@ private:
  *
  * @note Only Corona and HoeGaarden are expensive
  */
-bool isExpensiveBeer(const BeerBrand& brand);
+bool isExpensiveBeer(BeerBrand brand);
 
 /**
  * @todo Implement lambda beer country equality comparator
  * @return true if beer county is the same, false otherwise
  */
-auto sameCountry = [](const BeerBrand& lhs, const BeerBrand& rhs)
+auto sameCountry = [](BeerBrand lhs, BeerBrand rhs)
 {
     return getBeerCountry(lhs) == getBeerCountry(rhs);
 };
