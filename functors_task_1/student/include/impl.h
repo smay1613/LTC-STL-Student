@@ -2,6 +2,14 @@
 #include "bar_serving.h"
 #include <functional>
 
+BeerBrand& operator++(BeerBrand& beer)
+{
+    constexpr BeerBrand last = BeerBrand::Leffe;
+    constexpr BeerBrand first = BeerBrand::HoeGaarden;
+
+    return beer = (beer == last) ? first : static_cast<BeerBrand>(static_cast<int>(beer) + 1);
+}
+
 /**
  * @todo Implement functor-generator that will return next beer brand (cyclic)
  * @example HoeGaarden -> Corona -> Carlsberg -> Bud -> ZlataPraha -> Leffe -> HoeGaarden...
@@ -9,20 +17,7 @@
 struct BeerOrganizer
 {
     BeerBrand operator()() {
-        using convertedBeer = std::underlying_type<BeerBrand>::type;
-        auto nextBeer ([this]() {
-            return BeerBrand(static_cast<convertedBeer>(currentBear) + 1);
-        });
-
-        constexpr BeerBrand first = BeerBrand::HoeGaarden;
-        constexpr BeerBrand last = BeerBrand::Leffe;
-
-        if (currentBear == last) {
-            currentBear = first;
-        } else {
-            currentBear = nextBeer();
-        }
-        return  currentBear;
+        return ++currentBear;
     }
 private:
     BeerBrand currentBear {BeerBrand::None};
