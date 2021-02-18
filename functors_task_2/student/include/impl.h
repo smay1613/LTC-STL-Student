@@ -65,6 +65,12 @@ private:
         // find reader
         // check for errors
         // call functor
+        auto end = std::end(m_dataReaders);
+        auto foundIter = m_dataReaders.find(userId);
+        if(foundIter != end && nullptr != foundIter->second)
+        {
+            return f(foundIter->second);
+        }
         return false;
     }
 
@@ -78,6 +84,7 @@ private:
     {
         // adapt function
         // call selector member
+        method(selector.get(), result);
         return false;
     }
 };
