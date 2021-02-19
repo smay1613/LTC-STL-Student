@@ -8,6 +8,8 @@
 // for testing purposes
 extern IDataSelector* getSelector();
 
+using SelectorReference = const std::unique_ptr<IDataSelector>&;
+
 class DataBrowser
 {
 public:
@@ -62,10 +64,15 @@ private:
     bool safeCall(const std::string &userId, T&& f) const
     {
         static_assert(std::is_same<decltype(f(nullptr)), bool>::value, "Provided Callable must return bool");
-        // find reader
-        // check for errors
-        // call functor
-        return false;
+        auto readerIterator = m_dataReaders.find(userId);
+
+        if (readerIterator == m_dataReaders.end())
+            return false;
+
+        if (readerIterator->second == nullptr)
+            return false;
+
+        return f(readerIterator->second);
     }
 
     /**
@@ -74,10 +81,9 @@ private:
      * You must adapt functors before invocation
      */
     template<class Functional, typename Output>
-    bool invokeDataRequest(Functional method, const std::unique_ptr<IDataSelector>& selector, Output& result) const
+    bool invokeDataRequest(Functional method, SelectorReference selector, Output& result) const
     {
-        // adapt function
-        // call selector member
-        return false;
+        return selector == nullptr ? false
+                                   : method(selector.get(), result);
     }
 };

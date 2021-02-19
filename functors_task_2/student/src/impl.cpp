@@ -7,48 +7,40 @@ void DataBrowser::userLeave(const std::string &userId)
 
 bool DataBrowser::getDataType1(const std::string &userId, std::vector<size_t> &returnValues) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
-    {
-        return false;
-    }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
-    return it->second->getDataType1(returnValues, 0);
+    auto callType1 = [this, &returnValues](SelectorReference selector) {
+         using namespace std::placeholders;
+         return invokeDataRequest(std::bind(&IDataSelector::getDataType1, _1, _2, 0),
+                                  selector, returnValues);
+    };
+
+    return safeCall(userId, callType1);
 }
 
 bool DataBrowser::getDataType2(std::vector<size_t> &returnValues, const std::string &userId) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
-    {
-        return false;
-    }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
-    return it->second->getDataType2(returnValues);
+    auto callType2 = [this, &returnValues](SelectorReference selector) {
+        using namespace std::placeholders;
+        return invokeDataRequest(std::bind(&IDataSelector::getDataType2, _1, _2),
+                                 selector, returnValues);
+    };
+
+    return safeCall(userId, callType2);
 }
 
 bool DataBrowser::getDataType3(const std::string &userId, std::vector<std::string> &returnValues) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
-    {
-        return false;
-    }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
+    auto callType3 = [this, &returnValues](SelectorReference selector) {
+        std::deque<size_t> unprocessedResults {};
 
-    std::deque<size_t> unprocessedResults {};
-    bool success {it->second->getDataType3(unprocessedResults)};
-    returnValues = process(unprocessedResults);
-    return success;
+        using namespace std::placeholders;
+        bool success {invokeDataRequest(std::bind(&IDataSelector::getDataType3, _1, _2),
+                                        selector, unprocessedResults)};
+
+        returnValues = process(unprocessedResults);
+        return success;
+    };
+
+    return safeCall(userId, callType3);
 }
 
 template<class T>
