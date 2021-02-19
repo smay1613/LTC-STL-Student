@@ -62,10 +62,11 @@ private:
     bool safeCall(const std::string &userId, T&& f) const
     {
         static_assert(std::is_same<decltype(f(nullptr)), bool>::value, "Provided Callable must return bool");
-        // find reader
-        // check for errors
-        // call functor
-        return false;
+        auto it = m_dataReaders.find(userId);
+        if(it == end(m_dataReaders) || !(it->second))
+            return false;
+
+        return std::ref(f)(it->second);
     }
 
     /**
