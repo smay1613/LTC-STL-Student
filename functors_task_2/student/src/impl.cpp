@@ -7,48 +7,31 @@ void DataBrowser::userLeave(const std::string &userId)
 
 bool DataBrowser::getDataType1(const std::string &userId, std::vector<size_t> &returnValues) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
-    {
-        return false;
-    }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
-    return it->second->getDataType1(returnValues, 0);
+    using namespace std::placeholders;
+
+    auto convertedMethod ([&](const std::unique_ptr<IDataSelector>& selector) {
+        return invokeDataRequest(std::bind(&IDataSelector::getDataType1, _1, _2, 0), selector, returnValues);
+    });
+    return safeCall(userId, convertedMethod);
 }
 
 bool DataBrowser::getDataType2(std::vector<size_t> &returnValues, const std::string &userId) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
-    {
-        return false;
-    }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
-    return it->second->getDataType2(returnValues);
+    auto convertedMethod ([&](const std::unique_ptr<IDataSelector>& selector) {
+        return invokeDataRequest(&IDataSelector::getDataType2, selector, returnValues);
+    });
+    return safeCall(userId, convertedMethod);
 }
 
 bool DataBrowser::getDataType3(const std::string &userId, std::vector<std::string> &returnValues) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
-    {
-        return false;
-    }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
-
-    std::deque<size_t> unprocessedResults {};
-    bool success {it->second->getDataType3(unprocessedResults)};
-    returnValues = process(unprocessedResults);
-    return success;
+    auto convertedMethod ([&](const std::unique_ptr<IDataSelector>& selector) {
+        std::deque<size_t> unprocessedResults {};
+        bool result = invokeDataRequest(&IDataSelector::getDataType3, selector, unprocessedResults);
+        returnValues = process(unprocessedResults);
+        return result;
+    });
+    return safeCall(userId, convertedMethod);
 }
 
 template<class T>
