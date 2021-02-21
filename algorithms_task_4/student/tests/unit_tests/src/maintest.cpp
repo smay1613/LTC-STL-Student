@@ -5,65 +5,87 @@ using namespace ::testing;
 
 TEST(SlideSame, Right)
 {
-    std::deque<size_t> data {1, 1, 1, 0, 0, 0, 0};
+    std::deque<size_t> data     {0, 1, 1, 1, 0, 0, 0, 0};
 
-    std::deque<size_t> expected {0, 0, 0, 0, 1, 1, 1};
+    std::deque<size_t> expected {0, 0, 0, 0, 1, 1, 1, 0};
 
-    constexpr size_t offset {3};
-    auto endOfSlidingRange = std::next(data.begin(), offset);
-    auto newSlidedRange = slide(data.begin(), endOfSlidingRange,
-                                data.end());
+    const auto slidingRangeSize = 3;
+    auto slidingRangeBegin = std::next(data.begin());
+    auto slidingRangeEnd = slidingRangeBegin + slidingRangeSize;
+
+    const auto shift = slidingRangeSize;
+    auto slidingPosition = slidingRangeEnd + shift;
+
+    auto newSlidedRange = slide(slidingRangeBegin, slidingRangeEnd, slidingPosition);
 
     EXPECT_EQ(data, expected);
-    EXPECT_EQ(newSlidedRange.first, std::prev(data.end(),
-                                              std::distance(data.begin(), endOfSlidingRange)));
-    EXPECT_EQ(newSlidedRange.second, data.end());
+    EXPECT_EQ(newSlidedRange.first, std::prev(slidingPosition, slidingRangeSize));
+    EXPECT_EQ(newSlidedRange.second, slidingPosition);
 }
 
-TEST(SlideSame, Left)
+TEST(SlideSame, ReverseLeft)
 {
-    std::deque<size_t> data {0, 0, 0, 0, 1, 1, 1};
-    std::deque<size_t> expected {1, 1, 1, 0, 0, 0, 0};
+    std::deque<size_t> data     {0, 0, 0, 0, 1, 1, 1, 0};
 
-    constexpr size_t offset {3};
-    auto endOfSlidingRange = std::next(data.rbegin(), offset);
+    std::deque<size_t> expected {0, 1, 1, 1, 0, 0, 0, 0};
 
-    auto newSlidedRange = slide(data.rbegin(), endOfSlidingRange,
-                                data.rend());
+    const auto slidingRangeSize = 3;
+    auto slidingRangeBegin = std::next(data.rbegin());
+    auto slidingRangeEnd = slidingRangeBegin + slidingRangeSize;
+
+    const auto shift = slidingRangeSize;
+    auto slidingPosition = slidingRangeEnd + shift;
+
+    auto newSlidedRange = slide(slidingRangeBegin, slidingRangeEnd, slidingPosition);
 
     EXPECT_EQ(data, expected);
-    EXPECT_EQ(newSlidedRange.first, std::prev(data.rend(),
-                                              std::distance(data.rbegin(), endOfSlidingRange)));
-    EXPECT_EQ(newSlidedRange.second, data.rend());
+    EXPECT_EQ(newSlidedRange.first, std::prev(slidingPosition, slidingRangeSize));
+    EXPECT_EQ(newSlidedRange.second, slidingPosition);
 }
 
 TEST(SlideDifferent, Right)
 {
-    std::deque<size_t> data {1, 2, 3, 4, 5, 6, 7};
-
+    std::deque<size_t> data     {1, 2, 3, 4, 5, 6, 7};
     std::deque<size_t> expected {4, 1, 2, 3, 5, 6, 7};
 
-    constexpr size_t offset {3};
-    auto endOfSlidingRange = std::next(data.begin(), offset);
-    auto newSlidedRange = slide(data.begin(), endOfSlidingRange,
-                                std::next(endOfSlidingRange));
+    const auto slidingRangeSize = 3;
+    auto slidingRangeBegin = data.begin();
+    auto slidingRangeEnd = slidingRangeBegin + slidingRangeSize;
+
+    const auto shift = 1;
+    auto slidingPosition = slidingRangeEnd + shift;
+
+    auto newSlidedRange = slide(slidingRangeBegin, slidingRangeEnd, slidingPosition);
 
     EXPECT_EQ(data, expected);
-    EXPECT_EQ(newSlidedRange.first, std::next(data.begin()));
-    EXPECT_EQ(newSlidedRange.second, std::next(data.begin(), offset + 1));
+    EXPECT_EQ(newSlidedRange.first, std::prev(slidingPosition, slidingRangeSize));
+    EXPECT_EQ(newSlidedRange.second, slidingPosition);
 }
 
 TEST(SlideDifferent, Left)
 {
-    std::deque<size_t> data {5, 6, 7, 8, 1, 2, 3};
-    std::deque<size_t> expected {5, 6, 7, 1, 2, 3, 8};
+    std::deque<size_t> data       {4, 1, 2, 3, 5, 6, 7};
+    std::deque<size_t> expected   {1, 2, 3, 4, 5, 6, 7};
 
-    constexpr size_t offset {3};
-    auto endOfSlidingRange = std::next(data.rbegin(), offset);
-    auto newSlidedRange = slide(data.rbegin(), endOfSlidingRange,
-                                std::next(endOfSlidingRange));
+    const auto slidingRangeSize = 3;
+    auto slidingRangeBegin = std::next(data.begin());
+    auto slidingRangeEnd = slidingRangeBegin + slidingRangeSize;
+
+    const auto shift = -1;
+    auto slidingPosition = std::next(slidingRangeBegin, shift);
+
+    auto newSlidedRange = slide(slidingRangeBegin, slidingRangeEnd, slidingPosition);
 
     EXPECT_EQ(data, expected);
-    EXPECT_EQ(newSlidedRange.first, std::next(data.rbegin()));
-    EXPECT_EQ(newSlidedRange.second, std::next(data.rbegin(), offset + 1));
+    EXPECT_EQ(newSlidedRange.first, slidingPosition);
+    EXPECT_EQ(newSlidedRange.second, std::next(slidingPosition, slidingRangeSize));
+}
+
+TEST(Slide, NoSlide)
+{
+    std::deque<size_t> data {1, 2, 3};
+    auto newSlidedRange = slide(data.begin(), data.end(), data.begin());
+
+    EXPECT_EQ(newSlidedRange.first, data.begin());
+    EXPECT_EQ(newSlidedRange.second, data.end());
 }

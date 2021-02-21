@@ -6,7 +6,8 @@
  *
  * @param begin - begin of random-access range
  * @param last - end of random-access range
- * @param pos - new begin of slided range
+ * @param pos - new end of slided range (if right slide)
+ *           or new begin of slided range (if left slide)
  *
  * @return new slided range position
  */
