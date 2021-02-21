@@ -65,7 +65,16 @@ private:
         // find reader
         // check for errors
         // call functor
-        return false;
+        const auto& it = m_dataReaders.find(userId);
+        if (it == m_dataReaders.cend())
+        {
+            return false;
+        }
+        if (it->second == nullptr)
+        {
+            return false;
+        }
+        return f(it->second);
     }
 
     /**
@@ -78,6 +87,6 @@ private:
     {
         // adapt function
         // call selector member
-        return false;
+        return method(selector.get(), result);
     }
 };
