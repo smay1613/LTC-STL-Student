@@ -49,8 +49,8 @@ private:
      * Each user has an asociated data reader
      */
     std::map<std::string /*userId*/,
-            std::unique_ptr<IDataSelector> /* database selector - imagine that it is interface */
-            > m_dataReaders;
+    std::unique_ptr<IDataSelector> /* database selector - imagine that it is interface */
+    > m_dataReaders;
 
     /**
      * @todo SafeCall idiom
@@ -62,9 +62,14 @@ private:
     bool safeCall(const std::string &userId, T&& f) const
     {
         static_assert(std::is_same<decltype(f(nullptr)), bool>::value, "Provided Callable must return bool");
-        // find reader
-        // check for errors
-        // call functor
+
+        const auto& searchRes = m_dataReaders.find(userId);
+        if ((m_dataReaders.end() != searchRes)
+                && searchRes->second)
+        {
+            return std::ref(f)(searchRes->second);
+        }
+
         return false;
     }
 
@@ -76,8 +81,19 @@ private:
     template<class Functional, typename Output>
     bool invokeDataRequest(Functional method, const std::unique_ptr<IDataSelector>& selector, Output& result) const
     {
-        // adapt function
-        // call selector member
-        return false;
+        if (!selector)
+        {
+            return false;
+        }
+
+        return std::ref(method)(selector.get(), result);
     }
+
+    template<typename Output, typename Request>
+    bool makeRequest(const std::string &userId, Output &returnValues, Request&& request) const
+    {
+        return safeCall(userId, [this, &returnValues, &request] (const std::unique_ptr<IDataSelector>& selector) {
+            return invokeDataRequest(request, selector, returnValues);
+        });
+    };
 };
