@@ -12,24 +12,35 @@ class accumulator : public std::iterator<std::output_iterator_tag, typename Cont
     /** @todo Iterator operations */
 
 public:
-    using ValueType = typename Container::value_type;
 
-    accumulator operator*() const{
+    accumulator(Container& cont) {
+        m_container = &cont;
+    }
+    const accumulator& operator*() const{
         return *this;
     }
-
+    accumulator& operator*(){
+        return *this;
+    }
     const accumulator& operator++() const {
         return *this;
     }
     accumulator& operator++() {
         return *this;
     }
-    accumulator& operator=(const ValueType& value){
-        container->push_back(value);
+
+    template<class AnotherContainerType>
+    accumulator& operator=(const AnotherContainerType& value){
+        std::copy(value.cbegin(), value.cend(), std::inserter(*m_container, m_container->end()));
+        return *this;
+    }
+    template<class AnotherContainerType>
+    accumulator& operator=(AnotherContainerType&& value) noexcept{
+        std::move(value.begin(), value.end(),  std::inserter(*m_container, m_container->end()));
         return *this;
     }
 private:
-    Container* container;
+    Container* m_container;
 };
 
 /**
@@ -38,4 +49,5 @@ private:
 template<class Container>
 accumulator<Container> make_accumulator(Container& container)
 {
+    return accumulator<Container>(container);
 }
