@@ -62,10 +62,10 @@ private:
     bool safeCall(const std::string &userId, T&& f) const
     {
         static_assert(std::is_same<decltype(f(nullptr)), bool>::value, "Provided Callable must return bool");
-        // find reader
-        // check for errors
-        // call functor
-        return false;
+
+        const auto& it = m_dataReaders.find(userId);
+
+        return m_dataReaders.cend() == it || !it->second ? false : f(it->second);
     }
 
     /**
@@ -76,8 +76,6 @@ private:
     template<class Functional, typename Output>
     bool invokeDataRequest(Functional method, const std::unique_ptr<IDataSelector>& selector, Output& result) const
     {
-        // adapt function
-        // call selector member
-        return false;
+        return method(selector.get(), result);
     }
 };
