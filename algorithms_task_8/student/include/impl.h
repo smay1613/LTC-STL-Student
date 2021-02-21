@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <sstream>
 #include <numeric>
+#include <unordered_map>
 
 /** @warning: FOR LEARNING PURPOSES YOU ARE NOT ALLOWED TO USE LOOPS!*/
 
@@ -99,7 +100,6 @@ groupsRatio getGroupsRelation(const skillMatrix& generalMatrix,
  */
 std::vector<CVGroup> getPossibleCVGroups(const groupsRatio& relations);
 
-
 /**
  * @warning BONUS TASK:
  * COUNT OCCURENCIES OF EACH WORD IN A RESULT MATRIX AND CALCULATE EACH GROUP "WEIGHT"
@@ -107,3 +107,4 @@ std::vector<CVGroup> getPossibleCVGroups(const groupsRatio& relations);
  * For example, row "CPP: C++ (7 times), C (3 times), STL (1 time)"
  * Weight will be 11
  */
+std::unordered_map<CVGroup, size_t> getGroupWeights(const std::string& text, const skillMatrix& generalMatrix);

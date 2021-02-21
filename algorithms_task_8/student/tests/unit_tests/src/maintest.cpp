@@ -1,5 +1,5 @@
 #include "maintest.h"
-
+#include <unordered_map>
 using namespace ::testing;
 
 
@@ -76,4 +76,22 @@ TEST_P(SkillsMatrix, MatrixTopGroups)
 
     EXPECT_TRUE(std::any_of(topGroups.begin(), topGroups.end(),
                             equalsExpected));
+}
+
+TEST_F(SkillsMatrix, GroupWeights)
+{
+    const std::unordered_map<CVGroup, size_t> expectedGroupWeights = {
+        { CVGroup::CPP, 11 },
+        { CVGroup::Java, 2 },
+        { CVGroup::GeneralDev, 0 },
+    };
+
+    const std::string cvText = "CPP: "
+                               "C++ C++11 C++14 c++ c++11 c++14 C++ (7 times), "
+                               "C c c (3 times), "
+                               "STL (1 time), "
+                               "no java and no spring";
+    const auto cvGroupWeights = getGroupWeights(cvText, mainSkillMatrix);
+
+    EXPECT_EQ(cvGroupWeights, expectedGroupWeights);
 }
