@@ -12,11 +12,5 @@
  * @param sourceEnd - end of the subsequence to insert, NOTE: CONST
  */
 
-/**
- * @warning IS YOUR SOLUTION STABLE?
- * WHAT IF TARGET WILL BE FILLED WITH THE DUPLICATES VALUE
- * AND WE'LL INSERT A NEW (SAME) VALUE? WILL IT BE EFFICIENT?
- */
-
 template <typename Sequence, typename FwIt>
 void insert_to_sorted(Sequence& target, const FwIt sourceBegin, const FwIt sourceEnd);
