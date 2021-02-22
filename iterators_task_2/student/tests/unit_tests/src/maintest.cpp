@@ -144,14 +144,14 @@ TEST(Properties, Traits)
                                       lvalue_container>::value,
                    "Shall support container assign (lvalue)");
 
-//    using rvalue_container = std::add_rvalue_reference<container>::type;
-//    static_assert (std::is_assignable<accumulator,
-//                                      rvalue_container>::value,
-//                   "Shall support container assign (rvalue)");
+    using rvalue_container = std::add_rvalue_reference<container>::type;
+    static_assert (std::is_assignable<accumulator,
+                                      rvalue_container>::value,
+                   "Shall support container assign (rvalue)");
 
-//    using another_container = std::deque<int>;
-//    using const_ref_another = std::add_lvalue_reference<std::add_const<another_container>::type>::type;
-//    static_assert (std::is_assignable<accumulator,
-//                                      const_ref_another>::value,
-//                   "Shall support another container assign (lvalue)");
+    using another_container = std::deque<int>;
+    using const_ref_another = std::add_lvalue_reference<std::add_const<another_container>::type>::type;
+    static_assert (std::is_assignable<accumulator,
+                                      const_ref_another>::value,
+                   "Shall support another container assign (lvalue)");
 }
