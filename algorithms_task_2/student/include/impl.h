@@ -11,12 +11,9 @@
  * @return true if source starts from a prefix
  */
 bool startsWith(const std::string& source, const std::string& prefix) {
-    if (prefix.empty()) {
-        return prefix.empty() || source.empty();
-    }
-    if (prefix.size() > source.length()) {
+    if (prefix.length() > source.length()) {
         return false;
     }
 
-    return std::equal(source.cbegin(), source.cbegin() + prefix.length(), prefix.cbegin());
+    return std::equal(prefix.cbegin(), prefix.cend(), source.cbegin());
 }
