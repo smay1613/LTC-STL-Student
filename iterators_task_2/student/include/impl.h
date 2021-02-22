@@ -1,6 +1,5 @@
 #pragma once
 #include <iterator>
-#include <deque>
 
 template <class Container>
 struct accumulator : public std::iterator<std::output_iterator_tag, void, void, void, void>
@@ -13,35 +12,31 @@ struct accumulator : public std::iterator<std::output_iterator_tag, void, void, 
     /** @todo Iterator operations */
 
 protected:
-    Container* container;
+    Container &container;
 public:
-    explicit accumulator(Container& con): container(&con) {};
+    explicit accumulator(Container& con): container(con) {};
 
-    accumulator& operator=(Container& conLR) {
-        container->insert(container->end(), conLR.begin(), conLR.end());
-        return *this;
-    }
+    // ??? If I would like to specify the same value_type for another container. Is it correct?
+//    template< template<class> class another_cont>
+//    accumulator& operator=(const another_cont<typename Container::value_type>& another) {
+//        container.insert(container.end(), another.begin(), another.end());
+//        return *this;
+//    }
 
-    accumulator& operator=(Container&& conRR) {
-        container->insert(container->end(),
-                          std::make_move_iterator(conRR.begin()),
-                          std::make_move_iterator(conRR.end()));
-        return *this;
-    }
-
-    accumulator& operator=(const std::deque<typename Container::value_type>& decqu) {
-        container->insert(container->end(), decqu.begin(), decqu.end());
+    template<class another_cont>
+    accumulator& operator=(another_cont& another) {
+        container.insert(container.end(), another.begin(), another.end());
         return *this;
     }
 
-    accumulator& operator=(const typename Container::value_type& value) {
-        container->insert(container->end(), value);
+    template<class another_cont>
+    accumulator& operator=(another_cont&& another) {
+        container.insert(container.end(),
+                          std::make_move_iterator(another.begin()),
+                          std::make_move_iterator(another.end()));
         return *this;
     }
-    accumulator& operator=(typename Container::value_type&& value) {
-        container->insert(container->end(), std::move(value));
-        return *this;
-    }
+
     accumulator& operator*() { return *this; }
     accumulator& operator++() { return *this; }
 };
