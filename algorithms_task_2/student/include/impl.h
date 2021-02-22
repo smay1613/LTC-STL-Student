@@ -9,4 +9,17 @@
  *
  * @return true if source starts from a prefix
  */
-bool startsWith(const std::string& source, const std::string& prefix);
+bool startsWith(const std::string& source, const std::string& prefix)
+{
+    if (prefix.empty())
+    {
+        return true;
+    }
+
+    if (prefix.size() > source.size())
+    {
+        return false;
+    }
+
+    return std::equal(std::begin(prefix), std::end(prefix), std::begin(source));
+}
