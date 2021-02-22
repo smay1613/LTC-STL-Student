@@ -1,6 +1,5 @@
 #pragma once
 #include <algorithm>
-#include <iostream>
 
 /** @todo Implement right-shifting algorithm for bidirectional ranges
  *
