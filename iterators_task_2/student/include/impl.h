@@ -3,10 +3,8 @@
 
 // https://ideone.com/Vp22H3
 template <class Container>
-struct accumulator
+struct accumulator : std::iterator<std::output_iterator_tag, void, void, void, void>
 {
-    using difference_type = std::ptrdiff_t;
-    using iterator_category = std::output_iterator_tag;
     /** @todo Iterator traits*/
     /** @todo Constructor with container*/
     /** @todo lvalue writing operator*/
@@ -14,12 +12,36 @@ struct accumulator
 
     /** @todo Iterator operations */
 
-    accumulator(Container conatiner) :
+    accumulator(Container& conatiner) :
         m_container{conatiner}
     {}
 
+
+    template<class OtherConatianer>
+    accumulator& operator =(OtherConatianer&& rhs)
+    {
+        std::move(std::make_move_iterator(rhs.begin()),
+                  std::make_move_iterator(rhs.end()),
+                  std::back_inserter(m_container));
+        return *this;
+
+    }
+
+    template<class OtherConatianer>
+    accumulator& operator =(const OtherConatianer& rhs)
+    {
+        std::copy(rhs.begin(), rhs.end(), std::back_inserter(m_container));
+        return *this;
+    }
+
+    accumulator& operator *() { return *this; }
+
+    accumulator& operator ++() { return *this; }
+
+    accumulator operator ++(int) { return *this; }
+
 private:
-    Container m_container;
+    Container& m_container;
 };
 
 /**
@@ -28,4 +50,6 @@ private:
 template<class Container>
 accumulator<Container> make_accumulator(Container& container)
 {
+    accumulator<Container> accumulator{container};
+    return accumulator;
 }
