@@ -20,9 +20,7 @@ struct accumulator : std::iterator<std::output_iterator_tag, void, void, void, v
     template<class OtherConatianer>
     accumulator& operator =(OtherConatianer&& rhs)
     {
-        std::move(std::make_move_iterator(rhs.begin()),
-                  std::make_move_iterator(rhs.end()),
-                  std::back_inserter(m_container));
+        std::move(rhs.begin(), rhs.end(), std::back_inserter(m_container));
         return *this;
 
     }
