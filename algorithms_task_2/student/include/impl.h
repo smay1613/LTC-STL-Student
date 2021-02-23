@@ -11,10 +11,16 @@
  */
 bool startsWith(const std::string& source, const std::string& prefix)
 {
-    if (prefix.size() > source.size()) return false;
-    return prefix.cend() == std::mismatch(prefix.cbegin(), prefix.cend(), source.cbegin()).first;
+    if (prefix.size() > source.size())
+    {
+       return false;
+    }
+    return std::equal(prefix.cbegin(), prefix.cend(), source.cbegin());
 
     //alternative
-//    if (prefix.size() > source.size()) return false;
-//    return std::equal(prefix.cbegin(), prefix.cend(), source.cbegin());
+//    if (prefix.size() > source.size())
+//    {
+//       return false;
+//    }
+//    return prefix.cend() == std::mismatch(prefix.cbegin(), prefix.cend(), source.cbegin()).first;
 }
