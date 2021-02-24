@@ -10,4 +10,12 @@
  * @return gathered range
  */
 template <typename BiIt, typename UnaryPredicate>
-std::pair<BiIt, BiIt> gather(BiIt begin, BiIt end, BiIt position, UnaryPredicate predicate);
+std::pair<BiIt, BiIt> gather(BiIt begin, BiIt end, BiIt position, UnaryPredicate predicate) {
+    auto newEnd = std::partition(position, end, predicate);
+
+    auto lambda = [predicate](const BiIt& iter){ return !predicate(iter);
+
+    auto newBegin = std::partition(begin, position, lambda);
+
+    return std::pair<BiIt, BiIt>(newBegin, newEnd);
+}
