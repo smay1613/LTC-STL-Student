@@ -1,4 +1,5 @@
 #include "impl.h"
+#include <string>
 
 void DataBrowser::userLeave(const std::string &userId)
 {

@@ -1,4 +1,5 @@
 #pragma once
+#include <stddef.h>
 #include <array>
 
 /** @warning: do not change the values of enum */
