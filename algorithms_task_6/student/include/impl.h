@@ -19,4 +19,11 @@
  */
 
 template <typename Sequence, typename FwIt>
-void insert_to_sorted(Sequence& target, const FwIt sourceBegin, const FwIt sourceEnd);
+void insert_to_sorted(Sequence& target, const FwIt sourceBegin, const FwIt sourceEnd)
+{
+    std::for_each(sourceBegin, sourceEnd, [&] (const typename FwIt::value_type& item)
+                                            {
+                                                auto pos = std::lower_bound(target.begin(), target.end(), item);
+                                                target.insert(pos, item);
+                                            } );
+}
