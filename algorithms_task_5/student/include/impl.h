@@ -12,7 +12,10 @@
 template <typename BiIt, typename UnaryPredicate>
 std::pair<BiIt, BiIt> gather(BiIt begin, BiIt end, BiIt position, UnaryPredicate predicate) {
     auto newEnd = std::partition(position, end, predicate);
-    auto newBegin = std::partition(begin, position, [predicate](const typename BiIt::value_type& iter) { return !predicate(iter);});
+    auto newPredicate = [predicate](const typename BiIt::value_type& iter) {
+        return !predicate(iter);
+    };
+    auto newBegin = std::partition(begin, position, newPredicate);
 
-    return std::pair<BiIt, BiIt>(newBegin, newEnd);
+    return std::make_pair(newBegin, newEnd);
 }
