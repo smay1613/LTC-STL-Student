@@ -1,10 +1,6 @@
 #pragma once
 #include <numeric>
-#include <vector>
 #include <array>
-#include <iostream>
-#include <functional>
-#include <iterator>
 
 /**
  * @todo Implement function that will return N first fibonnaci numbers, started from 1
