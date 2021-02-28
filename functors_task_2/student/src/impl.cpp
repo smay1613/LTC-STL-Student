@@ -1,4 +1,6 @@
 #include "impl.h"
+#include <functional>
+#include <iostream>
 
 void DataBrowser::userLeave(const std::string &userId)
 {
@@ -7,48 +9,44 @@ void DataBrowser::userLeave(const std::string &userId)
 
 bool DataBrowser::getDataType1(const std::string &userId, std::vector<size_t> &returnValues) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
-    {
-        return false;
-    }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
-    return it->second->getDataType1(returnValues, 0);
+    auto method = [this, &returnValues] (const std::unique_ptr<IDataSelector> & selector) {
+        const auto & getDataType1 = [] (IDataSelector * selector, std::vector<size_t> &returnV) {
+            return selector->getDataType1(returnV, 0);
+        };
+
+        return invokeDataRequest(getDataType1, selector, returnValues);
+    };
+
+    return safeCall(userId, method);
 }
 
 bool DataBrowser::getDataType2(std::vector<size_t> &returnValues, const std::string &userId) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
-    {
-        return false;
-    }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
-    return it->second->getDataType2(returnValues);
+    auto method = [this, &returnValues] (const std::unique_ptr<IDataSelector> & selector) {
+        const auto & getDataType2 = [] (IDataSelector * selector, std::vector<size_t> &returnV) {
+            return selector->getDataType2(returnV);
+        };
+
+        return invokeDataRequest(getDataType2, selector, returnValues);
+    };
+
+    return safeCall(userId, method);
 }
 
 bool DataBrowser::getDataType3(const std::string &userId, std::vector<std::string> &returnValues) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
-    {
-        return false;
-    }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
+    auto method = [this, &returnValues] (const std::unique_ptr<IDataSelector> & selector) {
+        const auto & getDataType2 = [this] (IDataSelector * selector, std::vector<std::string> &returnV) {
+            std::deque<size_t> unprocessedResults {};
+            bool success {selector->getDataType3(unprocessedResults)};
+            returnV = process(unprocessedResults);
+            return success;
+        };
 
-    std::deque<size_t> unprocessedResults {};
-    bool success {it->second->getDataType3(unprocessedResults)};
-    returnValues = process(unprocessedResults);
-    return success;
+        return invokeDataRequest(getDataType2, selector, returnValues);
+    };
+
+    return safeCall(userId, method);
 }
 
 template<class T>

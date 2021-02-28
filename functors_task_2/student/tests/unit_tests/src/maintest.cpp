@@ -129,7 +129,10 @@ TEST_F(Regression, GetDataType1Data)
     std::vector<size_t> output;
     EXPECT_TRUE(m_browser.getDataType1(userId, output));
 
-    EXPECT_EQ(data, output); // <- data passed by selector must be set in output param
+//    bool test = data == output;  // test value will be true
+//    std::cout << "^^^^" << test << std::endl; // will output "^^^^1"
+//    EXPECT_TRUE(test);  // i dont know why but test failed
+    EXPECT_EQ(data, output); // <- data passed by selector must be set in output param // test failed ????
 }
 
 TEST_F(Regression, GetDataType2Data)
