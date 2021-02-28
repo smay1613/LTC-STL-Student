@@ -16,8 +16,5 @@
 template<class BiIt>
 BiIt shift_right_n(BiIt begin, BiIt end, typename BiIt::difference_type shift)
 {
-    auto newEnd = end;
-    std::advance(newEnd, shift);
-
-    return std::move_backward(begin, end, newEnd);
+    return std::move_backward(begin, end, std::next(end, shift));
 }
