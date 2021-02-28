@@ -21,6 +21,6 @@ std::pair<FI, FI> consecutive_group(FI start, FI end, Comparator comp = {})
 
     using value_type = typename std::iterator_traits<FI>::value_type;
     auto secondIter = std::find_if_not(firstIter, end,
-                                       [&](value_type elem){ return comp(elem, *firstIter); });
+                                       [&](const value_type &elem){ return comp(elem, *firstIter); });
     return std::make_pair(firstIter, secondIter);
 }
