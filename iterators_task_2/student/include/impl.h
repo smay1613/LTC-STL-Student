@@ -4,18 +4,51 @@
 template <class Container>
 struct accumulator
 {
-    /** @todo Iterator traits*/
-    /** @todo Constructor with container*/
-    /** @todo lvalue writing operator*/
-    /** @todo rvalue writing operator*/
+    using iterator_category = std::output_iterator_tag;
+    using value_type = void;
+    using difference_type = void;
+    using pointer = void;
+    using reference = void;
 
-    /** @todo Iterator operations */
+    explicit accumulator(Container& container)
+        : mContainer{container}
+    {
+    }
+
+    template<class Other>
+    accumulator& operator=(const Other& other)
+    {
+        std::copy(std::begin(other), std::end(other), std::back_inserter(mContainer));
+        return *this;
+    }
+
+    template<class Other>
+    accumulator& operator=(Other&& other)
+    {
+        std::move(std::begin(other), std::end(other), std::back_inserter(mContainer));
+        return *this;
+    }
+
+    accumulator& operator*()
+    {
+        return *this;
+    }
+
+    accumulator& operator++()
+    {
+        return *this;
+    }
+
+    accumulator operator++(int)
+    {
+
+    }
+private:
+    Container& mContainer;
 };
 
-/**
- *  @todo Implement accumulator object creator
- */
 template<class Container>
 accumulator<Container> make_accumulator(Container& container)
 {
+    return accumulator<Container>(container);
 }
