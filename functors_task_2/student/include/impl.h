@@ -65,7 +65,14 @@ private:
 
         const auto& it = m_dataReaders.find(userId);
 
-        return m_dataReaders.cend() == it || !it->second ? false : f(it->second);
+        bool result = false;
+
+        if (m_dataReaders.cend() != it && it->second)
+        {
+            result = f(it->second);
+        }
+
+        return result;
     }
 
     /**
