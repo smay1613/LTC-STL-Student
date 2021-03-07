@@ -18,4 +18,12 @@ void insert_to_sorted(Sequence& target, const FwIt sourceBegin, const FwIt sourc
     static_assert(std::is_const<typename std::remove_reference<
                           typename std::iterator_traits<FwIt>::reference>::type>::value,
                       "FwIt must point to const data");
+    using namespace std;
+    using value_type = typename std::iterator_traits<FwIt>::value_type const;
+
+    for_each(sourceBegin, sourceEnd,
+             [&target]( value_type & value){
+                 auto non_less = lower_bound(target.begin(), target.end(), value);
+                 target.insert(non_less, value);
+             });
 }
