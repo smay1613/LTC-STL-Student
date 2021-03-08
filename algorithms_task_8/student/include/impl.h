@@ -15,6 +15,11 @@ struct NoCaseComparator
 {
     bool operator()(const std::string& lhs, const std::string& rhs) const
     {
+        return lexicographical_compare(lhs.begin(),lhs.end(),
+                                            rhs.begin(), rhs.end(),
+                                            [](char const ch1,char const ch2) {
+                                                return tolower(ch1) < tolower(ch2);
+                                            });
     }
 };
 
