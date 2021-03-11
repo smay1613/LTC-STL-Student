@@ -18,4 +18,9 @@ void insert_to_sorted(Sequence& target, const FwIt sourceBegin, const FwIt sourc
     static_assert(std::is_const<typename std::remove_reference<
                           typename std::iterator_traits<FwIt>::reference>::type>::value,
                       "FwIt must point to const data");
+
+    std::for_each(sourceBegin, sourceEnd, [&target](const typename std::iterator_traits<FwIt>::value_type& value){
+        auto position = std::lower_bound(std::begin(target), std::end(target), value);
+        target.insert(position, value);
+    });
 }
