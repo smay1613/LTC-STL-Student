@@ -3,7 +3,8 @@
 The best way is: 3 sessinons during week, 2.5 hours each.  
 You can separate it in two parts: 2 weeks of training - first part, than skip 2 weeks, 2 weeks of training - second part.
 * Ask your training manager permission to record the training, and give the records only for students that have solved practice tasks related (it is a good motivation)
-* After each day of the training, don't forget to send the material to students. **CONVERT IT TO PDF BEFORE SENDING!**
+* After each day of the training, don't forget to send the material to students.  
+**CONVERT IT TO PDF BEFORE SENDING!**
 * Fork this repo and don't forget to check for updates.
 
 ## Practice tasks and review
@@ -34,7 +35,7 @@ It contains following questions:
 * Motivate students to fill it: if 70% of students filled this form, send them examples as a separate projects
 
 ## After the training
-* Ask students to fill the feedback in LTC or your form (like [that](https://forms.gle/ZPiQAHt9AghGLW8t6))
+* Ask students to fill the feedback in LTC or your form (like [that](https://forms.gle/ZPiQAHt9AghGLW8t6))  
 If 50% of students have filled the feedback form, you should send solved practice tasks - it is quite a good motivation.
 
 ## Think-times
