@@ -22,6 +22,7 @@ You can separate it in two parts: 2 weeks of training - first part, than skip 2 
 * **TEACH STUDENTS CPP CORE GUIDELINES (!!!!)**: [best practices](https://github.com/smay1613/LTC-STL-Student#best-practices-and-codestyle)
 Don't forget to link cpp core guidelines item when you are reviewing their code. 
 **MODERN C++ STYLE IS VERY IMPORTANT PART OF THIS TRAINING.**
+* **"Solved" repo may be out of date**, so you should check only the main idea of implementation there
 
 ## Before the training
 * Ask students to fill the form like [that](https://forms.gle/J58TbwA2AQJjbF8T8)
