@@ -1,21 +1,9 @@
 #pragma once
+#include <vector>
 #include <string>
+#include <stdexcept>
 
-struct Song
-{
-    std::string name;
-    explicit Song(std::string song_name)
-        : name {std::move(song_name)}
-    {
-    }
-};
-
-bool operator==(const Song& lhs, const Song& rhs)
-{
-    return lhs.name == rhs.name;
-}
-
-template<class Container>
+template<class Container, class Song_t>
 class StaticPlaylist
 {
 public:
@@ -23,19 +11,21 @@ public:
 
     /** @todo Iterators */
 
+    StaticPlaylist() = default;
+
     /** @todo Constructor from any reversible sequence container */
 
     /** @todo Assignment from any reversible sequence container */
 
     /** @todo Add track from initializer */
     template<class... Args>
-    const Song& play(Args&&... songData);
+    const Song_t& play(Args&&... songData);
 
     /** @todo Add track */
-    const Song& play(const Song& song);
+    const Song_t& play(const Song_t& song);
 
     /** @todo Get first track in playlist stack */
-    const Song& current() const;
+    const Song_t& current() const;
 
     /** @todo Skip to the next track in playlist, remove current */
     void switchNext();
