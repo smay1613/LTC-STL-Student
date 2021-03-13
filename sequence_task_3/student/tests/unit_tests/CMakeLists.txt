@@ -22,7 +22,7 @@ add_definitions(-DGTEST_LANGUAGE_CXX11)
 include(AddGTestTest)
 
 enable_testing()
-add_gtest_test(${PROJECT_NAME} "${sources}" static_playlist)
+add_gtest_test(${PROJECT_NAME} "${sources}" dynamic_playlist)
 
 include_directories(
         PRIVATE
