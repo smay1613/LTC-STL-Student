@@ -1,0 +1,5 @@
+You must implement DynamicPlaylist container wrapper that behaves like a tracks queue.
+Playback should start from the first passed file (sequence is passed to constructor)
+Track switch will remove current song from playlist
+You can play a new song, while playlist won't be changed until explicit switch
+You can set track to be played next, and also add track to the end of queue
