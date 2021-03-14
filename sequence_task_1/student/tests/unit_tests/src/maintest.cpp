@@ -107,8 +107,8 @@ TEST(TracklistOperations, FromArguments)
 {
     basic_container data {Song{"example1"}, Song{"example2"}};
     DefaultTracklist playlist {data};
-
-    EXPECT_EQ(playlist.play("example3").name, "example3");
+    playlist.play("example3");
+    EXPECT_EQ(playlist.current().name, "example3");
 }
 
 TEST(TracklistOperations, FromSeveralArguments)
@@ -139,8 +139,9 @@ TEST(TracklistOperations, FromLvalue)
     DefaultTracklist playlist {data};
 
     const Song newSong {"example3"};
+    playlist.play(newSong);
 
-    EXPECT_EQ(playlist.play(newSong), newSong);
+    EXPECT_EQ(playlist.current(), newSong);
 }
 
 TEST(TracklistOperations, NoUBToday)
