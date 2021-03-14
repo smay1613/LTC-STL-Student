@@ -88,7 +88,7 @@ TEST(TracklistCommon, Order)
     DefaultTracklist playlist {data};
 
     std::reverse(data.begin(), data.end());
-    std::equal(playlist.begin(), playlist.end(), data.begin());
+    EXPECT_TRUE(std::equal(playlist.begin(), playlist.end(), data.begin()));
 }
 
 TEST(TracklistOperations, AssignLvalue)
