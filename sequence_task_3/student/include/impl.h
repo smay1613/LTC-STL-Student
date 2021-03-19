@@ -106,7 +106,7 @@ public:
     {
         if (m_tracklist.empty())
         {
-            throw std::out_of_range("Track list is empty");
+            throw std::out_of_range("Track list is empty!");
         }
 
         m_tracklist.pop_front();
