@@ -1,48 +1,60 @@
 #include "maintest.h"
 #include <utility>
+#include <random>
+#include <algorithm>
 
 using namespace ::testing;
 
-TEST(Anagrams, PositiveDifferent)
+TEST(Anagrams, PositiveWithDuplications)
 {
-    std::string testString {"12356abс"};
-    std::string original {testString};
-    while (std::next_permutation(testString.begin(), testString.end()))
-    {
-        EXPECT_TRUE(is_anagram(testString, original));
-    }
+    playlist tracklist1 {10, {"1"}};
+    tracklist1.insert(tracklist1.end(), 10, {"4"});
+    tracklist1.insert(tracklist1.end(), 10, {"1"});
+    tracklist1.insert(tracklist1.end(), 10, {"2"});
+
+    playlist tracklist2 {tracklist1};
+    std::shuffle(tracklist2.begin(), tracklist2.end(),
+                 std::default_random_engine{});
+
+    EXPECT_TRUE(is_same_content(tracklist1, tracklist2));
+    EXPECT_TRUE(is_same_content(tracklist2, tracklist1));
 }
 
-TEST(Anagrams, PositiveSame)
+TEST(Anagrams, PositiveNoDuplications)
 {
-    std::string testString {10, '1'};
-    testString.insert(testString.end(), 10, '4');
-    testString.insert(testString.end(), 10, '1');
-    testString.insert(testString.end(), 10, '2');
+    std::vector<std::string> data {{"1"}, {"2"}, {"3"}, {"4"}, {"5"}, {"a"}, {"b"}};
 
-    std::string original {testString};
-    EXPECT_TRUE(is_anagram(testString, original));
+    auto fill = [&] (playlist& tracklist) {
+        std::transform(data.begin(), data.end(), std::back_inserter(tracklist),
+            [](const std::string& name) {
+                return Song {name};
+            });
+    };
+
+    playlist tracklist1;
+    fill(tracklist1);
+
+    while(std::next_permutation(data.begin(), data.end())) {
+        playlist tracklist2;
+        fill(tracklist2);
+        EXPECT_TRUE(is_same_content(tracklist1, tracklist2));
+        EXPECT_TRUE(is_same_content(tracklist2, tracklist1));
+    }
+
 }
 
-TEST(Anagrams, NegativeDifferent)
+TEST(Anagrams, NegativeNewElements)
 {
-    std::string testString {"12bс"};
-    std::string modified {testString};
-    modified.front() = 'k';
-    while (std::next_permutation(testString.begin(), testString.end()))
-    {
-        EXPECT_FALSE(is_anagram(testString, modified));
-    }
+    playlist tracklist1 {{"a"}, {"b"}, {"c"}, {"c"}};
+    playlist tracklist2 {{"a"}, {"b"}, {"c"}, {"d"}};
+    EXPECT_FALSE(is_same_content(tracklist1, tracklist2));
+    EXPECT_FALSE(is_same_content(tracklist2, tracklist1));
 }
 
-TEST(Anagrams, NegativeSame)
+TEST(Anagrams, NegativeMoreElements)
 {
-    std::string testString {10, '2'};
-    std::string modified {testString};
-    modified.push_back('2');
-
-    while (std::next_permutation(testString.begin(), testString.end()))
-    {
-        EXPECT_FALSE(is_anagram(testString, modified));
-    }
+    playlist tracklist1 {{"a"}, {"b"}, {"c"}};
+    playlist tracklist2 {{"a"}, {"b"}, {"c"}, {"b"}};
+    EXPECT_FALSE(is_same_content(tracklist1, tracklist2));
+    EXPECT_FALSE(is_same_content(tracklist2, tracklist1));
 }

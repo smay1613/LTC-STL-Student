@@ -1,5 +1,5 @@
-You must implement method that will check if one string is an anagram (has the same characters) of another.
+ You must implement function that will check if one playlist has the same songs as the second one
 
-Example:
-	beer & reeb -> true
-            beer & neer -> false
+ Examples:
+    is_same_content({"a", "b", "c", "d"}, {"a", "c", "d", "b"}) -> true
+    is_same_content({"a", "b", "c", "d"}, {"a", "b", "e", "c"}) -> false
