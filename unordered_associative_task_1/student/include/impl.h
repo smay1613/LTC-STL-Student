@@ -1,15 +1,35 @@
 #pragma once
 #include <string>
+#include <vector>
+
+struct Song
+{
+public:
+    Song(const std::string& name)
+             : track_name {name}
+    {
+    }
+
+    const std::string& name() const
+    {
+        return track_name;
+    }
+
+    bool operator<(const Song&) = delete;
+
+private:
+    std::string track_name;
+};
+
+using playlist = std::vector<Song>;
 
 /**
- * @todo Implement function that will check if one string has the same characters
+ * @todo Implement function that will check if one playlist has the same songs
  * as the second one
  *
- * @example is_anagram("abcd", "acdb") -> true
- * @example is_anagram("abcd", "abec") -> false
+ * @example is_same_content({"a", "b", "c", "d"}, {"a", "c", "d", "b"}) -> true
+ * @example is_same_content({"a", "b", "c", "d"}, {"a", "b", "e, "c"}) -> false
  *
- * @param first - first word
- * @param second - second word
- * @return true if first is anagram of second
+ * @return true if first playlist is anagram of second
  */
-bool is_anagram(const std::string& first, const std::string& second);
+bool is_same_content(const playlist& first_playlist, const playlist& second_playlist);
