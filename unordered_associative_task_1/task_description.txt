@@ -2,4 +2,4 @@
 
  Examples:
     is_same_content({"a", "b", "c", "d"}, {"a", "c", "d", "b"}) -> true
-    is_same_content({"a", "b", "c", "d"}, {"a", "b", "e, "c"}) -> false
+    is_same_content({"a", "b", "c", "d"}, {"a", "b", "e", "c"}) -> false

@@ -28,7 +28,7 @@ using playlist = std::vector<Song>;
  * as the second one
  *
  * @example is_same_content({"a", "b", "c", "d"}, {"a", "c", "d", "b"}) -> true
- * @example is_same_content({"a", "b", "c", "d"}, {"a", "b", "e, "c"}) -> false
+ * @example is_same_content({"a", "b", "c", "d"}, {"a", "b", "e", "c"}) -> false
  *
  * @return true if first playlist is anagram of second
  */
