@@ -20,7 +20,7 @@ You can separate it in two parts: 2 weeks of training - first part, than skip 2 
   - Critical (marked with bold font) - when you see something disastrous (like UB/crash/compilation error/etc)
   - Common - when you see something not optimal or incorrect (like excessive copy/incorrect use of algorithm/etc)
   - Non-critical (marked with italic font) - when you see something related to codestyle (bad naming/too big function/etc)
-* **TEACH STUDENTS CPP CORE GUIDELINES (!!!!)**: [best practices](https://github.com/smay1613/LTC-STL-Student#best-practices-and-codestyle)
+* **TEACH STUDENTS CPP CORE GUIDELINES (!!!!)**: [best practices](https://github.com/smay1613/LTC-STL-Student#best-practices-and-codestyle)  
 Don't forget to link cpp core guidelines item when you are reviewing their code. 
 **MODERN C++ STYLE IS VERY IMPORTANT PART OF THIS TRAINING.**
 * **"Solved" repo may be out of date**, so you should check only the main idea of implementation there
