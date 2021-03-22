@@ -46,13 +46,15 @@ public:
     template<class... Args>
     const Song_t& play(Args&&... songData)
     {
-        return *m_tracklist.emplace(m_tracklist.begin(), std::forward<Args>(songData)...);
+        m_tracklist.emplace_front(std::forward<Args>(songData)...);
+        return current();
     }
 
     /** @todo Set track as currently played from lvalue */
     const Song_t& play(const Song_t& song)
     {
-        return *m_tracklist.insert(m_tracklist.begin(), song);
+        m_tracklist.push_front(song);
+        return current();
     }
 
     /** @todo Set track to be played next from initializer */
