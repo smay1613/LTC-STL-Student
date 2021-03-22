@@ -1,6 +1,14 @@
 #pragma once
 #include <map>
 
+const std::map<size_t, size_t> marksMap{
+        {0, 1},
+        {30, 2},
+        {50, 3},
+        {70, 4},
+        {90, 5}
+};
+
 /**
  * @todo Implement function for conversion from 100 point system to 5 point system
  *
