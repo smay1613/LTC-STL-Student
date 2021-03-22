@@ -9,27 +9,34 @@ const std::vector<std::pair<char, char>> brackets {
     {'{', '}'}
 };
 
+auto findBracket(const char bracket) -> std::vector<std::pair<char, char>>::const_iterator
+{
+    return std::find_if(brackets.cbegin(), brackets.cend(),
+                        [bracket] (const std::pair<char, char>& p)
+                        {
+                            return p.first == bracket || p.second == bracket;
+                        });
+}
+
 bool isValid(const std::string& source)
 {
     std::stack<char> openBrackets;
 
-    for (char ch : source)
+    for (char sourceCharacter : source)
     {
-        auto pairIt = std::find_if(brackets.cbegin(), brackets.cend(),
-                                   [ch] (const std::pair<char, char>& p)
-                                        {
-                                            return p.first == ch || p.second == ch;
-                                        });
+        auto bracketsIt = findBracket(sourceCharacter);
 
-        if (pairIt != brackets.cend())
+        if (bracketsIt != brackets.cend())
         {
-            if (pairIt->first == ch)
+            bool isOpenBracket = bracketsIt->first == sourceCharacter;
+
+            if (isOpenBracket)
             {
-                openBrackets.push(ch);
+                openBrackets.push(sourceCharacter);
             }
             else
             {
-                if (openBrackets.empty() || pairIt->first != openBrackets.top())
+                if (openBrackets.empty() || bracketsIt->first != openBrackets.top())
                 {
                     return false;
                 }
