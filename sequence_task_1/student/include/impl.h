@@ -17,11 +17,11 @@ public:
     using reference = typename Container::reference;
 
     /** @todo Iterators */
-    const_iterator end() {
+    const_iterator end() const {
         return m_tracklist.cend();
     }
 
-    const_iterator begin() {
+    const_iterator begin() const {
         return m_tracklist.cbegin();
     }
 
