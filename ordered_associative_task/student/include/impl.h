@@ -16,10 +16,6 @@
  * @return 1-5
  */
 size_t convertMarkTo5PointSystem(size_t markIn100Point){
-    std::map<size_t,size_t> ranges={{29,1},{49,2},{69,3},{89,4}};
-     const auto it=ranges.lower_bound(markIn100Point);
-     if(ranges.cend()==it){
-         return 5;
-     }
-     return it->second;
+    std::map<size_t,size_t> ranges={{29,1},{49,2},{69,3},{89,4},{(size_t)-1,5}};
+     return ranges.lower_bound(markIn100Point)->second;
 }
