@@ -17,6 +17,10 @@ public:
 
     bool operator<(const Song&) = delete;
 
+    bool operator==(const Song& song) const {
+        return track_name == song.track_name;
+    }
+
 private:
     std::string track_name;
 };
