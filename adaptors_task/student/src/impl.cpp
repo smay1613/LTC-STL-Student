@@ -19,18 +19,18 @@ bool isCloseBracket(const char bracket) {
 bool isValid(const std::string& source) {
     std::stack<char> bracketsStack;
 
-    for (const char &ch : source) {
-        auto resultIter = std::find_if(brackets.begin(), brackets.end(), [ch](const std::pair<char, char> value) {
-            return value.first == ch;
+    for (const char &symbol : source) {
+        auto resultIter = std::find_if(brackets.begin(), brackets.end(), [symbol](const std::pair<char, char> value) {
+            return value.first == symbol;
         });
 
         if (resultIter != brackets.end()) {
-            bracketsStack.push((*resultIter).second);
-        } else if (isCloseBracket(ch)) {
-            if (bracketsStack.empty()) {
+            bracketsStack.push(resultIter->second);
+        } else if (isCloseBracket(symbol)) {
+            if (bracketsStack.empty() || bracketsStack.top() != symbol) {
                 return false;
             }
-            if (bracketsStack.top() == ch) {
+            if (bracketsStack.top() == symbol) {
                 bracketsStack.pop();
             }
         }
