@@ -16,7 +16,7 @@ bool isValid(const std::string &source)
     auto isWrongPair = [](const std::map<char, char>& brackets, const char& symbol)
     {
         return std::any_of(brackets.begin(), brackets.end(),
-                                         [&symbol](const std::pair<const char, char>& pair) { return symbol == pair.second ? true : false; });
+                                         [&symbol](const std::pair<const char, char>& pair) { return symbol == pair.second; });
     };
 
     for(const auto& symbol : source)
@@ -29,7 +29,6 @@ bool isValid(const std::string &source)
                 checkBrackets.pop();
             else if ( isWrongPair(brackets, symbol) )
                 return false;
-
         }
     }
 
