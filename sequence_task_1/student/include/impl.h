@@ -53,13 +53,14 @@ public:
     const Song_t& play(Args&&... songData)
     {
         m_tracklist.emplace_back(std::forward<Args>(songData)...);
-        return m_tracklist.back();
+        return current();
     }
 
     /** @todo Add track */
     const Song_t& play(const Song_t& song)
     {
-        return *(m_tracklist.insert(m_tracklist.end(), song));
+        m_tracklist.push_back(song);
+        return current();
     }
 
     /** @todo Get first track in playlist stack */
@@ -71,7 +72,7 @@ public:
     /** @todo Skip to the next track in playlist, remove current */
     void switchNext()
     {
-        m_tracklist.erase(std::prev(m_tracklist.end()));
+        hasTracks() ? m_tracklist.pop_back() : throw std::out_of_range("Tracklist is empty");
     }
 
     /** @todo Amount of tracks in playlist */
