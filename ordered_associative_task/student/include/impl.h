@@ -16,19 +16,18 @@
  * @return 1-5
  */
 size_t convertMarkTo5PointSystem(size_t markIn100Point) {
-    int maxMark = 5;
     std::map<int, int> pointSystem {
         {29, 1},
         {49, 2},
         {69, 3},
         {89, 4},
-        {90, maxMark}
+        {90, 5}
     };
 
     auto reultIter = pointSystem.lower_bound(markIn100Point);
 
     if (reultIter == pointSystem.cend()) {
-        return maxMark;
+        return std::prev(pointSystem.cend())->second;
     }
 
     return reultIter->second;
