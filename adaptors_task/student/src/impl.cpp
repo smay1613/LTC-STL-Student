@@ -30,9 +30,7 @@ bool isValid(const std::string& source) {
             if (bracketsStack.empty() || bracketsStack.top() != symbol) {
                 return false;
             }
-            if (bracketsStack.top() == symbol) {
-                bracketsStack.pop();
-            }
+            bracketsStack.pop();
         }
     }
 
