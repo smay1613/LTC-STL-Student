@@ -17,18 +17,14 @@
  */
 size_t convertMarkTo5PointSystem(size_t markIn100Point) {
     std::map<int, int> pointSystem {
-        {29, 1},
-        {49, 2},
-        {69, 3},
-        {89, 4},
+        {0, 1},
+        {30, 2},
+        {50, 3},
+        {70, 4},
         {90, 5}
     };
 
-    auto reultIter = pointSystem.lower_bound(markIn100Point);
+    auto reultIter = pointSystem.upper_bound(markIn100Point);
 
-    if (reultIter == pointSystem.cend()) {
-        return std::prev(pointSystem.cend())->second;
-    }
-
-    return reultIter->second;
+    return (--reultIter)->second;
 }
