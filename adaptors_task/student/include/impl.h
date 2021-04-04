@@ -1,6 +1,12 @@
 #pragma once
 #include <string>
+#include <stack>
+#include <algorithm>
 
+bool isOpenBracket(const char ch);
+bool isClosedBracket(const char ch);
+bool isMirrored(const char ch1, const char ch2);
+void validation(std::stack<char> & brackets, bool & isValid,const char ch);
 /**
  * @todo isValid - check if given expression is valid - all open brackets are closed
  * by CORRESPONDING closed bracket.
