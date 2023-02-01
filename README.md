@@ -79,6 +79,7 @@ Especially, you must follow these rules:
 
 
 ## If you are not familiar with git:
+0. Create github account and fork this repo
 1. [Install git](https://git-scm.com/downloads)
 2. [Setup ssh access](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh)
 2. Learn how to:
