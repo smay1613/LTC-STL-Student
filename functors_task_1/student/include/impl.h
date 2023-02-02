@@ -9,18 +9,13 @@
  */
 struct BeerOrganizer
 {
-    std::vector<BeerBrand> brands = {
-        BeerBrand::HoeGaarden,
-        BeerBrand::Corona,
-        BeerBrand::Carlsberg,
-        BeerBrand::Bud,
-        BeerBrand::ZlataPraha,
-        BeerBrand::Leffe
-    };
-    BeerBrand operator()() const {
-       static size_t index = 0;
-       index %= brands.size();
-       return brands[index++];
+    int next = static_cast<int>(BeerBrand::HoeGaarden);
+    
+    BeerBrand operator()(){
+        if(next == static_cast<int>(BeerBrand::Max)){
+            next = static_cast<int>(BeerBrand::HoeGaarden);
+        }
+       return static_cast<BeerBrand>(next++);
     }
 };
 
