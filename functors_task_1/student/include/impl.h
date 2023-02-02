@@ -1,6 +1,7 @@
 #pragma once
 #include "bar_serving.h"
 #include <functional>
+#include <vector>
 
 /**
  * @todo Implement functor-generator that will return next beer brand (cyclic)
@@ -8,6 +9,19 @@
  */
 struct BeerOrganizer
 {
+    std::vector<BeerBrand> brands = {
+        BeerBrand::HoeGaarden,
+        BeerBrand::Corona,
+        BeerBrand::Carlsberg,
+        BeerBrand::Bud,
+        BeerBrand::ZlataPraha,
+        BeerBrand::Leffe
+    };
+    BeerBrand operator()() const {
+       static size_t index = 0;
+       index %= brands.size();
+       return brands[index++];
+    }
 };
 
 /**
@@ -16,16 +30,18 @@ struct BeerOrganizer
  *
  * @note Only Corona and HoeGaarden are expensive
  */
-bool isExpensiveBeer(/**???*/)
+bool isExpensiveBeer(BeerBrand beer)
 {
+    return beer == BeerBrand::Corona || beer == BeerBrand::HoeGaarden;
 }
 
 /**
  * @todo Implement lambda beer country equality comparator
  * @return true if beer county is the same, false otherwise
  */
-auto sameCountry = [](/**???*/)
+auto sameCountry = [](BeerBrand brand, BeerBrand beer)
 {
+    return getBeerCountry(beer) == getBeerCountry(brand);
 };
 
 struct MixingPolicy
@@ -40,9 +56,30 @@ struct MixingPolicy
      * Whiskey + SevenUp = SevenPlusSeven;
      * Others + Others = Oops;
      */
-    static Cocktail mix(/**???*/)
+    static Cocktail mix(AlcoholDrink alcohol, NonAlcoholDrink juice)
     {
+        switch(alcohol){
+            case AlcoholDrink::Gin:
+                switch(juice){
+                    case NonAlcoholDrink::LimeJuice:
+                        return Cocktail::Gimlet;
+                        break;
+                    case NonAlcoholDrink::GrapefruitJuice:
+                        return Cocktail::Greyhount;
+                        break;
+                    default:
+                        return Cocktail::Oops;
+                        break;
+                }
+                break;
+            case AlcoholDrink::Whiskey:
+                return (juice == NonAlcoholDrink::SevenUp)?Cocktail::SevenPlusSeven:Cocktail::Oops;
+                break;
+            default:
+                return Cocktail::Oops;
+                break;
+        }
     }
 };
 
-std::function</**???*/> mixer {&MixingPolicy::mix};
+std::function<Cocktail(AlcoholDrink,NonAlcoholDrink)> mixer {&MixingPolicy::mix};
