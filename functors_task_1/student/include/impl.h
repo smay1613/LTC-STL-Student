@@ -11,7 +11,7 @@ struct BeerOrganizer
 	int brand = static_cast<int>(BeerBrand::None);
 	BeerBrand operator()() {
 		if (brand == static_cast<int>(BeerBrand::Leffe))
-			brand = 0;
+			brand = static_cast<int>(BeerBrand::None);
 		return static_cast<BeerBrand>(++brand);
 	}
 };
