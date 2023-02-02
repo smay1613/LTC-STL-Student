@@ -8,11 +8,11 @@
  */
 struct BeerOrganizer
 {
-	int brand = static_cast<int>(BeerBrand::None);
+	int brand = static_cast<int>(BeerBrand::HoeGaarden);
 	BeerBrand operator()() {
-		if (brand == static_cast<int>(BeerBrand::Leffe))
-			brand = static_cast<int>(BeerBrand::None);
-		return static_cast<BeerBrand>(++brand);
+		if (brand == static_cast<int>(BeerBrand::Max))
+			brand = static_cast<int>(BeerBrand::HoeGaarden);
+		return static_cast<BeerBrand>(brand++);
 	}
 };
 
@@ -22,7 +22,7 @@ struct BeerOrganizer
  *
  * @note Only Corona and HoeGaarden are expensive
  */
-bool isExpensiveBeer(BeerBrand beer)
+bool isExpensiveBeer(const BeerBrand beer)
 {
 	return (beer == BeerBrand::Corona || beer == BeerBrand::HoeGaarden );
 }
@@ -31,7 +31,7 @@ bool isExpensiveBeer(BeerBrand beer)
  * @todo Implement lambda beer country equality comparator
  * @return true if beer county is the same, false otherwise
  */
-auto sameCountry = [](const BeerBrand &c1,const BeerBrand &c2)
+auto sameCountry = [](const BeerBrand c1,const BeerBrand c2)
 {
 	return getBeerCountry(c1) == getBeerCountry(c2);
 };
@@ -52,15 +52,24 @@ struct MixingPolicy
     {
 		switch (bev1)
 		{
-		case AlcoholDrink::Gin:
-			if (bev2 == NonAlcoholDrink::LimeJuice) return Cocktail::Gimlet;
-			else if (bev2 == NonAlcoholDrink::GrapefruitJuice) return Cocktail::Greyhount;
-			else return Cocktail::Oops;
-		case AlcoholDrink::Whiskey:
-			if (bev2 == NonAlcoholDrink::SevenUp) return Cocktail::SevenPlusSeven;
-		default:
-			return Cocktail::Oops;
+			case AlcoholDrink::Gin:
+				switch (bev2)
+				{
+					case (NonAlcoholDrink::LimeJuice):
+						return Cocktail::Gimlet;
+					case (NonAlcoholDrink::GrapefruitJuice):
+						return Cocktail::Greyhount;
+					default:
+						break;
+				}
+				break;
+			case AlcoholDrink::Whiskey:
+				if (bev2 == NonAlcoholDrink::SevenUp)
+					return Cocktail::SevenPlusSeven;
+			default:
+				break;
 		}
+		return Cocktail::Oops;
 	}
 };
 
