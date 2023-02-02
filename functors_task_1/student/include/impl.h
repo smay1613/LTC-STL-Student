@@ -9,13 +9,13 @@
 struct BeerOrganizer
 {  
     BeerBrand operator()(){
-        if(currentIndex==static_cast<int>(BeerBrand::Leffe)){
-            currentIndex=static_cast<int>(BeerBrand::None);
+        if(currentIndex==static_cast<int>(BeerBrand::Max)){
+            currentIndex=static_cast<int>(BeerBrand::HoeGaarden);
         }
-        return static_cast<BeerBrand>(++currentIndex);
+        return static_cast<BeerBrand>(currentIndex++);
     }
     
-    size_t currentIndex{static_cast<int>(BeerBrand::None)};
+    size_t currentIndex{static_cast<int>(BeerBrand::HoeGaarden)};
 };
 
 /**
@@ -53,15 +53,39 @@ struct MixingPolicy
      */
     static Cocktail mix(const AlcoholDrink AlDrink,const NonAlcoholDrink NonAlDrink)
     {
-        if(AlDrink==AlcoholDrink::Gin && NonAlDrink==NonAlcoholDrink::LimeJuice){
-            return Cocktail::Gimlet;
-        }
+        switch (AlDrink)
+        {
+            case AlcoholDrink::Gin:
+            {
+                switch (NonAlDrink)
+                {
+                    case NonAlcoholDrink::LimeJuice:
+                        return Cocktail::Gimlet;
 
-        if(AlDrink==AlcoholDrink::Gin && NonAlDrink==NonAlcoholDrink::GrapefruitJuice){
-            return Cocktail::Greyhount;
-        }
-        if(AlDrink==AlcoholDrink::Whiskey && NonAlDrink==NonAlcoholDrink::SevenUp){
-            return Cocktail::SevenPlusSeven;
+                    case NonAlcoholDrink::GrapefruitJuice:
+                        return Cocktail::Greyhount;
+
+                    default:
+                        break;
+                }
+            }
+            break;
+
+            case AlcoholDrink::Whiskey:
+            {
+                switch (NonAlDrink)
+                {
+                    case NonAlcoholDrink::SevenUp:
+                        return Cocktail::SevenPlusSeven;
+
+                    default:
+                        break;
+                }
+            }
+            break;
+
+            default:
+                break;
         }
 
         return Cocktail::Oops;
