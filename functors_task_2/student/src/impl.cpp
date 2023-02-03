@@ -7,48 +7,36 @@ void DataBrowser::userLeave(const std::string &userId)
 
 bool DataBrowser::getDataType1(const std::string &userId, std::vector<size_t> &returnValues) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
-    {
-        return false;
-    }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
-    return it->second->getDataType1(returnValues, 0);
+	return safeCall(userId,  [&](const std::unique_ptr<IDataSelector>& a) {
+		auto lambda = [](const IDataSelector* a,std::vector<size_t> & returnValues){
+			return a->getDataType1(returnValues, 0);
+		};
+		return invokeDataRequest(lambda, a,returnValues);
+	});
 }
 
 bool DataBrowser::getDataType2(std::vector<size_t> &returnValues, const std::string &userId) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
-    {
-        return false;
-    }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
-    return it->second->getDataType2(returnValues);
+	return safeCall(userId,  [&](const std::unique_ptr<IDataSelector>& a) {
+		auto lambda = [](std::vector<size_t> & returnValues, const IDataSelector* a){
+			return a->getDataType2(returnValues);
+		};
+		auto wrapper = std::bind(lambda, std::placeholders::_2, std::placeholders::_1);
+		return invokeDataRequest(wrapper, a,returnValues);
+	});
 }
 
 bool DataBrowser::getDataType3(const std::string &userId, std::vector<std::string> &returnValues) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
-    {
-        return false;
-    }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
-
-    std::deque<size_t> unprocessedResults {};
-    bool success {it->second->getDataType3(unprocessedResults)};
-    returnValues = process(unprocessedResults);
-    return success;
+	return safeCall(userId,  [&](const std::unique_ptr<IDataSelector>& a) {
+		auto lambda = [this](std::vector<std::string> & returnValues, const IDataSelector* a){
+			std::deque<size_t> unprocessedResults {};
+			bool success {a->getDataType3(unprocessedResults)};
+			returnValues = process(unprocessedResults);
+			return success;
+		};
+		return invokeDataRequest(lambda, a,returnValues);
+	});
 }
 
 template<class T>
