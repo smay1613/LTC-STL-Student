@@ -1,7 +1,6 @@
 #pragma once
 #include "bar_serving.h"
 #include <functional>
-#include <vector>
 
 /**
  * @todo Implement functor-generator that will return next beer brand (cyclic)
@@ -9,11 +8,13 @@
  */
 struct BeerOrganizer
 {
-    int next = static_cast<int>(BeerBrand::HoeGaarden);
+    int initial_value = static_cast<int>(BeerBrand::HoeGaarden);
+    int next = initial_value;
+    int last_value = static_cast<int>(BeerBrand::Max);
     
     BeerBrand operator()(){
-        if(next == static_cast<int>(BeerBrand::Max)){
-            next = static_cast<int>(BeerBrand::HoeGaarden);
+        if(next == last_value){
+            next = initial_value;
         }
        return static_cast<BeerBrand>(next++);
     }
@@ -25,7 +26,7 @@ struct BeerOrganizer
  *
  * @note Only Corona and HoeGaarden are expensive
  */
-bool isExpensiveBeer(BeerBrand beer)
+bool isExpensiveBeer(const BeerBrand beer)
 {
     return beer == BeerBrand::Corona || beer == BeerBrand::HoeGaarden;
 }

@@ -1,6 +1,5 @@
 #pragma once
 #include <array>
-using namespace std;
 
 /** @warning: do not change the values of enum */
 enum class BeerBrand
