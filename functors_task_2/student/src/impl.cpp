@@ -7,48 +7,33 @@ void DataBrowser::userLeave(const std::string &userId)
 
 bool DataBrowser::getDataType1(const std::string &userId, std::vector<size_t> &returnValues) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
-    {
-        return false;
+    const auto& it =  m_dataReaders.find(userId);
+    if(it != m_dataReaders.cend() && it->second){
+        return it->second->getDataType1(returnValues, 0);
     }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
-    return it->second->getDataType1(returnValues, 0);
+    return false;
 }
 
 bool DataBrowser::getDataType2(std::vector<size_t> &returnValues, const std::string &userId) const
 {
     const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
-    {
-        return false;
+    if(it != m_dataReaders.cend() && it->second){
+        return it->second->getDataType2(returnValues);
     }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
-    return it->second->getDataType2(returnValues);
+    return false;
 }
+    
 
 bool DataBrowser::getDataType3(const std::string &userId, std::vector<std::string> &returnValues) const
 {
     const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
-    {
-        return false;
+    if (it != m_dataReaders.cend() && it->second){
+        std::deque<size_t> unprocessedResults {};
+        bool success {it->second->getDataType3(unprocessedResults)};
+        returnValues = process(unprocessedResults);
+        return success;
     }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
-
-    std::deque<size_t> unprocessedResults {};
-    bool success {it->second->getDataType3(unprocessedResults)};
-    returnValues = process(unprocessedResults);
-    return success;
+    return false;
 }
 
 template<class T>
