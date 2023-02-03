@@ -14,7 +14,7 @@ private:
 public:
     BeerBrand operator()() {
         if (currentIndex == static_cast<int>(BeerBrand::Max)) {
-            currentIndex = 1;
+            currentIndex = static_cast<int>(BeerBrand::HoeGaarden);
         }
         return BeerBrand(currentIndex++);
     }
@@ -26,7 +26,7 @@ public:
  *
  * @note Only Corona and HoeGaarden are expensive
  */
-bool isExpensiveBeer(BeerBrand beer)
+bool isExpensiveBeer(const BeerBrand &beer)
 {
     if (beer == BeerBrand::Corona || beer == BeerBrand::HoeGaarden) {
         return true;
@@ -38,7 +38,7 @@ bool isExpensiveBeer(BeerBrand beer)
  * @todo Implement lambda beer country equality comparator
  * @return true if beer county is the same, false otherwise
  */
-auto sameCountry = [](BeerBrand lhs, BeerBrand rhs)
+auto sameCountry = [](const BeerBrand &lhs, const BeerBrand &rhs)
 {
     if (getBeerCountry(lhs) == getBeerCountry(rhs)) {
         return true;
@@ -60,14 +60,21 @@ struct MixingPolicy
      */
     static Cocktail mix(AlcoholDrink alcohol, NonAlcoholDrink nonAlcohol)
     {
-        if (alcohol == AlcoholDrink::Gin && nonAlcohol == NonAlcoholDrink::LimeJuice) {
-            return Cocktail::Gimlet;
-        } else if (alcohol == AlcoholDrink::Gin && nonAlcohol == NonAlcoholDrink::GrapefruitJuice) {
-            return Cocktail::Greyhount;
-        } else if (alcohol == AlcoholDrink::Whiskey && nonAlcohol == NonAlcoholDrink::SevenUp) {
-            return Cocktail::SevenPlusSeven;
-        } else {
-            return Cocktail::Oops;
+        switch (alcoholDrink) {
+            case AlcoholDrink::Gin:
+                if (nonAlcoholDrink == NonAlcoholDrink::LimeJuice) {
+                    return Cocktail::Gimlet;
+                } else if (nonAlcoholDrink == NonAlcoholDrink::GrapefruitJuice) {
+                    return Cocktail::Greyhount;
+                }
+                return Cocktail::Oops;
+            case AlcoholDrink::Whiskey:
+                if (nonAlcoholDrink == NonAlcoholDrink::SevenUp) {
+                    return Cocktail::SevenPlusSeven;
+                }
+                return Cocktail::Oops;
+            default:
+                return Cocktail::Oops;
         }
     }
 };
