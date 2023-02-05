@@ -69,7 +69,7 @@ private:
         {
             return f(it->second);
         }
-            return false;
+        return false;
     }
 
     /**
