@@ -3,6 +3,7 @@
 #include <memory>
 #include <functional>
 #include <algorithm>
+#include <string>
 #include "selector.h"
 
 // for testing purposes
@@ -48,9 +49,7 @@ private:
     /**
      * Each user has an asociated data reader
      */
-    std::map<std::string /*userId*/,
-            std::unique_ptr<IDataSelector> /* database selector - imagine that it is interface */
-            > m_dataReaders;
+    std::map<std::string /*userId*/, std::unique_ptr<IDataSelector> /* database selector - imagine that it is interface */> m_dataReaders;
 
     /**
      * @todo SafeCall idiom
@@ -62,9 +61,12 @@ private:
     bool safeCall(const std::string &userId, T&& f) const
     {
         static_assert(std::is_same<decltype(f(nullptr)), bool>::value, "Provided Callable must return bool");
-        // find reader
-        // check for errors
-        // call functor
+        auto foundUserIdIterator = m_dataReaders.find(userId);
+
+        if (foundUserIdIterator != m_dataReaders.end() && foundUserIdIterator->second != nullptr) {
+            return f(foundUserIdIterator->second);
+        }
+
         return false;
     }
 
@@ -76,8 +78,6 @@ private:
     template<class Functional, typename Output>
     bool invokeDataRequest(Functional method, const std::unique_ptr<IDataSelector>& selector, Output& result) const
     {
-        // adapt function
-        // call selector member
-        return false;
+        return method(selector.get(), result);
     }
 };
