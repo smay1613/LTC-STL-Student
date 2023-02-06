@@ -65,11 +65,9 @@ private:
         
         const auto & iter = m_dataReaders.find(userId);
         
-        if(iter!=m_dataReaders.cend()){
-            if(iter->second){
-                return f(iter->second);
+        if(iter!=m_dataReaders.cend() && iter->second){
+            return f(iter->second);
             }
-        }
         
         return false;
     }

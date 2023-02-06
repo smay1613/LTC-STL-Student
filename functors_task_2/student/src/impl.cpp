@@ -6,42 +6,59 @@ void DataBrowser::userLeave(const std::string &userId)
 }
 
 bool DataBrowser::getDataType1(const std::string &userId, std::vector<size_t> &returnValues) const
-{    
-    const auto &it =m_dataReaders.find(userId);
+{   
+    auto fun_1 =[](const IDataSelector* data, std::vector<size_t> &returnValues){
+        return data->getDataType1(returnValues, 0);
 
-    if(it !=m_dataReaders.cend() && it->second){
-        return it->second->getDataType1(returnValues, 0);
-    }
+    };
 
-    return false;
+    auto fun_2=[&](const  std::unique_ptr<IDataSelector> & data){
+        return invokeDataRequest(fun_1,data,returnValues);
+
+    };
+
+    return safeCall(userId,fun_2);
+
  
 }
 
 bool DataBrowser::getDataType2(std::vector<size_t> &returnValues, const std::string &userId) const
-{
-    const auto& it = m_dataReaders.find(userId);
+{   
+  
+     auto fun_1 =[](std::vector<size_t> &returnValues, const IDataSelector* data ){
+        return data->getDataType2(returnValues);
 
-    if(it!= m_dataReaders.cend() && it->second ){
-        return it->second->getDataType2(returnValues);
-    }
+    };
 
-    return false;
-    
+    auto fun_2=[&](const  std::unique_ptr<IDataSelector> & data){
+        auto inverse=std::bind(fun_1,std::placeholders::_2,std::placeholders::_1);
+        return invokeDataRequest(inverse,data,returnValues);
+
+    };
+
+    return safeCall(userId,fun_2);
+
 }
 
 bool DataBrowser::getDataType3(const std::string &userId, std::vector<std::string> &returnValues) const
 {   
-    const auto& it = m_dataReaders.find(userId);
-    
-    if(it!= m_dataReaders.cend() && it->second ){
-        
+     auto fun_1 =[&](const IDataSelector* data, std::vector<std::string> &returnValues ){
+
         std::deque<size_t> unprocessedResults {};
-        bool success {it->second->getDataType3(unprocessedResults)};
+        bool success =data->getDataType3(unprocessedResults);
         returnValues = process(unprocessedResults);
         return success;
-    }
 
-    return false;
+    };
+
+    auto fun_2=[&](const  std::unique_ptr<IDataSelector> & data){
+       
+        return invokeDataRequest(fun_1,data,returnValues);
+
+    };
+    
+    return safeCall(userId,fun_2);
+
 }
 
 template<class T>
