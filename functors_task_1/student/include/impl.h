@@ -25,22 +25,18 @@ public:
  *
  * @note Only Corona and HoeGaarden are expensive
  */
-bool isExpensiveBeer(BeerBrand beer)
+bool isExpensiveBeer(const BeerBrand beer)
 {
-    if (beer == BeerBrand::HoeGaarden || beer == BeerBrand::Corona)
-        return true;
-    return false;
+    return beer == BeerBrand::HoeGaarden || beer == BeerBrand::Corona;
 }
 
 /**
  * @todo Implement lambda beer country equality comparator
  * @return true if beer county is the same, false otherwise
  */
-auto sameCountry = [](BeerBrand beer1, BeerBrand beer2)
+auto sameCountry = [](const BeerBrand beer1, const BeerBrand beer2)
 {
-    if (getBeerCountry(beer1) == getBeerCountry(beer2))
-        return true;
-    return false;
+    return getBeerCountry(beer1) == getBeerCountry(beer2);
 };
 
 struct MixingPolicy
@@ -57,12 +53,28 @@ struct MixingPolicy
      */
     static Cocktail mix(AlcoholDrink alcDrink, NonAlcoholDrink nonAlcDrink)
     {
-        if (alcDrink == AlcoholDrink::Gin && nonAlcDrink == NonAlcoholDrink::LimeJuice)
-            return Cocktail::Gimlet;
-        else if (alcDrink == AlcoholDrink::Gin && nonAlcDrink == NonAlcoholDrink::GrapefruitJuice)
-            return Cocktail::Greyhount;
-        else if (alcDrink == AlcoholDrink::Whiskey && nonAlcDrink == NonAlcoholDrink::SevenUp)
-            return Cocktail::SevenPlusSeven;
+        switch(alcDrink) {
+            case AlcoholDrink::Gin:
+                switch(nonAlcDrink) {
+                    case NonAlcoholDrink::LimeJuice:
+                        return Cocktail::Gimlet;
+                    case NonAlcoholDrink::GrapefruitJuice:
+                        return Cocktail::Greyhount;
+                    default:
+                        break;
+                }
+                break;
+            case AlcoholDrink::Whiskey:
+                switch(nonAlcDrink) {
+                    case NonAlcoholDrink::SevenUp:
+                        return Cocktail::SevenPlusSeven;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
         return Cocktail::Oops;
     }
 };
