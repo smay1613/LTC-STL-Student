@@ -1,5 +1,6 @@
 #pragma once
 #include <array>
+using std::size_t;
 
 /** @warning: do not change the values of enum */
 enum class BeerBrand
