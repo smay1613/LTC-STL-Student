@@ -65,6 +65,7 @@ private:
         // find reader
         // check for errors
         // call functor
+        
         return false;
     }
 
@@ -77,7 +78,9 @@ private:
     bool invokeDataRequest(Functional method, const std::unique_ptr<IDataSelector>& selector, Output& result) const
     {
         // adapt function
+        
         // call selector member
+        
         return false;
     }
 };

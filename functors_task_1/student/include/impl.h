@@ -1,6 +1,7 @@
 #pragma once
 #include "bar_serving.h"
 #include <functional>
+#include <vector>
 
 /**
  * @todo Implement functor-generator that will return next beer brand (cyclic)
@@ -8,6 +9,35 @@
  */
 struct BeerOrganizer
 {
+    private:
+    int index=1;
+
+    public:
+    BeerBrand operator()()
+    {
+        if(index == (int)BeerBrand::Max)
+        {
+            index = 1;
+        }
+
+        switch (index++)
+        {
+            case (int)BeerBrand::HoeGaarden:
+                return BeerBrand::HoeGaarden;
+            case (int)BeerBrand::Corona:
+                return BeerBrand::Corona;
+            case (int)BeerBrand::Carlsberg:
+                return BeerBrand::Carlsberg;
+            case (int)BeerBrand::Bud:
+                return BeerBrand::Bud;
+            case (int)BeerBrand::ZlataPraha:
+                return BeerBrand::ZlataPraha;
+            case (int)BeerBrand::Leffe:
+                return BeerBrand::Leffe;
+            default:
+                return BeerBrand::None;
+        }
+    }
 };
 
 /**
@@ -16,16 +46,18 @@ struct BeerOrganizer
  *
  * @note Only Corona and HoeGaarden are expensive
  */
-bool isExpensiveBeer(/**???*/)
+bool isExpensiveBeer(BeerBrand beer)
 {
+    return beer == BeerBrand::Corona || beer == BeerBrand::HoeGaarden ? true : false;
 }
 
 /**
  * @todo Implement lambda beer country equality comparator
  * @return true if beer county is the same, false otherwise
  */
-auto sameCountry = [](/**???*/)
+auto sameCountry = [](BeerBrand beer1, BeerBrand beer2)
 {
+    return (int)getBeerCountry(beer1) == (int)getBeerCountry(beer2);
 };
 
 struct MixingPolicy
@@ -40,9 +72,17 @@ struct MixingPolicy
      * Whiskey + SevenUp = SevenPlusSeven;
      * Others + Others = Oops;
      */
-    static Cocktail mix(/**???*/)
+    static Cocktail mix(AlcoholDrink alcoholDrink, NonAlcoholDrink nonAlcoholDrink)
     {
+        if(alcoholDrink == AlcoholDrink::Gin && nonAlcoholDrink == NonAlcoholDrink::LimeJuice)
+            return Cocktail::Gimlet;
+        if(alcoholDrink == AlcoholDrink::Gin && nonAlcoholDrink == NonAlcoholDrink::GrapefruitJuice)
+            return Cocktail::Greyhount;
+        if(alcoholDrink == AlcoholDrink::Whiskey && nonAlcoholDrink == NonAlcoholDrink::SevenUp)
+            return Cocktail::SevenPlusSeven;
+        else   
+            return Cocktail::Oops;
     }
 };
 
-std::function</**???*/> mixer {&MixingPolicy::mix};
+std::function<Cocktail(AlcoholDrink, NonAlcoholDrink)> mixer {&MixingPolicy::mix};
