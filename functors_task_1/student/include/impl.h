@@ -8,13 +8,18 @@
  */
 struct BeerOrganizer
 {
-    BeerBrand beer = BeerBrand::None;
+    BeerBrand current_beer = BeerBrand::None;
 
     BeerBrand operator()()
     {
-        beer = static_cast<BeerBrand>(static_cast<int>(beer) + 1) ;
-        if(beer == BeerBrand::Max)beer = BeerBrand::HoeGaarden;
-        return beer;
+        current_beer = static_cast<BeerBrand>(static_cast<int>(current_beer) + 1) ;
+
+        if(current_beer == BeerBrand::Max)
+        {
+            current_beer = BeerBrand::HoeGaarden;
+        }
+
+        return current_beer;
     }
 };
 
@@ -26,8 +31,7 @@ struct BeerOrganizer
  */
 bool isExpensiveBeer(BeerBrand beer)
 {
-    if(beer == BeerBrand::Corona || beer == BeerBrand::HoeGaarden) return true;
-    return false;
+    return (beer == BeerBrand::Corona || beer == BeerBrand::HoeGaarden);
 }
 
 /**
@@ -36,8 +40,7 @@ bool isExpensiveBeer(BeerBrand beer)
  */
 auto sameCountry = [](BeerBrand beer1,BeerBrand beer2)
 {
-    if(getBeerCountry(beer1)  == getBeerCountry(beer2)) return true;
-    return false;
+    return (getBeerCountry(beer1)  == getBeerCountry(beer2));
 };
 
 struct MixingPolicy
@@ -54,13 +57,37 @@ struct MixingPolicy
      */
     static Cocktail mix(AlcoholDrink alcohol , NonAlcoholDrink nonalcohol)
     {
-        if(alcohol == AlcoholDrink::Gin && nonalcohol == NonAlcoholDrink::LimeJuice )
-            return Cocktail::Gimlet;
-        if(alcohol == AlcoholDrink::Gin && nonalcohol == NonAlcoholDrink::GrapefruitJuice )
-            return Cocktail::Greyhount;
-        if(alcohol == AlcoholDrink::Whiskey && nonalcohol == NonAlcoholDrink::SevenUp )
-            return Cocktail::SevenPlusSeven;
-        return Cocktail::Oops;
+        switch(alcohol)
+        {
+            case AlcoholDrink::Gin:
+                switch(nonalcohol)
+                {
+                    case NonAlcoholDrink::LimeJuice:
+                        return Cocktail::Gimlet;
+                        break;
+                    case NonAlcoholDrink::GrapefruitJuice:
+                        return Cocktail::Greyhount;
+                        break;
+                    default:
+                        return Cocktail::Oops;
+                        break;
+                }
+                break;
+            case AlcoholDrink::Whiskey:
+                switch(nonalcohol)
+                {
+                    case NonAlcoholDrink::SevenUp:
+                        return Cocktail::SevenPlusSeven;
+                        break;
+                    default:
+                        return Cocktail::Oops;
+                        break;
+                    }
+                    break;
+            default:
+                return Cocktail::Oops;
+                break;
+        }
     }
 };
 
