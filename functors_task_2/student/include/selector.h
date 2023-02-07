@@ -19,16 +19,16 @@ public:
     /**
      * Challenge method with deprecated param, that should allways be zero
      */
-    virtual bool getDataType1(std::vector<size_t>& returnValues,
-                              const size_t unusedDataShouldBeZero) const = 0;
+    virtual bool getDataType1(std::vector<std::size_t>& returnValues,
+                              const std::size_t unusedDataShouldBeZero) const = 0;
     /**
      * Normal method
      */
-    virtual bool getDataType2(std::vector<size_t>& returnValues) const = 0;
+    virtual bool getDataType2(std::vector<std::size_t>& returnValues) const = 0;
 
     /**
      * Maintainer added method with another signature
      */
-    virtual bool getDataType3(std::deque<size_t>& returnValues) const = 0;
+    virtual bool getDataType3(std::deque<std::size_t>& returnValues) const = 0;
 
 };
