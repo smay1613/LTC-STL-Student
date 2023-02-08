@@ -8,15 +8,26 @@ class StaticPlaylist
 {
 public:
     /** @todo Member traits */
-    typedef Song_t value_type;
-    typedef Song_t& reference;
-    typedef const Song_t& const_reference;
-    typedef typename Container::iterator iterator;
-    typedef typename Container::const_iterator const_iterator;
-    typedef ptrdiff_t difference_type;
-    typedef size_t size_type;
+    using value_type = typename Container::value_type;
+    using reference = typename Container::reference;
+    using const_reference = typename Container::const_reference;
+    using iterator = typename Container::iterator;
+    using const_iterator = typename Container::const_iterator;
+    using difference_type = typename Container::difference_type;
+    using size_type = typename Container::size_type;
 
     /** @todo Iterators */
+    // Not working: See test RangeFor.Iterators static_assert
+    /*iterator begin()
+    {
+        return m_tracklist.begin();
+    }
+
+    iterator end()
+    {
+        return m_tracklist.end();
+    }*/
+
     const_iterator begin() const
     {
         return m_tracklist.cbegin();
@@ -40,10 +51,7 @@ public:
     template<class GenericContainer>
     StaticPlaylist<Container, Song_t>& operator=(const GenericContainer& other)
     {
-        Container trackList;
-        trackList.assign(other.rbegin(), other.rend());
-
-        m_tracklist.swap(trackList);
+        m_tracklist.assign(other.rbegin(), other.rend());
         return *this;
     }
 
@@ -51,21 +59,21 @@ public:
     template<class... Args>
     const Song_t& play(Args&&... songData)
     {
-        m_tracklist.emplace(end(), std::forward<Args>(songData)...);
+        m_tracklist.emplace_back(std::forward<Args>(songData)...);
         return current();
     }
 
     /** @todo Add track */
     const Song_t& play(const Song_t& song)
     {
-        m_tracklist.emplace(end(), song);
+        m_tracklist.insert(m_tracklist.end(), song);
         return current();
     }
 
     /** @todo Get first track in playlist stack */
     const Song_t& current() const
     {
-        return *std::prev(end());
+        return m_tracklist.back();
     }
 
     /** @todo Skip to the next track in playlist, remove current */
@@ -74,7 +82,7 @@ public:
         if (!hasTracks())
             throw std::out_of_range("Track list is empty");
 
-        m_tracklist.erase(std::prev(end()));
+        m_tracklist.pop_back();
     }
 
     /** @todo Amount of tracks in playlist */
