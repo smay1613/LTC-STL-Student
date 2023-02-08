@@ -7,7 +7,15 @@
  * @example HoeGaarden -> Corona -> Carlsberg -> Bud -> ZlataPraha -> Leffe -> HoeGaarden...
  */
 struct BeerOrganizer
-{
+{    
+    BeerBrand operator()(){
+        if(currentIndex==static_cast<int>(BeerBrand::Leffe)){
+            currentIndex=static_cast<int>(BeerBrand::None);
+        }
+        return static_cast<BeerBrand>(++currentIndex);
+    }
+
+    size_t currentIndex{static_cast<int>(BeerBrand::None)};
 };
 
 /**
@@ -18,6 +26,7 @@ struct BeerOrganizer
  */
 bool isExpensiveBeer(/**???*/)
 {
+     return brand==BeerBrand::Corona || brand==BeerBrand::HoeGaarden;
 }
 
 /**
@@ -26,6 +35,7 @@ bool isExpensiveBeer(/**???*/)
  */
 auto sameCountry = [](/**???*/)
 {
+    return getBeerCountry(lhs)==getBeerCountry(rhs);
 };
 
 struct MixingPolicy
@@ -42,7 +52,19 @@ struct MixingPolicy
      */
     static Cocktail mix(/**???*/)
     {
+         if(AlDrink==AlcoholDrink::Gin && NonAlDrink==NonAlcoholDrink::LimeJuice){
+            return Cocktail::Gimlet;
+        }
+
+        if(AlDrink==AlcoholDrink::Gin && NonAlDrink==NonAlcoholDrink::GrapefruitJuice){
+            return Cocktail::Greyhount;
+        }
+        if(AlDrink==AlcoholDrink::Whiskey && NonAlDrink==NonAlcoholDrink::SevenUp){
+            return Cocktail::SevenPlusSeven;
+        }
+
+        return Cocktail::Oops;
     }
 };
 
-std::function</**???*/> mixer {&MixingPolicy::mix};
+std::function<Cocktail(const AlcoholDrink,const NonAlcoholDrink)> mixer {&MixingPolicy::mix};
