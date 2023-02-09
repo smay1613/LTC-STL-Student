@@ -8,13 +8,13 @@ class StaticPlaylist
 {
 public:
     /** @todo Member traits */
-    typedef Song_t value_type;
-    typedef Song_t& reference;
-    typedef const Song_t& const_reference;
-    typedef typename Container::iterator iterator;
-    typedef typename Container::const_iterator const_iterator;
-    typedef ptrdiff_t difference_type;
-    typedef size_t size_type;
+    using value_type = typename Container::value_type;
+    using reference = Song_t&;
+    using const_reference =  typename Container::const_reference;
+    using iterator = typename Container::iterator;
+    using const_iterator = typename Container::const_iterator;
+    using difference_type = typename Container::difference_type;
+    using size_type = typename std::size_t;
     /** @todo Iterators */
     const_iterator begin() const{
         return m_tracklist.cbegin();
@@ -27,34 +27,31 @@ public:
 
     /** @todo Constructor from any reversible sequence container */
     template<class T>
-    StaticPlaylist(const T _container){
+    StaticPlaylist(const T &_container){
         m_tracklist.assign(_container.rbegin(), _container.rend());
     }
     /** @todo Assignment from any reversible sequence container */
     template<class T>
-    StaticPlaylist<Container, Song_t>& operator=(const T _container){
-        Container trackList;
-        trackList.assign(_container.rbegin(), _container.rend());
-
-        m_tracklist.swap(trackList);
+    StaticPlaylist<Container, Song_t>& operator=(const T &_container){
+        m_tracklist.assign(_container.rbegin(), _container.rend());
         return *this;
     }
     /** @todo Add track from initializer */
     template<class... Args>
     const Song_t& play(Args&&... songData){
-        m_tracklist.emplace(end(), std::forward<Args>(songData)...);
+        m_tracklist.emplace_back(std::forward<Args>(songData)...);
         return current();
     }
 
     /** @todo Add track */
     const Song_t& play(const Song_t& song){
-        m_tracklist.emplace_back(song);
+        m_tracklist.insert(end(), song);
         return current();
     }
 
     /** @todo Get first track in playlist stack */
     const Song_t& current() const{
-        return *std::prev(end());
+        return m_tracklist.back();
     }
 
     /** @todo Skip to the next track in playlist, remove current */
