@@ -9,13 +9,13 @@ class StaticPlaylist
 public:
     /** @todo Member traits */
 
-	using value_type = Song_t;
-	using reference = Song_t &;
-	using const_reference = const Song_t &;
+	using value_type = typename Container::value_type;
+	using reference = typename Container::reference;
+	using const_reference = typename Container::const_reference;
 	using iterator = typename Container::iterator;
 	using const_iterator = typename Container::const_iterator;
-	using difference_type = ptrdiff_t;
-	using size_type = size_t;
+	using difference_type = typename Container::difference_type;
+	using size_type = typename Container::size_type;
 
     /** @todo Iterators */
 
@@ -42,11 +42,15 @@ public:
     /** @todo Add track from initializer */
     template<class... Args>
     const Song_t& play(Args&&... songData) {
-		return *m_tracklist.emplace(end(), std::forward<Args>(songData)...);
+		m_tracklist.emplace_back(std::forward<Args>(songData)...);
+		return current();
 	}
 
     /** @todo Add track */
-    const Song_t& play(const Song_t& song) { return *m_tracklist.insert(m_tracklist.end(), song); }
+    const Song_t& play(const Song_t& song) {
+		m_tracklist.push_back(song);
+		return current(); 
+	}
 
     /** @todo Get first track in playlist stack */
     const Song_t& current() const { return m_tracklist.back();}
