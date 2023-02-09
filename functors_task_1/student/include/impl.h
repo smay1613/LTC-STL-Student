@@ -10,33 +10,19 @@
 struct BeerOrganizer
 {
     private:
-    int index=1;
+    BeerBrand beer;
 
     public:
     BeerBrand operator()()
     {
-        if(index == (int)BeerBrand::Max)
+        beer = (BeerBrand)((int)beer+1);
+
+        if(beer == BeerBrand::Max)
         {
-            index = 1;
+            beer = (BeerBrand)((int)BeerBrand::None+1);
         }
 
-        switch (index++)
-        {
-            case (int)BeerBrand::HoeGaarden:
-                return BeerBrand::HoeGaarden;
-            case (int)BeerBrand::Corona:
-                return BeerBrand::Corona;
-            case (int)BeerBrand::Carlsberg:
-                return BeerBrand::Carlsberg;
-            case (int)BeerBrand::Bud:
-                return BeerBrand::Bud;
-            case (int)BeerBrand::ZlataPraha:
-                return BeerBrand::ZlataPraha;
-            case (int)BeerBrand::Leffe:
-                return BeerBrand::Leffe;
-            default:
-                return BeerBrand::None;
-        }
+        return beer;
     }
 };
 
@@ -48,7 +34,7 @@ struct BeerOrganizer
  */
 bool isExpensiveBeer(BeerBrand beer)
 {
-    return beer == BeerBrand::Corona || beer == BeerBrand::HoeGaarden ? true : false;
+    return beer == BeerBrand::Corona || beer == BeerBrand::HoeGaarden;
 }
 
 /**
