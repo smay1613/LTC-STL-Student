@@ -68,6 +68,36 @@ struct MixingPolicy
             return Cocktail::SevenPlusSeven;
         else   
             return Cocktail::Oops;
+
+        switch (alcoholDrink)
+        {
+            case AlcoholDrink::Gin:
+            {
+                switch (nonAlcoholDrink)
+                {
+                    case NonAlcoholDrink::LimeJuice:
+                        return Cocktail::Gimlet;
+                    
+                    case NonAlcoholDrink::GrapefruitJuice:
+                        return Cocktail::Greyhount;
+                    
+                    default:
+                        return Cocktail::Oops;
+                }
+            }
+                
+            case AlcoholDrink::Whiskey:
+                switch (nonAlcoholDrink)
+                {
+                    case NonAlcoholDrink::SevenUp:
+                        return Cocktail::SevenPlusSeven;
+                    
+                    default:
+                        return Cocktail::Oops;
+                }
+            default:
+                return Cocktail::Oops;
+            }
     }
 };
 
