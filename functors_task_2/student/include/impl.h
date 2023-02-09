@@ -75,7 +75,6 @@ private:
             return false;
         }
         return f(it->second);
-        //return false;
     }
 
     /**
@@ -88,10 +87,6 @@ private:
     {
         // adapt function
         // call selector member
-        std::vector<size_t> dummy = result;
-        auto function = std::bind(method, selector.get(), dummy);
-        return function();
-        
-        //return false;
+        return method(selector.get(), result);
     }
 };
