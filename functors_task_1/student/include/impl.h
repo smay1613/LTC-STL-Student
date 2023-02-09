@@ -43,7 +43,7 @@ bool isExpensiveBeer(BeerBrand beer)
  */
 auto sameCountry = [](BeerBrand beer1, BeerBrand beer2)
 {
-    return (int)getBeerCountry(beer1) == (int)getBeerCountry(beer2);
+    return getBeerCountry(beer1) == getBeerCountry(beer2);
 };
 
 struct MixingPolicy
