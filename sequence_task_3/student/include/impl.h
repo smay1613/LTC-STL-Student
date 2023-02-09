@@ -9,8 +9,8 @@ class DynamicPlaylist
 public:
     /** @todo Member traits */
     using value_type = typename Container::value_type;
-	using reference = Song_t &;
-	using const_reference = typename Container::const_reference;
+    using reference = Song_t &;
+    using const_reference = typename Container::const_reference;
     using iterator = typename Container::iterator;
     using const_iterator = typename Container::const_iterator;
     using difference_type = typename Container::difference_type;
