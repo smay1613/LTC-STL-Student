@@ -8,13 +8,13 @@ class StaticPlaylist
 {
 public:
     /** @todo Member traits */
-    typedef Song_t value_type;
-    typedef Song_t& reference;
-    typedef const Song_t& const_reference;
-    typedef typename Container::iterator iterator;
-    typedef typename Container::const_iterator const_iterator;
-    typedef ptrdiff_t difference_type;
-    typedef size_t size_type;
+    using value_type = Song_t;
+    using reference = Song_t&;
+    using const_reference = const Song_t&;
+    using iterator = typename Container::iterator;
+    using const_iterator = typename Container::const_iterator;
+    using difference_type = ptrdiff_t;
+    using size_type = size_t;
 
     /** @todo Iterators */
     const_iterator begin() const {
@@ -28,16 +28,14 @@ public:
 
     /** @todo Constructor from any reversible sequence container */
     template<class T>
-    StaticPlaylist(const T container_) {
+    StaticPlaylist(const T& container_) {
         m_tracklist.assign(container_.rbegin(), container_.rend());
     }
     /** @todo Assignment from any reversible sequence container */
     template<class T>
-    StaticPlaylist<Container, Song_t>& operator=(const T container_){
-        Container trackList;
-        trackList.assign(container_.rbegin(), container_.rend());
+    StaticPlaylist<Container, Song_t>& operator=(const T& container_){
+        m_tracklist.assign(container_.rbegin(), container_.rend());
 
-        m_tracklist.swap(trackList);
         return *this;
     }
     /** @todo Add track from initializer */
@@ -55,13 +53,13 @@ public:
 
     /** @todo Get first track in playlist stack */
     const Song_t& current() const {
-        return *std::prev(end());
+        return m_tracklist.back();
     }
 
     /** @todo Skip to the next track in playlist, remove current */
     void switchNext() {
         if (!hasTracks()) throw std::out_of_range("Track list is empty");
-        m_tracklist.erase(std::prev(end()));
+        m_tracklist.pop_back();
     }
 
     /** @todo Amount of tracks in playlist */
