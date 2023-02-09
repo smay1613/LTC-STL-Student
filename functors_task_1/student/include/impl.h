@@ -20,23 +20,7 @@ struct BeerOrganizer
             index = 1;
         }
 
-        switch (index++)
-        {
-            case (int)BeerBrand::HoeGaarden:
-                return BeerBrand::HoeGaarden;
-            case (int)BeerBrand::Corona:
-                return BeerBrand::Corona;
-            case (int)BeerBrand::Carlsberg:
-                return BeerBrand::Carlsberg;
-            case (int)BeerBrand::Bud:
-                return BeerBrand::Bud;
-            case (int)BeerBrand::ZlataPraha:
-                return BeerBrand::ZlataPraha;
-            case (int)BeerBrand::Leffe:
-                return BeerBrand::Leffe;
-            default:
-                return BeerBrand::None;
-        }
+        return BeerBrand++;
     }
 };
 
