@@ -80,10 +80,7 @@ public:
     /** @todo Checks if playlist has any playable tracks */
     bool hasTracks() const
     {
-        if(m_tracklist.empty())
-            return false;
-        else
-            return true;
+        return !m_tracklist.empty();
     };
 
 private:
