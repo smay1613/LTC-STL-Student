@@ -27,9 +27,8 @@ public:
 
     /** @todo Constructor from any reversible sequence container */
     template<class T>
-    StaticPlaylist(const T &_container){
-        m_tracklist.assign(_container.rbegin(), _container.rend());
-    }
+    StaticPlaylist(const T &_container) :
+        m_tracklist(_container.rbegin(), _container.rend()) {}
     /** @todo Assignment from any reversible sequence container */
     template<class T>
     StaticPlaylist<Container, Song_t>& operator=(const T &_container){
@@ -45,7 +44,7 @@ public:
 
     /** @todo Add track */
     const Song_t& play(const Song_t& song){
-        m_tracklist.insert(end(), song);
+        m_tracklist.push_back(song);
         return current();
     }
 
@@ -59,7 +58,7 @@ public:
         if (!hasTracks())
             throw std::out_of_range("Track list is empty");
 
-        m_tracklist.erase(std::prev(end()));
+        m_tracklist.pop_back();
     }
 
     /** @todo Amount of tracks in playlist */
