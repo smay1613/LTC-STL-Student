@@ -7,36 +7,35 @@ void DataBrowser::userLeave(const std::string &userId)
 
 bool DataBrowser::getDataType1(const std::string &userId, std::vector<size_t> &returnValues) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if(it != m_dataReaders.cend() && it->second)
+    auto func = [&](const std::unique_ptr<IDataSelector>& sel) -> bool
     {
-        return it->second->getDataType1(returnValues, 0);
-    }
+        return sel->getDataType1(returnValues, 0);
+    };
 
-    return false;
+    return safeCall(userId, func);
 }
 
 bool DataBrowser::getDataType2(std::vector<size_t> &returnValues, const std::string &userId) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it != m_dataReaders.cend() && it->second)
+    auto func = [&](const std::unique_ptr<IDataSelector>& sel) -> bool
     {
-        return it->second->getDataType2(returnValues);
-    }
-    return false;
+        return sel->getDataType2(returnValues);
+    };
+
+    return safeCall(userId, func);
 }
 
 bool DataBrowser::getDataType3(const std::string &userId, std::vector<std::string> &returnValues) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it != m_dataReaders.cend() && it->second)
+    std::deque<size_t> unprocessedResults {};
+    auto func = [&](const std::unique_ptr<IDataSelector>& sel) -> bool
     {
-        std::deque<size_t> unprocessedResults {};
-        bool success {it->second->getDataType3(unprocessedResults)};
+        bool success {sel->getDataType3(unprocessedResults)};
         returnValues = process(unprocessedResults);
         return success;
-    }
-    return false;
+    };
+
+    return safeCall(userId, func);
 }
 
 template<class T>
