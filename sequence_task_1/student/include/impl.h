@@ -18,8 +18,6 @@ public:
     using difference_type = typename Container::difference_type;
     using size_type = typename Container::size_type;
     /** @todo Iterators */
-    typename Container::iterator it;
-
     const_iterator begin() const {
         return m_tracklist.cbegin();
     }
@@ -70,7 +68,6 @@ public:
         {
             throw std::out_of_range("Out of Range");;
         }
-        it++;
         m_tracklist.pop_back();
     };
 
