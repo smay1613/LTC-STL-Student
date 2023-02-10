@@ -32,7 +32,7 @@ struct BeerOrganizer
  *
  * @note Only Corona and HoeGaarden are expensive
  */
-bool isExpensiveBeer(BeerBrand beer)
+bool isExpensiveBeer(const BeerBrand beer)
 {
     return beer == BeerBrand::Corona || beer == BeerBrand::HoeGaarden;
 }
