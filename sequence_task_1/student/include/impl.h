@@ -33,15 +33,15 @@ public:
     template<class PlayList>
     StaticPlaylist(PlayList& playList)
     {
-        m_tracklist.assign(playList.begin(), playList.end());
+        m_tracklist.assign(playList.rbegin(), playList.rend());
     };
     /** @todo Assignment from any reversible sequence container */
     template<class PlayList>
-    StaticPlaylist<Container, Song_t> operator=(const PlayList& playList)
+    StaticPlaylist<Container, Song_t> &operator=(const PlayList& playList)
     {
-        m_tracklist.assign(playList.begin(), playList.end());
+        m_tracklist.assign(playList.rbegin(), playList.rend());
         return *this;
-    } 
+    }; 
     /** @todo Add track from initializer */
     template<class... Args>
     const Song_t& play(Args&&... songData)
@@ -66,7 +66,12 @@ public:
     /** @todo Skip to the next track in playlist, remove current */
     void switchNext()
     {
-        m_tracklist.erase(it++);
+        if(m_tracklist.empty())
+        {
+            throw std::out_of_range("Out of Range");;
+        }
+        it++;
+        m_tracklist.pop_back();
     };
 
     /** @todo Amount of tracks in playlist */
