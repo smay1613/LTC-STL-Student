@@ -28,10 +28,9 @@ public:
     /** @todo Constructor from any reversible sequence container */
 
 	template <typename reversable_sequence_container>
-	StaticPlaylist(reversable_sequence_container init) {
-		m_tracklist.assign(init.rbegin(), init.rend());
-	}
-    /** @todo Assignment from any reversible sequence container */
+	StaticPlaylist(const reversable_sequence_container &init): m_tracklist{init.rbegin(), init.rend()} {}
+
+	/** @todo Assignment from any reversible sequence container */
 
 	template <typename reversable_sequence_container>
 	StaticPlaylist& operator=(const reversable_sequence_container &other) {
