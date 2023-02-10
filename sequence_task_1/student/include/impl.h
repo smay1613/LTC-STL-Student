@@ -19,7 +19,7 @@ public:
     using size_type = typename Container::size_type;
 
     /** @todo Iterators */
-      const_iterator begin() const{
+    const_iterator begin() const{
         return m_tracklist.cbegin();
     };
     const_iterator end() const{
@@ -30,9 +30,9 @@ public:
 
     /** @todo Constructor from any reversible sequence container */
  
-    template<class OtherContainer> StaticPlaylist(const OtherContainer & tracklist){
-       m_tracklist.assign(tracklist.rbegin(),tracklist.rend());
-    }
+    template<class OtherContainer> StaticPlaylist(const OtherContainer & tracklist):
+    m_tracklist(tracklist.rbegin(),tracklist.rend()){}
+    
 
     /** @todo Assignment from any reversible sequence container */
     template<class OtherContainer> StaticPlaylist & operator=(const OtherContainer & other){
