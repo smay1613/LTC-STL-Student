@@ -25,18 +25,21 @@ public:
 
     /** @todo Constructor from two iterators*/
 	template <typename it>
-	DynamicPlaylist(it first, it last) {
-		m_tracklist.assign(first, last);
+	DynamicPlaylist(it first, it last) : m_tracklist{first, last} {
 	}
 
     /** @todo Set track as currently played from initializer */
     template<class... Args>
     const Song_t& play(Args&&... songData) {
-		return *m_tracklist.emplace(begin(), std::forward<Args>(songData)...);
+		m_tracklist.emplace_front(std::forward<Args>(songData)...);
+		return current();
 	}
 
     /** @todo Set track as currently played from lvalue */
-    const Song_t& play(const Song_t& song) { return *m_tracklist.insert(begin(), song);}
+    const Song_t& play(const Song_t& song) { 
+		m_tracklist.push_front(song);
+		return current();
+	}
 
     /** @todo Set track to be played next from initializer */
     template<class... Args>
@@ -45,10 +48,17 @@ public:
 		m_tracklist.emplace(begin() + pos, std::forward<Args>(songData)...);
 	}
 
+	const_iterator get_next_track() {
+		const_iterator it  = m_tracklist.begin();
+		if (m_tracklist.begin() != m_tracklist.end()) {
+			++it;
+		}
+		return it;
+	}
+
     /** @todo Set track to be played next from lvalue */
     void playNext(const Song_t& song)   { 
-		short pos = hasTracks() ? 1:0;
-		m_tracklist.insert(begin() + pos,1, song);
+		m_tracklist.insert(get_next_track(), song);
 	}
 
     /** @todo Add track to the end of the queue from initializer */
