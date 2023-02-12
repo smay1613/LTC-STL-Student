@@ -1,5 +1,6 @@
 #include "impl.h"
 #include <vector>
+#include <tuple>
 #include <stack>
 
 const std::vector<std::pair<char, char>> brackets {
@@ -8,26 +9,31 @@ const std::vector<std::pair<char, char>> brackets {
     {'{', '}'}
 };
 
+std::pair<char, char> get_brackets(char c) {
+	for (auto &bracket: brackets) {
+		if (c == bracket.first || c == bracket.second)
+			return std::make_pair(bracket.first, bracket.second);
+		}
+	return std::pair<char, char>();
+}
+
+
 bool isValid(const std::string& source){
 	std::stack<char> stack;
-	auto find_pair = [](char c){
-		for (auto it = brackets.cbegin() ; it != brackets.cend(); it++) {
-		if (c == it->first || c == it->second)
-			return it;
-		}
-		return brackets.cend();
-	};
-	
 	for (auto c : source){
-		auto check = find_pair(c);
-		if (check != brackets.cend())
+		char lbracket, rbracket;
+		std::tie(lbracket, rbracket) = get_brackets(c);
+		if (lbracket != rbracket)
 		{
-			if (check->first == c)
+			if (lbracket == c) {
 				stack.push(c);
-			else if (!stack.empty() && stack.top() == check->first && c == check->second)
+			}
+			else if (!stack.empty() && stack.top() == lbracket && c == rbracket) {
 				stack.pop();
-			else
+			}
+			else {
 				return false;
+			}
 		}
 	}
 	return stack.empty();
