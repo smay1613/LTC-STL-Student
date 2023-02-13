@@ -8,9 +8,13 @@ class DynamicPlaylist
 {
 public:
     /** @todo Member traits */
+    using value_type = typename Container::value_type;
+    using reference = typename Container::reference;
+    using const_reference = typename Container::const_reference;
     using iterator = typename Container::iterator;
     using const_iterator = typename Container::const_iterator;
     using size_type = typename Container::size_type;
+    using difference_type = typename Container::difference_type;
 
     /** @todo Iterators */
     iterator begin() {
@@ -20,13 +24,20 @@ public:
         return m_tracklist.end();
     }
 
+    const_iterator cbegin() {
+        return m_tracklist.cbegin();
+    }
+
+    const_iterator cend() {
+        return m_tracklist.cend();
+    }
+
     DynamicPlaylist() = default;
 
     /** @todo Constructor from two iterators*/
-    template<class BeginIter, class EndIter>
-    DynamicPlaylist(BeginIter begin, EndIter end) {
-        m_tracklist.assign(begin, end);
-    }
+    template<class Iterator>
+    DynamicPlaylist(Iterator begin, Iterator end) :
+        m_tracklist(begin, end) {}
 
     /** @todo Set track as currently played from initializer */
     template<class... Args>
