@@ -1,6 +1,8 @@
 #pragma once
 #include <map>
 
+extern std::map<size_t,size_t> mapConverter;
+
 /**
  * @todo Implement function for conversion from 100 point system to 5 point system
  *
