@@ -1,6 +1,6 @@
 #pragma once
 #include <map>
-
+#include <algorithm>
 /**
  * @todo Implement function for conversion from 100 point system to 5 point system
  *
@@ -15,4 +15,18 @@
  *
  * @return 1-5
  */
-size_t convertMarkTo5PointSystem(size_t markIn100Point);
+
+const size_t MAX_POINTS = 100;
+
+std::map<std::size_t, std::size_t> pointSystem{
+    {30,1},
+    {50,2},
+    {70,3},
+    {90,4},
+    {101, 5}
+};
+
+std::size_t convertMarkTo5PointSystem(std::size_t markIn100Point){
+    
+    return pointSystem.upper_bound(std::min(markIn100Point, MAX_POINTS))->second;
+}
