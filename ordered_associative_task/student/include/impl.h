@@ -15,4 +15,18 @@
  *
  * @return 1-5
  */
-size_t convertMarkTo5PointSystem(size_t markIn100Point);
+
+std::map<size_t, size_t> gradePoints = {
+    {29, 1},
+    {49, 2},
+    {69, 3},
+    {89, 4},
+    {100, 5}
+};
+
+size_t convertMarkTo5PointSystem(size_t markIn100Point)
+{
+    auto it = gradePoints.lower_bound(markIn100Point > 100 ? 100 : markIn100Point);
+
+    return it->second;
+};
