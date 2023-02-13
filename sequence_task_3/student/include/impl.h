@@ -9,17 +9,23 @@ class DynamicPlaylist
 public:
     /** @todo Member traits */
     using value_type = typename Container::value_type;
-    using reference = Song_t &;
+    using reference = typename Container::reference;
     using const_reference = typename Container::const_reference;
     using iterator = typename Container::iterator;
     using const_iterator = typename Container::const_iterator;
     using difference_type = typename Container::difference_type;
     using size_type = std::size_t;
     /** @todo Iterators */
-    const_iterator begin() const{
+    iterator begin(){
+        return m_tracklist.begin();
+    }
+    iterator end(){
+        return m_tracklist.end();
+    }
+    const_iterator cbegin() const{
         return m_tracklist.cbegin();
     }
-    const_iterator end() const{
+    const_iterator cend() const{
         return m_tracklist.cend();
     }
 
@@ -27,21 +33,20 @@ public:
 
     /** @todo Constructor from two iterators*/
     template<class Iterator>
-    DynamicPlaylist(const Iterator begin, const Iterator end){
-        for( auto read = begin; read != end; ++read){
-            m_tracklist.push_back(*read);
-        }
-    }
+    DynamicPlaylist(const Iterator begin, const Iterator end) 
+    : m_tracklist(begin, end){}
 
     /** @todo Set track as currently played from initializer */
     template<class... Args>
     const Song_t& play(Args&&... songData){
-        return *m_tracklist.emplace(begin(),std::forward<Args>(songData)...);
+        m_tracklist.emplace_front(std::forward<Args>(songData)...);
+        return current();
     }
 
     /** @todo Set track as currently played from lvalue */
     const Song_t& play(const Song_t& song){
-        return *m_tracklist.emplace_front(song);
+        m_tracklist.push_front(song);
+        return current();
     }
 
     /** @todo Set track to be played next from initializer */
