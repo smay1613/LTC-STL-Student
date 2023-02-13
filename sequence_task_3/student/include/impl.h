@@ -35,8 +35,8 @@ public:
     DynamicPlaylist() = default;
 
     /** @todo Constructor from two iterators*/
-    template<class Iterator> DynamicPlaylist(Iterator first, Iterator second){
-        m_tracklist.assign(first,second);
+    template<class Iterator> DynamicPlaylist(Iterator first, Iterator second): m_tracklist(first,second) {
+      
     }
 
     /** @todo Set track as currently played from initializer */
@@ -56,7 +56,7 @@ public:
     template<class... Args>
     void playNext(Args&&... songData){
         if(m_tracklist.empty()){
-            m_tracklist.emplace_front(std::forward<Args>(songData)...);
+            play(songData...);
         }else{
         m_tracklist.emplace(std::next(m_tracklist.begin()),std::forward<Args>(songData)...);
         }
@@ -102,7 +102,7 @@ public:
 
     /** @todo Checks if playlist has any playable tracks */
     bool hasTracks() const{
-        return !(m_tracklist.empty());
+        return !m_tracklist.empty();
     }
 
 private:
