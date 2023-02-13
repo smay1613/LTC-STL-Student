@@ -15,4 +15,8 @@
  *
  * @return 1-5
  */
-size_t convertMarkTo5PointSystem(size_t markIn100Point);
+int convertMarkTo5PointSystem(int markIn100Point){
+    if(markIn100Point>90) markIn100Point = 90;
+    std::map<int, int> m {{0, 1}, {29, 1}, {30, 2}, {49, 2}, {50, 3}, {69, 3}, {70, 4}, {89, 4}, {90, 5}};
+    return m.lower_bound(markIn100Point)->second;
+}
