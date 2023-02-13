@@ -9,26 +9,26 @@ const std::vector<std::pair<char, char>> brackets {
     {'{', '}'}
 };
 
-std::pair<char, char> get_brackets(char c) {
-	for (auto &bracket: brackets) {
-		if (c == bracket.first || c == bracket.second)
-			return std::make_pair(bracket.first, bracket.second);
+std::pair<char, char> get_matching_brackets_pair(char c) {
+	for (auto &bracket_pair: brackets) {
+		if (c == bracket_pair.first || c == bracket_pair.second)
+			return bracket_pair;
 		}
-	return std::pair<char, char>();
+	return {};
 }
 
 
 bool isValid(const std::string& source){
 	std::stack<char> stack;
 	for (auto c : source){
-		char lbracket, rbracket;
-		std::tie(lbracket, rbracket) = get_brackets(c);
-		if (lbracket != rbracket)
+		char openBracket, closingBracket;
+		std::tie(openBracket, closingBracket) = get_matching_brackets_pair(c);
+		if (openBracket != closingBracket)
 		{
-			if (lbracket == c) {
+			if (c == openBracket) {
 				stack.push(c);
 			}
-			else if (!stack.empty() && stack.top() == lbracket && c == rbracket) {
+			else if (!stack.empty() && stack.top() == openBracket && c == closingBracket  ) {
 				stack.pop();
 			}
 			else {
