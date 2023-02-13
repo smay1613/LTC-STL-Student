@@ -12,12 +12,17 @@ bool isValid(const std::string& source)
 {
     std::stack<char> br_stack;
 
+    auto isBracketClosed = [](const char ch ,const std::pair<char, char> bracket)
+    {
+        return ch==bracket.second;
+    };
+
     for(const char &ch : source)
     {
 
         for(const auto &bracket : brackets )
         {
-            if(br_stack.empty() && ch==bracket.second )
+            if(br_stack.empty() && isBracketClosed(ch,bracket))
             {
                 return false;
             }
@@ -25,13 +30,12 @@ bool isValid(const std::string& source)
             if(ch==bracket.first)
             {
                 br_stack.push(ch);
-                break;
             }
 
-            if(!br_stack.empty() && ch==bracket.second)
+            if(!br_stack.empty() && isBracketClosed(ch,bracket))
             {
-                auto first = br_stack.top();
-                if(first != bracket.first)
+                auto lastBracketOpen = br_stack.top();
+                if(lastBracketOpen != bracket.first)
                 {
                     return false;
                 }
