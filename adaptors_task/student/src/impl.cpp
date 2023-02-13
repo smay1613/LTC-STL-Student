@@ -1,7 +1,6 @@
 #include "impl.h"
 #include <vector>
 #include <stack>
-#include <algorithm>
 
 const std::vector<std::pair<char, char>> brackets {
     {'(', ')'},
@@ -9,40 +8,51 @@ const std::vector<std::pair<char, char>> brackets {
     {'{', '}'}
 };
 
+bool isBracket(char c, char& matchOpenBracket, bool& isOpening, bool& isClosing)
+{
+    for (auto& bracket : brackets)
+    {
+        if (bracket.first != c && bracket.second != c)
+            continue;
+
+        matchOpenBracket = bracket.first;
+        isOpening = bracket.first == c;
+        isClosing = bracket.second == c;
+
+        return isOpening || isClosing;
+    }
+
+    return false;
+}
+
 bool isValid(const std::string& source)
 {
     std::stack<char> stack;
 
+    bool isOpeningBracket = false;
+    bool isClosingBracket = false;
+    char matchOpenBracket = '\0';
+
     for (auto& c : source)
     {
-        auto it = std::find_if(brackets.begin(), brackets.end(), [&](const std::pair<char, char>& p) -> bool {
-            return p.first == c || p.second == c;
-        });
-
-        if (it == brackets.end())
-            continue; // Not a bracket
-
-        if (stack.empty())
-        {
-            stack.push(c);
+        if (!isBracket(c, matchOpenBracket, isOpeningBracket, isClosingBracket))
             continue;
-        }
 
-        if (it->first == c)
+        if (isOpeningBracket)
         {
-            // Opening bracket
             stack.push(c);
         }
-        else if (it->second == c)
+        else if (isClosingBracket)
         {
-            // Closing bracket
-            char lastChar = stack.top();
+            if (stack.empty())
+                return false;
 
-            // Check if last opening bracket matches closing bracket
-            if (lastChar == it->first)
-            {
-                stack.pop();
-            }
+            bool isLastBracketMatching = matchOpenBracket == stack.top();
+
+            if (!isLastBracketMatching)
+                return false;
+
+            stack.pop();
         }
     }
 
