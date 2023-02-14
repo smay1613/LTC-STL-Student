@@ -48,6 +48,7 @@ TEST_F(ThreeFiles, Reversed)
     }
 
     std::vector<std::vector<std::string>> groups {findDuplicates("sandbox")};
+
     EXPECT_EQ(groups.size(), 1);
     EXPECT_EQ(groups.front().size(), 2);
 }
