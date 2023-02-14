@@ -1,4 +1,5 @@
 #pragma once
+#include <set>
 #include <string>
 #include <vector>
 
@@ -32,4 +33,31 @@ using playlist = std::vector<Song>;
  *
  * @return true if first playlist is anagram of second
  */
-bool is_same_content(const playlist& first_playlist, const playlist& second_playlist);
+bool is_same_content(const playlist& first_playlist, const playlist& second_playlist)
+{
+    std::multiset<std::string> first_playlistset;
+    std::multiset<std::string> second_playlistset;
+    for( auto &song : first_playlist)
+    {
+        first_playlistset.emplace(song.name());
+    }
+    for( auto &song : second_playlist)
+    {
+        second_playlistset.emplace(song.name());
+    }
+
+    auto match_count = [&](std::string songname)
+    {
+        return first_playlistset.erase(songname) == second_playlistset.erase(songname);
+    };
+
+    for(const auto &song : second_playlist)
+    {
+        if(!match_count(song.name()))
+        {
+            return false;
+        }
+    }
+
+    return first_playlistset.empty();
+}
