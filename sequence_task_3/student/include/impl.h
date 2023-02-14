@@ -37,10 +37,9 @@ public:
 
     /** @todo Constructor from two iterators*/
     template<class T>
-    DynamicPlaylist(T first, T second)
-    {
-        m_tracklist.assign(first,second);
-    }
+    DynamicPlaylist(T first, T second):m_tracklist{typename Container::template deque<Song_t>(first,second)}{}
+
+
     /** @todo Set track as currently played from initializer */
     template<class... Args>
     const Song_t& play(Args&&... songData)
@@ -76,7 +75,7 @@ public:
         {
             nextsong++;
         }
-        m_tracklist.emplace(nextsong, song);
+        m_tracklist.insert(nextsong, song);
     }
 
     /** @todo Add track to the end of the queue from initializer */
@@ -89,7 +88,7 @@ public:
     /** @todo Add track to the end of the queue from lvalue */
     void add(const Song_t& song)
     {
-        m_tracklist.emplace_back(song);
+        m_tracklist.push_back(song);
     }
 
     /** @todo Get first track in playlist queue */
