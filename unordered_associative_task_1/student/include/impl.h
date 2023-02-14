@@ -1,5 +1,5 @@
 #pragma once
-#include <set>
+#include <unordered_set>
 #include <string>
 #include <vector>
 
@@ -35,8 +35,9 @@ using playlist = std::vector<Song>;
  */
 bool is_same_content(const playlist& first_playlist, const playlist& second_playlist)
 {
-    std::multiset<std::string> first_playlistset;
-    std::multiset<std::string> second_playlistset;
+    std::unordered_multiset<std::string> first_playlistset;
+    std::unordered_multiset<std::string> second_playlistset;
+
     for( auto &song : first_playlist)
     {
         first_playlistset.emplace(song.name());
@@ -46,18 +47,5 @@ bool is_same_content(const playlist& first_playlist, const playlist& second_play
         second_playlistset.emplace(song.name());
     }
 
-    auto match_count = [&](std::string songname)
-    {
-        return first_playlistset.erase(songname) == second_playlistset.erase(songname);
-    };
-
-    for(const auto &song : second_playlist)
-    {
-        if(!match_count(song.name()))
-        {
-            return false;
-        }
-    }
-
-    return first_playlistset.empty();
+    return first_playlistset == second_playlistset;
 }
