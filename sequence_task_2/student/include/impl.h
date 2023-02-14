@@ -14,4 +14,10 @@
  * @note See https://en.cppreference.com/w/cpp/algorithm/rotate
  */
 template<class T, class BI>
-void rotate(std::list<T>& list, BI begin, BI new_begin, BI end);
+void rotate(std::list<T>& list, BI begin, BI new_begin, BI end){
+    const auto len = std::distance(begin, end);
+    const auto offset = std::distance(list.begin(), new_begin);
+    list.splice(list.end(), list, begin, new_begin);
+    std::advance(new_begin, len);
+    list.splice(list.begin(), list, new_begin, end);
+}
