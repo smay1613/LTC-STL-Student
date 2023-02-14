@@ -2,6 +2,8 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <unordered_set>
+#include <iostream>
 
 struct Song
 {
@@ -18,22 +20,24 @@ public:
 
     bool operator<(const Song&) = delete;
 
+    bool operator==(const Song& t) const
+    {
+        return name() == t.name();
+    }
+
 private:
     std::string track_name;
 };
 
-using playlist = std::vector<Song>;
-
-bool is_in_playlist(const Song& search, const playlist& playlist)
+struct MySongHash
 {
-    size_t count = std::count_if(playlist.begin(), playlist.end(), 
-        [&](const Song& song) {
-            return song.name() == search.name();
-        }
-    );
+    size_t operator()(const Song& song) const
+    {
+        return std::hash<std::string>{}(song.name());
+    }
+};
 
-    return count > 0;
-}
+using playlist = std::vector<Song>;
 
 /**
  * @todo Implement function that will check if one playlist has the same songs
@@ -46,18 +50,18 @@ bool is_in_playlist(const Song& search, const playlist& playlist)
  */
 bool is_same_content(const playlist& first_playlist, const playlist& second_playlist)
 {
+    std::unordered_set<Song, MySongHash> playlist1{first_playlist.begin(), first_playlist.end()};
+    std::unordered_set<Song, MySongHash> playlist2{second_playlist.begin(), second_playlist.end()};
+    
     if (first_playlist.size() != second_playlist.size())
         return false;
-    
+
+    if (playlist1.size() != playlist2.size())
+        return false;
+
     for (auto& it : first_playlist)
     {
-        if (!is_in_playlist(it, second_playlist))
-            return false;
-    }
-
-    for (auto& it : second_playlist)
-    {
-        if (!is_in_playlist(it, first_playlist))
+        if (playlist2.count(it) == 0)
             return false;
     }
 
