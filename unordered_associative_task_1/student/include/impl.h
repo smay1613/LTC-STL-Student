@@ -49,8 +49,8 @@ using playlist = std::vector<Song>;
  * @return true if first playlist is anagram of second
  */
 bool is_same_content(const playlist& first_playlist, const playlist& second_playlist){
-    std::unordered_multiset<Song> first_set (first_playlist.begin(),first_playlist.end());
-    std::unordered_multiset<Song> second_set (second_playlist.begin(),second_playlist.end());
-    return (first_set==second_set);
+    std::unordered_multiset<Song> first_multiset (first_playlist.begin(),first_playlist.end());
+    std::unordered_multiset<Song> second_multiset (second_playlist.begin(),second_playlist.end());
+    return first_multiset==second_multiset;
 
 }
