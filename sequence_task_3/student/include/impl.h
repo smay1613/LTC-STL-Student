@@ -37,7 +37,7 @@ public:
 
     /** @todo Constructor from two iterators*/
     template<class T>
-    DynamicPlaylist(T first, T second):m_tracklist{typename Container::template deque<Song_t>(first,second)}{}
+    DynamicPlaylist(T first, T second):m_tracklist(first,second){}
 
 
     /** @todo Set track as currently played from initializer */
