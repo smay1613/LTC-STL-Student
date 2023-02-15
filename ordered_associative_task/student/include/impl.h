@@ -16,20 +16,19 @@
  * @return 1-5
  */
 std::size_t convertMarkTo5PointSystem(std::size_t markIn100Point) {
-    const std::size_t MAX100POINT = 100;
-    const std::size_t MAX5POINT = 5;
     std::map<std::size_t, std::size_t> map {
-        {29, 1},
-        {49, 2},
-        {69, 3},
-        {89, 4},
-        {100, 5}
+        {0, 1},
+        {30, 2},
+        {50, 3},
+        {70, 4},
+        {90, 5}
     };
 
-    if (markIn100Point > MAX100POINT) {
-        return MAX5POINT;
+    if (markIn100Point >= map.rbegin()->first) {
+        return map.rbegin()->second;
     }
 
-    auto it = map.lower_bound(markIn100Point);
+    auto it = map.upper_bound(markIn100Point);
+    --it;
     return (*it).second;
 }
