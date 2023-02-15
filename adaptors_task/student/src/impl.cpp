@@ -1,5 +1,6 @@
 #include "impl.h"
 #include <vector>
+#include <stack>
 
 const std::vector<std::pair<char, char>> brackets {
     {'(', ')'},
