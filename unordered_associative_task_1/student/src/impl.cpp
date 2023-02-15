@@ -18,9 +18,7 @@ const bool isEqualSize(const T& p1, const T& p2) {
 	return p1.size() == p2.size();
 }
 
-using unordered_set = std::unordered_set<Song, SongHash, SongEqual>;
-
-const bool operator== (const unordered_set& p1, const unordered_set& p2) {
+const bool operator== (const std::unordered_set<Song, SongHash, SongEqual>& p1, const std::unordered_set<Song, SongHash, SongEqual>& p2) {
 	if (!isEqualSize(p1, p2)) {
 		return false;
 	}
@@ -37,7 +35,7 @@ bool is_same_content(const playlist& first_playlist, const playlist& second_play
 	if (!isEqualSize(first_playlist, second_playlist)){
 		return false;
 	}
-	unordered_set playlist1(first_playlist.begin(), first_playlist.end());
-	unordered_set playlist2(second_playlist.begin(), second_playlist.end());
+	std::unordered_set<Song, SongHash, SongEqual> playlist1(first_playlist.begin(), first_playlist.end());
+	std::unordered_set<Song, SongHash, SongEqual> playlist2(second_playlist.begin(), second_playlist.end());
 	return playlist1 == playlist2;
 }
