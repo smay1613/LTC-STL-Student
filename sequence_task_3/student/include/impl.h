@@ -28,7 +28,7 @@ public:
 
     /** @todo Constructor from two iterators*/
     template<typename iterator>
-    DynamicPlaylist(iterator first, iterator last)
+    DynamicPlaylist(iterator first, iterator last):m_tracklist{}
     {
         m_tracklist.assign(first, last);
     };
@@ -36,14 +36,14 @@ public:
     template<class... Args>
     const Song_t& play(Args&&... songData)
     {
-        m_tracklist.emplace(begin(), std::forward<Args>(songData)...);
+        m_tracklist.emplace_front(std::forward<Args>(songData)...);
         return current();
     };
 
     /** @todo Set track as currently played from lvalue */
     const Song_t& play(const Song_t& song)
     {
-        return m_tracklist.insert(begin(), song);
+        return m_tracklist.push_front(song);
         return current();
     };
 
@@ -51,15 +51,19 @@ public:
     template<class... Args>
     void playNext(Args&&... songData)
     {
-        int pos = hasTracks() ? 1:0;
-        m_tracklist.emplace(begin()+pos, std::forward<Args>(songData)...);
+        if(hasTracks())
+            m_tracklist.emplace(++begin(), std::forward<Args>(songData)...);
+        else
+            m_tracklist.emplace(begin(), std::forward<Args>(songData)...);
     };
 
     /** @todo Set track to be played next from lvalue */
     void playNext(const Song_t& song)
     {
-        int pos = hasTracks() ? 1:0;
-        m_tracklist.insert(begin()+pos, 1, song);
+        if(hasTracks())
+            m_tracklist.insert(++begin(), 1, song);
+        else
+            m_tracklist.insert(begin(), 1, song);
     };
 
     /** @todo Add track to the end of the queue from initializer */
@@ -72,7 +76,7 @@ public:
     /** @todo Add track to the end of the queue from lvalue */
     void add(const Song_t& song)
     {
-        m_tracklist.insert(end(), song);
+        m_tracklist.push_back(song);
     };
 
     /** @todo Get first track in playlist queue */
