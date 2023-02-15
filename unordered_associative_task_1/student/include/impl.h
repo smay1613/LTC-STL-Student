@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <unordered_set>
 
 struct Song
 {
@@ -21,6 +22,20 @@ private:
     std::string track_name;
 };
 
+namespace std {
+    template<> class hash<Song> {
+        public:
+        size_t operator()(const Song& song) const {
+            return std::hash<std::string>{}(song.name());
+        }
+    };
+}
+
+bool operator ==(const Song& lhs, const Song& rhs)
+{
+    return lhs.name() == rhs.name();
+}
+
 using playlist = std::vector<Song>;
 
 /**
@@ -32,4 +47,13 @@ using playlist = std::vector<Song>;
  *
  * @return true if first playlist is anagram of second
  */
-bool is_same_content(const playlist& first_playlist, const playlist& second_playlist);
+bool is_same_content(const playlist& first_playlist, const playlist& second_playlist) {
+    if (first_playlist.size() != second_playlist.size()) {
+        return false;
+    }
+
+    std::unordered_multiset<Song> first_playlist_set(first_playlist.begin(), first_playlist.end());
+    std::unordered_multiset<Song> second_playlist_set(second_playlist.begin(), second_playlist.end());
+
+    return first_playlist_set == second_playlist_set;
+}
