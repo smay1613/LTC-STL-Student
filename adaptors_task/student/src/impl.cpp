@@ -12,10 +12,10 @@ bool isValid(const std::string& source) {
     std::stack<char> openedBrackets;
     for (auto const &c : source) {
         for (auto const &currentBracket : brackets) {
-            if (c == currentBracket.first) {
+            if (const bool isOpenBracket = (c == currentBracket.first)) {
                 openedBrackets.push(c);
                 break;
-            } else if (c == currentBracket.second) {
+            } else if (const bool isCloseBracket = (c == currentBracket.second)) {
                 if (openedBrackets.empty()) {
                     return false;
                 }
