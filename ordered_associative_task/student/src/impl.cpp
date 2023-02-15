@@ -2,15 +2,11 @@
 #include <map>
 
 size_t convertMarkTo5PointSystem(size_t markIn100Point) {
-	const size_t MAX = 100;
 	std::map<int, int> ranges {
-		{29, 1},
-		{49, 2},
-		{69, 3},
-		{89, 4},
-		{MAX, 5}
+		{0, 1}, {30, 2}, {50, 3}, {70, 4}, {90, 5}
 	};
-	auto nearestRange = ranges.lower_bound(markIn100Point);
-	const bool isOutOfBound = nearestRange == ranges.end();
-	return isOutOfBound? ranges[MAX] : nearestRange->second;
+	auto nearestRange = ranges.equal_range(markIn100Point);
+	if (nearestRange.first->second == nearestRange.second->second)
+		return (--nearestRange.first)->second ;
+	return nearestRange.first->second;
 }
