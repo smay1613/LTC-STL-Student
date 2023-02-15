@@ -17,14 +17,17 @@
  * @return 1-5
  */
 
-std::map<size_t, size_t> markLimits {
-    {29, 1},
-    {49, 2},
-    {69, 3},
-    {89, 4},
-    {100, 5}
+const size_t maxScore = 100;
+
+const std::map<size_t, size_t> markLimits {
+    {0, 1},
+    {30, 2},
+    {50, 3},
+    {70, 4},
+    {90, 5}
 };
 
 size_t convertMarkTo5PointSystem(size_t markIn100Point) {
-    return markLimits.lower_bound(std::min(markIn100Point, (size_t)100))->second;
+    auto iterator = markLimits.upper_bound(std::min(markIn100Point, maxScore));
+    return (--iterator)->second;
 }
