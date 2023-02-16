@@ -17,20 +17,13 @@
  */
 std::size_t convertMarkTo5PointSystem(std::size_t markIn100Point)
 {
-    if(markIn100Point > 100)
-    {
-        markIn100Point = 100;
-    }
     std::map<std::size_t,std::size_t> MarkDict{
-        {29,1},
-        {49,2},
-        {69,3},
-        {89,4},
-        {100,5}
+        {0,1},
+        {30,2},
+        {50,3},
+        {70,4},
+        {90,5}
     };
-
-    auto val = MarkDict.lower_bound(markIn100Point);
-    return MarkDict[val->first];
-
-
+    auto val = MarkDict.upper_bound(markIn100Point);
+    return MarkDict[(--val)->first];
 }
