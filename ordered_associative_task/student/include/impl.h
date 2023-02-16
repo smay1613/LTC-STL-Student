@@ -24,10 +24,6 @@ std::size_t convertMarkTo5PointSystem(std::size_t markIn100Point) {
         {90, 5}
     };
 
-    if (markIn100Point >= map.rbegin()->first) {
-        return map.rbegin()->second;
-    }
-
     auto it = map.upper_bound(markIn100Point);
     --it;
     return (*it).second;
