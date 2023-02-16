@@ -28,10 +28,8 @@ public:
 
     /** @todo Constructor from two iterators*/
     template<typename iterator>
-    DynamicPlaylist(iterator first, iterator last):m_tracklist{}
-    {
-        m_tracklist.assign(first, last);
-    };
+    DynamicPlaylist(iterator first, iterator last):m_tracklist{first, last}
+    {};
     /** @todo Set track as currently played from initializer */
     template<class... Args>
     const Song_t& play(Args&&... songData)
