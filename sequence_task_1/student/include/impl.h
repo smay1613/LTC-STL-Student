@@ -29,10 +29,8 @@ public:
     StaticPlaylist() : m_tracklist() {}
     /** @todo Constructor from any reversible sequence container */
     template<class PlayList>
-    StaticPlaylist(const PlayList& playList)
-    {
-        m_tracklist.assign(playList.rbegin(), playList.rend());
-    };
+    StaticPlaylist(const PlayList& playList):m_tracklist{playList.rbegin(), playList.rend()}
+    {};
     /** @todo Assignment from any reversible sequence container */
     template<class PlayList>
     StaticPlaylist<Container, Song_t> &operator=(const PlayList& playList)
