@@ -18,12 +18,28 @@ public:
 
     bool operator<(const Song&) = delete;
 
+    bool operator==(const Song& other)const
+    {
+        return track_name == other.name();
+    }
+
 private:
     std::string track_name;
 };
 
 using playlist = std::vector<Song>;
 
+namespace std
+{
+    template<>
+    struct hash<Song>
+    {
+        size_t operator()(const Song& key)const
+        {
+            return hash<std::string>()(key.name());
+        }
+    };
+}
 /**
  * @todo Implement function that will check if one playlist has the same songs
  * as the second one
@@ -35,17 +51,8 @@ using playlist = std::vector<Song>;
  */
 bool is_same_content(const playlist& first_playlist, const playlist& second_playlist)
 {
-    std::unordered_multiset<std::string> first_playlistset;
-    std::unordered_multiset<std::string> second_playlistset;
-
-    for( auto &song : first_playlist)
-    {
-        first_playlistset.emplace(song.name());
-    }
-    for( auto &song : second_playlist)
-    {
-        second_playlistset.emplace(song.name());
-    }
+    std::unordered_multiset<Song> first_playlistset(first_playlist.begin(),first_playlist.end());
+    std::unordered_multiset<Song> second_playlistset(second_playlist.begin(),second_playlist.end());
 
     return first_playlistset == second_playlistset;
 }
