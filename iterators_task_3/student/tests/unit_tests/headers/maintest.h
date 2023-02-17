@@ -7,7 +7,7 @@ class TypesAndTraits : public ::testing::Test
 {
 
 protected:
-    using key_type = size_t;
+    using key_type = std::string;
     using value_type = size_t;
 
     using map = std::map<key_type, value_type>;
