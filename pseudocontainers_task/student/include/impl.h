@@ -27,6 +27,7 @@ void checkOverlap( int& count, int& overlap, worker_id& w1,  worker_id& w2, iter
     count = 0;    
 }
 
+
 std::tuple<worker_id, worker_id, days> getMaxIntersection(const std::unordered_map<worker_id, calendar>& workerVacations){
     worker_id w1 = 0, w2 = 0;
     int overlap = 0, count = 0;
