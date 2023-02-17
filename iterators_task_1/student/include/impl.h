@@ -10,4 +10,14 @@
  *
  * @warning YOU MUST USE STRING STREAMS AND STREAM ITERATORS!
  */
-std::string reverseWords(const std::string& input);
+std::string reverseWords(const std::string& input) {
+    std::stringstream myStream(input);
+    std::string token, reversedSentence;
+    while(myStream >> token) {
+        reversedSentence = " " + token + reversedSentence;
+    }
+    if (reversedSentence.empty()) {
+        return "";
+    }
+    return reversedSentence.substr(1);
+}
