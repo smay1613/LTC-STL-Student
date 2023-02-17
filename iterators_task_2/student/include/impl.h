@@ -17,20 +17,14 @@ struct accumulator
     /** @todo lvalue writing operator*/
     template<typename T>
     accumulator<Container>& operator=(const T& value){
-            std::copy(
-                begin(value), end(value),
-                std::back_inserter(m_container)
-            );
+            std::copy(value.begin(), value.end(), std::back_inserter(m_container));
         return *this;
     }
 
     /** @todo rvalue writing operator*/
     template<typename T>
     accumulator<Container>& operator=(T&& value){
-        std::move(
-                begin(value), end(value),
-                std::back_inserter(m_container)
-            );
+        std::move(value.begin(), value.end(), std::back_inserter(m_container));
         return *this;
     }
 
