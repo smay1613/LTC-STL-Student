@@ -2,24 +2,24 @@
 #include <bitset>
 std::tuple<worker_id, worker_id, days> getMaxIntersection(const std::unordered_map<worker_id, calendar>& workerVacations){
 
-    worker_id resultWorker1, resultWorker2;
-    days resultDaysOverlap=0;
+    worker_id resultWorker1{}, resultWorker2{};
+    days resultDaysOverlap{};
 
 
-    for (auto & itOuter : workerVacations){
+    for (auto & outerVacation : workerVacations){
 
-        std::bitset<daysInMonth> bitsetOuter(itOuter.second,0,itOuter.second.size(),'o','x');
+        std::bitset<daysInMonth> outerCalendar(outerVacation.second,0,outerVacation.second.size(),'o','x');
     
-        for(auto & itInner : workerVacations){
-            if(itInner!=itOuter){
-                std::bitset<daysInMonth> bitsetInner(itInner.second,0,itInner.second.size(),'o','x');
-                std::bitset<daysInMonth> bitsetOverlap = bitsetOuter & bitsetInner;
-                auto countOverlap = bitsetOverlap.count();
+        for(auto & innerVacation : workerVacations){
+            if(innerVacation!=outerVacation){
+                std::bitset<daysInMonth> innerCalendar(innerVacation.second,0,innerVacation.second.size(),'o','x');
+                std::bitset<daysInMonth> overlapCalendar = outerCalendar & innerCalendar;
+                auto countOverlap = overlapCalendar.count();
 
                 if(countOverlap > resultDaysOverlap){
                     resultDaysOverlap=countOverlap;
-                    resultWorker1=itOuter.first;
-                    resultWorker2=itInner.first;
+                    resultWorker1=outerVacation.first;
+                    resultWorker2=innerVacation.first;
 
                 }
             }
