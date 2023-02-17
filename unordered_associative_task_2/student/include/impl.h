@@ -47,10 +47,8 @@ std::vector<std::string> flattenGrouped (const filtering_map& grouped){
 
     std::vector<std::string> flattened;
 
-    for( auto group : grouped){
-        for( auto s : group.second){
-            flattened.push_back(s);
-        }      
+    for( const auto& group : grouped){
+        flattened.insert(flattened.end(), group.second.begin(), group.second.end());      
     }
 
     return flattened;

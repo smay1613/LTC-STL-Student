@@ -4,6 +4,7 @@
 #include <numeric>
 #include "xxhash.h"
 #include <iostream>
+#include <functional>
 
 namespace fs = std::experimental::filesystem;
 
@@ -25,34 +26,27 @@ auto xx_hash = [] (const std::string &file)
     return xxh::xxhash<64>(buffer);
 };
 
+struct FilterBySize{
+    size_t operator()(std::string path){
+        return fs::file_size(path);
+    }
+};
+
+struct FilterByHash{
+    size_t operator()(std::string path){
+        return xx_hash(path);
+    }
+};
 
 /** @todo Implement filtering files by different buckets by specified criteria*/
 template<class FilterCriteria>
 filtering_map filter(const std::vector<std::string>& files, FilterCriteria filter)
 {
     filtering_map unique;
-
+    
     for(auto path : files){
-        std::size_t key;
 
-        if(filter){
-
-            std::ifstream stream {path};
-
-            if (!stream)
-            {
-                std::cerr << "File " << path << " can't be opened" << std::endl;
-            }
-
-            key = (!stream)? 0 : fs::file_size(path);
-        } else {
-
-            key = xx_hash(path);
-        }
-
-        std::vector<std::string> none = {};
-        unique.try_emplace(key, none);
-        unique[key].push_back(path);
+        unique[filter(path)].push_back(path);
     }
     return unique;
 }
@@ -69,16 +63,16 @@ filtering_map groupDuplicates (const std::vector<std::string>& dataSource, Filte
 std::vector<std::vector<std::string> > findDuplicates(const std::string &rootPath)
 {
     // filter by size
-    filtering_map by_size = groupDuplicates(listFiles(rootPath), true);
+    filtering_map by_size = groupDuplicates(listFiles(rootPath), FilterBySize());
 
     // flatten
     std::vector<std::string> duplicated_file_list = flattenGrouped(by_size);
 
     // filter by content
-    filtering_map by_hash = groupDuplicates(duplicated_file_list, false);
+    filtering_map by_hash = groupDuplicates(duplicated_file_list, FilterByHash());
     
     std::vector<std::vector<std::string>> duplicated;
-    for( auto group : by_hash){
+    for( const auto& group : by_hash){
 
         duplicated.push_back(group.second);
     }
