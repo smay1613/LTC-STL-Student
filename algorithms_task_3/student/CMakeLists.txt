@@ -20,8 +20,8 @@ set(TEST ON)
 add_library(shift_right SHARED ${sources})
 
 set_target_properties(shift_right PROPERTIES
-                        C_STANDARD 11
-                        CXX_STANDARD 11
+                        C_STANDARD 17
+                        CXX_STANDARD 17
                         PUBLIC_HEADER "${headers}"
 )
 
