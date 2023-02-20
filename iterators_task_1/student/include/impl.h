@@ -21,8 +21,9 @@ std::string reverseWords(const std::string& input) {
     if(tokens.empty()) {
         return "";
     }
-    std::string reversed_sentence;
-    for_each(tokens.rbegin(), tokens.rend(), [&reversed_sentence](const std::string& item){reversed_sentence += item + " ";});
+    std::ostringstream output;
+    std::copy(tokens.rbegin(), tokens.rend(), std::ostream_iterator<std::string>(output, " "));
+    std::string reversed_sentence = output.str();
     reversed_sentence.pop_back();
     return reversed_sentence;
 }
