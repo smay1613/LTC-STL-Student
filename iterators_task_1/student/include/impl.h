@@ -2,6 +2,8 @@
 #include <sstream>
 #include <iterator>
 #include <string>
+#include <vector>
+#include <algorithm>
 
 /**
  * @todo Implement function that will reverse words in a sentence
@@ -14,15 +16,17 @@
 
 std::string reverseWords(const std::string& input){
     std::stringstream ss(input);
+    std::vector<std::string> words((std::istream_iterator<std::string>(ss)), std::istream_iterator<std::string>());
 
-    std::string res, word;
-
-    ss >> word;
-    res = word;
-
-    while (ss >> word) {
-        res = word + " " + res;
+    std::ostringstream oss;
+    std::copy(words.rbegin(), 
+    words.rend(), 
+    std::ostream_iterator<std::string>(oss, " "));
+    
+    std::string res(oss.str());
+    if(!res.empty()){
+        res.pop_back();
     }
-
+    
     return res;
 }
