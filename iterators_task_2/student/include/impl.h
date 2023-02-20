@@ -6,10 +6,10 @@ struct accumulator
 {
     /** @todo Iterator traits*/
     using iterator_category	= typename std::output_iterator_tag;
-    using difference_type = typename Container::difference_type;
-    using value_type = typename Container::value_type;
-    using pointer = typename Container::pointer;
-    using reference	= typename Container::reference;
+    using difference_type = void;
+    using value_type = void;
+    using pointer = void;
+    using reference	= void;
 
     /** @todo Constructor with container*/
     accumulator(Container& container) : m_container{container} {}
@@ -17,7 +17,7 @@ struct accumulator
     /** @todo lvalue writing operator*/
     template<typename T>
     accumulator<Container>& operator=(const T& value){
-            std::copy(value.begin(), value.end(), std::back_inserter(m_container));
+            m_container.insert(m_container.end(), value.begin(), value.end());
         return *this;
     }
 
