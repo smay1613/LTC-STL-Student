@@ -18,6 +18,6 @@ std::pair<FI, FI> consecutive_group(FI start, FI end, Comparator comp = {}) {
         return std::make_pair(end, end);
     }
     auto value = *it_start;
-    auto it_end = find_if_not(it_start, end, [value](const typename std::iterator_traits<FI>::value_type current_value) {return !(current_value == value);});
+    auto it_end = find_if_not(it_start, end, [&value](const typename std::iterator_traits<FI>::value_type& current_value) {return current_value == value;});
     return std::make_pair(it_start, it_end);
 }
