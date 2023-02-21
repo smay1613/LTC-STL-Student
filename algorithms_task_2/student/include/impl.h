@@ -11,9 +11,9 @@
  * @return true if source starts from a prefix
  */
 bool startsWith(const std::string& source, const std::string& prefix){
-    return source.find(prefix, 0) == 0;
+    return std::mismatch(source.begin(), std::next(source.begin(), prefix.size()), prefix.begin()) == make_pair(std::next(source.begin(), prefix.size()), prefix.end());
+    // Checking source.find(prefix, 0, prefix.size()) == 0 will be liniar in prefix size, so it's slower in some cases
     // Can also check source.begin() == std::search(source.begin(), source.end(), prefix.begin(), prefix.end());
-    // Another possibility is std::mismatch
     // Could also check if std::equal(source.begin(), std::next(source.begin(), prefix.size), prefix.begin(), prefix.end()) is true 
     // Or check if source.substr(0, prefix.size()) == prefix
 }
