@@ -9,4 +9,7 @@
  *
  * @return true if source starts from a prefix
  */
-bool startsWith(const std::string& source, const std::string& prefix);
+bool startsWith(const std::string& source, const std::string& prefix) {
+    auto mismatchPoint = std::mismatch(source.begin(), source.end(), prefix.begin());
+    return mismatchPoint.second == prefix.end();
+}
