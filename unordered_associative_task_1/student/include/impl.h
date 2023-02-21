@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-
+#include <bits/stdc++.h>
 struct Song
 {
 public:
@@ -17,8 +17,22 @@ public:
 
     bool operator<(const Song&) = delete;
 
+    bool operator==(const Song& s) const
+    {
+        return this->track_name == s.track_name;
+    }
+
+    friend struct SongHash;
 private:
     std::string track_name;
+};
+
+struct SongHash
+{
+    std::size_t operator()(const Song& s) const 
+    {
+        return std::hash<std::string>()(s.track_name);
+    }
 };
 
 using playlist = std::vector<Song>;
@@ -37,18 +51,25 @@ bool is_same_content(const playlist& first_playlist, const playlist& second_play
     if(first_playlist.size() != second_playlist.size())
         return false;
 
-    playlist temp_playlist {first_playlist.begin(), first_playlist.end()};
+    std::unordered_multiset<Song, SongHash> temp_playlist (first_playlist.begin(), first_playlist.end());
 
-    for(auto track : second_playlist)
+    bool found;
+    for(auto const &track : second_playlist)
     {
+        found = false;
+
         for(auto it = temp_playlist.begin(); it != temp_playlist.end(); ++it)
         {
-            if(it->name() == track.name())
+            if (track.name() == it->name())
             {
                 temp_playlist.erase(it);
+                found = true;
                 break;
             }
         }
+        
+        if(!found)
+            return false;
     }
 
     if(temp_playlist.empty())
