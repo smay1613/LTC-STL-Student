@@ -10,4 +10,13 @@
  * @return gathered range
  */
 template <typename BiIt, typename UnaryPredicate>
-std::pair<BiIt, BiIt> gather(BiIt begin, BiIt end, BiIt position, UnaryPredicate predicate);
+std::pair<BiIt, BiIt> gather(BiIt begin, BiIt end, BiIt position, UnaryPredicate predicate) {
+    auto invertedPredicate =
+            [&predicate](typename std::iterator_traits<BiIt>::value_type val) {
+                return !predicate(val);
+            };
+
+    auto partitionStart = std::partition(begin, position, invertedPredicate);
+    auto partitionEnd = std::partition(position, end, predicate);
+    return std::make_pair(partitionStart, partitionEnd);
+}
