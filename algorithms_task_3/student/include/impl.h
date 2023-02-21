@@ -1,4 +1,5 @@
 #pragma once
+#include <algorithm>
 
 /** @todo Implement right-shifting algorithm for bidirectional ranges
  *
@@ -13,4 +14,6 @@
  * @note behavior is undefined if shift out of bounds
  */
 template<class BiIt>
-BiIt shift_right_n(BiIt begin, BiIt end, typename BiIt::difference_type shift);
+BiIt shift_right_n(BiIt begin, BiIt end, typename BiIt::difference_type shift) {
+    return std::move_backward(begin, end, std::next(end, shift));
+}
