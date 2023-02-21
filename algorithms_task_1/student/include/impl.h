@@ -13,7 +13,12 @@
 template<class FI, class Comparator = std::equal_to<typename std::iterator_traits<FI>::value_type>>
 std::pair<FI, FI> consecutive_group(FI start, FI end, Comparator comp = {}){
   auto first=std::adjacent_find(start,end, comp);
-  auto second=std::adjacent_find(first,end, std::not_equal_to<typename std::iterator_traits<FI>::value_type>());
+
+  auto not_comp= [&](const typename std::iterator_traits<FI>::value_type & a,const typename std::iterator_traits<FI>::value_type &  b)
+  {return !comp(a,b);};
+  // Since C++17 I could have used std::not_fn(comp) !!!
+  
+  auto second=std::adjacent_find(first,end, not_comp);
   if(second!=end){
     second=std::next(second);
   }
