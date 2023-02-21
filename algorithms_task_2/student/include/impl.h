@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <algorithm>
 using std::size_t;
 
 /**
@@ -11,6 +12,6 @@ using std::size_t;
  * @return true if source starts from a prefix
  */
 bool startsWith(const std::string& source, const std::string& prefix) {
-    std::size_t isPrefixOf = source.find(prefix);
-    return isPrefixOf != std::string::npos && isPrefixOf == 0;
+    auto it = std::mismatch(prefix.begin(), prefix.end(), source.begin());
+    return it.first == prefix.end();
 }
