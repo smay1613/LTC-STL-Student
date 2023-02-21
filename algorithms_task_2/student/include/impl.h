@@ -12,5 +12,5 @@ using std::size_t;
  */
 bool startsWith(const std::string& source, const std::string& prefix) {
     std::size_t isPrefixOf = source.find(prefix);
-    return isPrefixOf != std::string::npos;
+    return isPrefixOf != std::string::npos && isPrefixOf == 0;
 }
