@@ -11,6 +11,9 @@
  * @return true if source starts from a prefix
  */
 bool startsWith(const std::string& source, const std::string& prefix){
+    if(source.size()<prefix.size()){
+        return false;
+    }
     return std::equal(prefix.begin(),prefix.end(),source.begin()); 
     // Complexity: prefix.begin()-prefix.end() applications of the predicate
 
