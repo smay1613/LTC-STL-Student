@@ -14,7 +14,7 @@ template<class FI, class Comparator = std::equal_to<typename std::iterator_trait
 std::pair<FI, FI> consecutive_group(FI start, FI end, Comparator comp = {}) {
 	auto itBegin = std::adjacent_find(start, end, comp);
 	if (itBegin != end) {
-		auto itEnd = std::find_if_not(itBegin, end, [itBegin](typename std::iterator_traits<FI>::value_type bo){return bo == *itBegin;});
+		auto itEnd = std::find_if_not(itBegin, end, [itBegin](const typename std::iterator_traits<FI>::value_type& elem){return elem == *itBegin;});
 		return std::make_pair(itBegin, itEnd);
 	}
 	return std::make_pair(end, end);
