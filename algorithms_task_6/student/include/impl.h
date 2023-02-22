@@ -1,6 +1,18 @@
 #pragma once
 #include <algorithm>
+#include <list>
 
+template<typename T>
+void sort_container(T& cont)
+{
+    std::sort(cont.begin(), cont.end());
+}
+
+template<typename T>
+void sort_container(std::list<T>& cont)
+{
+    cont.sort();
+}
 
 /**
  * @todo insert_to_sorted
@@ -18,4 +30,7 @@ void insert_to_sorted(Sequence& target, const FwIt sourceBegin, const FwIt sourc
     static_assert(std::is_const<typename std::remove_reference<
                           typename std::iterator_traits<FwIt>::reference>::type>::value,
                       "FwIt must point to const data");
+    
+    std::copy(sourceBegin, sourceEnd, std::back_inserter(target));
+    sort_container(target);
 }
