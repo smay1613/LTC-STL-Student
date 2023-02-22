@@ -19,8 +19,8 @@ set(TEST ON)
 add_library(cv_analyzer_HOMEWORK SHARED ${sources})
 
 set_target_properties(cv_analyzer_HOMEWORK PROPERTIES
-                        C_STANDARD 11
-                        CXX_STANDARD 11
+                        C_STANDARD 14
+                        CXX_STANDARD 14
                         PUBLIC_HEADER "${headers}"
 )
 

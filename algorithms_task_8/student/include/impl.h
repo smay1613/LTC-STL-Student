@@ -7,7 +7,7 @@
 #include <sstream>
 #include <numeric>
 #include <unordered_map>
-
+#include <iostream>
 /** @warning: FOR LEARNING PURPOSES YOU ARE NOT ALLOWED TO USE LOOPS!*/
 
 /** @todo Must compare two strings without case checking*/
@@ -15,6 +15,12 @@ struct NoCaseComparator
 {
     bool operator()(const std::string& lhs, const std::string& rhs) const
     {
+        std::string left = "";
+        std::transform(lhs.begin(), lhs.end(), std::back_inserter(left), tolower);
+        std::string right = "";
+        std::transform(rhs.begin(), rhs.end(), std::back_inserter(right), tolower);
+
+        return left < right;
     }
 };
 
@@ -107,4 +113,20 @@ std::vector<CVGroup> getPossibleCVGroups(const groupsRatio& relations);
  * For example, row "CPP: C++ (7 times), C (3 times), STL (1 time)"
  * Weight will be 11
  */
-std::unordered_map<CVGroup, size_t> getGroupWeights(const std::string& text, const skillMatrix& generalMatrix);
+std::unordered_map<CVGroup, size_t> getGroupWeights(const std::string& text, const skillMatrix& generalMatrix){
+    std::unordered_map<CVGroup, size_t> weights;
+    std::string plain = getPlainText(text);
+
+    std::stringstream ss(plain);
+    std::vector<std::string> aux((std::istream_iterator<std::string>(ss)), std::istream_iterator<std::string>());
+    std::multiset<std::string, NoCaseComparator> output(aux.begin(), aux.end());
+
+    auto groups = {CVGroup::CPP, CVGroup::GeneralDev, CVGroup::Java};
+    std::for_each(groups.begin(), groups.end(), [&](auto g){
+        weights[g] = std::count_if(output.begin(), output.end(), [&](auto kw){
+            return generalMatrix.at(g).count(kw) > 0;
+        });
+    });
+
+    return weights;
+}
