@@ -14,7 +14,11 @@
 
 template <typename Sequence, typename FwIt>
 void insert_to_sorted(Sequence& target, const FwIt sourceBegin, const FwIt sourceEnd)
-{
+{   
+    for(auto it= sourceBegin; it!=sourceEnd; ++it){
+        target.insert(std::upper_bound(target.begin(),target.end(),*it),*it);
+    }
+
     static_assert(std::is_const<typename std::remove_reference<
                           typename std::iterator_traits<FwIt>::reference>::type>::value,
                       "FwIt must point to const data");
