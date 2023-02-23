@@ -11,9 +11,15 @@
  * @return true if source starts from a prefix
  */
 bool startsWith(const std::string& source, const std::string& prefix){
-    return std::mismatch(source.begin(), std::next(source.begin(), prefix.size()), prefix.begin()) == make_pair(std::next(source.begin(), prefix.size()), prefix.end());
+    if( source.size() < prefix.size()){
+        return false;
+    }
+    return std::equal(source.begin(), std::next(source.begin(), prefix.size()), prefix.begin());
+    // std::equal shortcitcuits on first getting unequal value so it will be faster in most cases than O(prefix.size)
     // Checking source.find(prefix, 0, prefix.size()) == 0 will be liniar in prefix size, so it's slower in some cases
-    // Can also check source.begin() == std::search(source.begin(), source.end(), prefix.begin(), prefix.end());
-    // Could also check if std::equal(source.begin(), std::next(source.begin(), prefix.size), prefix.begin(), prefix.end()) is true 
-    // Or check if source.substr(0, prefix.size()) == prefix
+    // Can also check source.begin() == std::search(source.begin(), source.end(), prefix.begin(), prefix.end()); 
+    // but will also check whole source first
+    // Could also check if std::mismatch(source.begin(), std::next(source.begin(), prefix.size), prefix.begin(), prefix.end()) 
+    // is a pair of source begin + prefix size and prefix end, worse readability than equal and additional memory for pair  
+    // Or check if source.substr(0, prefix.size()) == prefix, liniar in prefix size for substring copy
 }
