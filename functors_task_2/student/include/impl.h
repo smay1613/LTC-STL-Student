@@ -3,6 +3,7 @@
 #include <memory>
 #include <functional>
 #include <algorithm>
+#include <string>
 #include "selector.h"
 
 // for testing purposes
@@ -62,9 +63,11 @@ private:
     bool safeCall(const std::string &userId, T&& f) const
     {
         static_assert(std::is_same<decltype(f(nullptr)), bool>::value, "Provided Callable must return bool");
-        // find reader
-        // check for errors
-        // call functor
+        auto userIdIterator = m_dataReaders.find(userId);
+        
+        if (userIdIterator != m_dataReaders.end() && userIdIterator->second != nullptr)
+            return f(userIdIterator->second);
+       
         return false;
     }
 
@@ -78,6 +81,6 @@ private:
     {
         // adapt function
         // call selector member
-        return false;
+        return method(selector.get(), result);
     }
 };
