@@ -30,7 +30,13 @@ auto xx_hash = [] (const std::string &file)
 template<class FilterCriteria>
 filtering_map filter(const std::vector<std::string>& files, FilterCriteria filter)
 {
+    filtering_map filteredFiles;
+    for (auto const& f : files) {
+        filteredFiles[filter(f)].push_back(f);
+    }
+    return filteredFiles;
 }
+
 
 /** @note HELPER */
 template<class Filter>
@@ -44,6 +50,22 @@ filtering_map groupDuplicates (const std::vector<std::string>& dataSource, Filte
 std::vector<std::vector<std::string> > findDuplicates(const std::string &rootPath)
 {
     // filter by size
+    filtering_map filesBySize = groupDuplicates(listFiles(rootPath),
+        [](const std::string& file) { return fs::file_size(file); });
+
+    std::vector<std::string> filesList = flattenGrouped(filesBySize);
+
     // filter by content
+    filtering_map filesByContent = groupDuplicates(filesList,
+        [](const std::string& file) { return xx_hash(file); });
+
     // flatten
+    std::vector<std::vector<std::string>> result;
+    for (auto const& file : filesByContent) {
+        if (result.second.size() > 0) {
+            std::vector<std::string> files(file.second.begin(), file.second.end());
+            result.push_back(files);
+        }
+    }
+    return result;
 }
