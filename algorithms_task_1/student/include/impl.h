@@ -11,4 +11,20 @@
   * @return consecutive range
 */
 template<class FI, class Comparator = std::equal_to<typename std::iterator_traits<FI>::value_type>>
-std::pair<FI, FI> consecutive_group(FI start, FI end, Comparator comp = {});
+std::pair<FI, FI> consecutive_group(FI start, FI end, Comparator comp = {}) {
+    auto first = std::adjacent_find(start, end, comp);
+
+    if (first == end)
+        return std::make_pair(end, end);
+
+    auto value = *first;
+
+    auto last = std::find_if_not(first, end,
+        [&value](const typename FI::value_type& x)
+        {
+            return value == x;
+        }
+    );
+
+    return std::make_pair(first, last);
+}
