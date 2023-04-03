@@ -7,48 +7,46 @@ void DataBrowser::userLeave(const std::string &userId)
 
 bool DataBrowser::getDataType1(const std::string &userId, std::vector<size_t> &returnValues) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
+    auto f = [&](const std::unique_ptr<IDataSelector>& selector) 
     {
-        return false;
-    }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
-    return it->second->getDataType1(returnValues, 0);
+        return invokeDataRequest(
+            [](const IDataSelector* sel, std::vector<size_t>& returnValues) 
+            {
+                return sel->getDataType1(returnValues, 0);
+            },
+            selector, returnValues);
+    };
+    return safeCall(userId, f);
 }
 
 bool DataBrowser::getDataType2(std::vector<size_t> &returnValues, const std::string &userId) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
+    auto f = [&](const std::unique_ptr<IDataSelector>& selector) 
     {
-        return false;
-    }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
-    return it->second->getDataType2(returnValues);
+        return invokeDataRequest(
+            [](std::vector<size_t>& returnValues, const IDataSelector* sel)
+            {
+                return sel->getDataType2(returnValues);
+            },
+            selector, returnValues  );
+    };
+    return safeCall(userId, f);
 }
 
 bool DataBrowser::getDataType3(const std::string &userId, std::vector<std::string> &returnValues) const
 {
-    const auto& it = m_dataReaders.find(userId);
-    if (it == m_dataReaders.cend())
+    auto f = [&](const std::unique_ptr<IDataSelector>& selector)
     {
-        return false;
-    }
-    if (it->second == nullptr)
-    {
-        return false;
-    }
-
-    std::deque<size_t> unprocessedResults {};
-    bool success {it->second->getDataType3(unprocessedResults)};
-    returnValues = process(unprocessedResults);
-    return success;
+        return invokeDataRequest([&](const IDataSelector* sel, std::vector<std::string>& returnValues) 
+            {
+                std::deque<size_t> unprocessedResults{};
+                bool result = sel->getDataType3(unprocessedResults);
+                returnValues = process(unprocessedResults);
+                return result;
+            },
+            selector, returnValues);
+    };
+    return safeCall(userId, f);
 }
 
 template<class T>
